@@ -1,10 +1,10 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import WebFont from 'webfontloader';
 import { StylesProvider } from '@material-ui/core';
-import App from './Components/AppRoot/App';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './Components/AppRoot';
 import * as serviceWorker from './serviceWorker';
 
 WebFont.load({
@@ -13,12 +13,14 @@ WebFont.load({
   },
 });
 
-document.title = 'Jack';
+document.title = 'Fizzy Finder';
 
 ReactDOM.render(
   <React.StrictMode>
     <StylesProvider injectFirst>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </StylesProvider>
   </React.StrictMode>,
   document.getElementById('root')

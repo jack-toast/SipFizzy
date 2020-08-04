@@ -1,11 +1,13 @@
 import React from 'react';
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { BubbleChartOutlined } from '@material-ui/icons';
 
 const AppToolbar = () => {
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" color="primary">
       <Toolbar>
-        <div>FizzyFinder</div>
+        <BubbleChartOutlined />
+        <Typography variant="h5">Fizzy Finder</Typography>
       </Toolbar>
     </AppBar>
   );

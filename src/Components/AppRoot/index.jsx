@@ -1,9 +1,11 @@
 import React from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
+import { Switch, Route } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import HomeView from '../../Views/HomeView';
+import ReviewView from '../../Views/ReviewView';
 
 const useStyles = makeStyles((theme) => ({
   // '@global': {
@@ -34,7 +36,14 @@ const AppRoot = () => {
       <AppToolbar />
       <div className={styles.ContentRoot}>
         <div className={muiClasses.toolbar} />
-        <HomeView />
+        <Switch>
+          <Route path="/review">
+            <ReviewView />
+          </Route>
+          <Route path="/">
+            <HomeView />
+          </Route>
+        </Switch>
       </div>
     </MuiThemeProvider>
   );
