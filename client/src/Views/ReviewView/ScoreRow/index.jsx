@@ -6,7 +6,7 @@ import SCORING_CATEGORIES from '../scoringCategories';
 
 const categoryDescriptions = {
   [SCORING_CATEGORIES.flavor]: 'Flavor',
-  [SCORING_CATEGORIES.shotgun]: 'Shotgun-ability',
+  [SCORING_CATEGORIES.drinkability]: 'Drinkability',
   [SCORING_CATEGORIES.mouth]: 'Mouth Feel',
 };
 

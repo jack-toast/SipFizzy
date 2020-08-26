@@ -1,7 +1,6 @@
 import React from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
 import { Switch, Route } from 'react-router-dom';
-import styles from './styles.module.scss';
 import { MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import HomeView from '../../Views/HomeView';
@@ -34,7 +33,7 @@ const AppRoot = () => {
     <MuiThemeProvider theme={MUI_LIGHT_THEME}>
       <CssBaseline />
       <AppToolbar />
-      <div className={styles.ContentRoot}>
+      <div>
         <div className={muiClasses.toolbar} />
         <Switch>
           <Route path="/review">

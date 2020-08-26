@@ -6,10 +6,9 @@ import ScoreRow from './ScoreRow';
 import SCORING_CATEGORIES from './scoringCategories';
 
 const ReviewView = () => {
-  // const [score, setScore] = useState(0.5);
   const [scores, setScores] = useState({
     [SCORING_CATEGORIES.flavor]: 0.5,
-    [SCORING_CATEGORIES.shotgun]: 0.5,
+    [SCORING_CATEGORIES.drinkability]: 0.5,
     [SCORING_CATEGORIES.mouth]: 0.5,
   });
 
@@ -43,7 +42,6 @@ const ReviewView = () => {
           </Typography>
           <Divider />
           {scoreSections}
-          {/* <Scores scores={scores} handleChangeScore={handleChangeScore} /> */}
         </div>
       </div>
     </Container>
