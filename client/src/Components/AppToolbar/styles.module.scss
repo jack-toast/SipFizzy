@@ -1,0 +1,10 @@
+.HomeButton {
+  display: flex;
+  align-items: center;
+  color: unset;
+  text-decoration: unset;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

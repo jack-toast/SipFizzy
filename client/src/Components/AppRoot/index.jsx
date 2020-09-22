@@ -1,7 +1,7 @@
 import React from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
 import { Switch, Route } from 'react-router-dom';
-import { MUI_LIGHT_THEME } from '../../muiThemes';
+import { MUI_LIGHT_THEME, MUI_DARK_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import HomeView from '../../Views/HomeView';
 import ReviewView from '../../Views/ReviewView';
