@@ -1,14 +1,30 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
+const { Schema, SchemaTypes } = mongoose;
 
-const Drink = new Schema(
+const drinkSchema = new Schema(
   {
     name: { type: String, required: true },
-    rating: { type: Number, required: true },
-    // reviews: {type: Document}
+    avgRatings: {
+      bubbles: Number,
+      sweetness: Number,
+      flavorIntensity: Number,
+      flavorAuth: Number,
+      flavorTruth: Number,
+    },
+    abv: Number,
+    calories: Number,
+    flavors: [String],
+    createdBy: {
+      type: SchemaTypes.ObjectId,
+      ref: 'User',
+    },
+    editedBy: {
+      type: SchemaTypes.ObjectId,
+      ref: 'User',
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Drink', Drink);
+module.exports = mongoose.model('Drink', drinkSchema);

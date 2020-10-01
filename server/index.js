@@ -9,8 +9,8 @@ const createHttpError = require('http-errors');
 
 // my imports
 const db = require('./db');
-const drinkRouter = require('./routers/drinkRouter');
 const myErrorHandler = require('./utils/myErrorHandler');
+const routes = require('./routes');
 
 // logging setup
 // levels: trace, debug, info, warn, error, fatal
@@ -31,11 +31,8 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.use('/api', drinkRouter);
+// Where we connect all our routing into the app
+app.use('/', routes);
 
 // handle 404s for nonexistent routes
 app.use((req, res, next) => next(createHttpError(404)));

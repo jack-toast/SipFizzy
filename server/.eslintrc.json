@@ -10,7 +10,7 @@
   },
   "overrides": [
     {
-      "files": ["*controllers/*"],
+      "files": ["*controllers/**"],
       "rules": {
         "no-underscore-dangle": "off"
       }
