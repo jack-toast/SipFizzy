@@ -9,13 +9,13 @@ const reviewSchema = new Schema(
       required: true,
     },
     description: { type: String },
-    drinkID: {
+    drinkId: {
       type: SchemaTypes.ObjectId,
       ref: 'Drink',
       required: true,
       index: true,
     },
-    userID: {
+    userId: {
       type: SchemaTypes.ObjectId,
       ref: 'User',
       required: true,

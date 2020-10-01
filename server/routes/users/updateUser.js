@@ -11,8 +11,8 @@ module.exports = asyncHandler(async (req, res) => {
   if (!user) throw createHttpError(404, 'User not found');
 
   const { image, bio } = body;
-  if (image) user.name = image;
-  if (bio) user.rating = bio;
+  if (image) user.image = image;
+  if (bio) user.bio = bio;
 
   const saveResp = await user.save();
   if (!saveResp) throw createHttpError(500, 'failed to update existing user');

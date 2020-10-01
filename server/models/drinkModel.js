@@ -12,6 +12,7 @@ const drinkSchema = new Schema(
       flavorAuth: Number,
       flavorTruth: Number,
     },
+    numRatings: Number,
     abv: Number,
     calories: Number,
     flavors: [String],
