@@ -11,6 +11,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .catch((e) => {
     console.error('Connection Error', e.message);

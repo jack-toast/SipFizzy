@@ -36,7 +36,7 @@ module.exports = ash(async (req, res) => {
   res.status(200).json({
     success: true,
     message: 'review created successfully',
-    id: review._id,
+    id: review.id,
     review,
   });
 });

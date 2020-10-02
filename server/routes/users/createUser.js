@@ -17,7 +17,7 @@ module.exports = ash(async (req, res) => {
   res.status(200).json({
     success: true,
     message: 'user created successfully',
-    id: user._id,
+    id: user.id,
     user,
   });
 });
