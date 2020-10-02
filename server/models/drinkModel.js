@@ -5,12 +5,12 @@ const { Schema, SchemaTypes } = mongoose;
 const drinkSchema = new Schema(
   {
     name: { type: String, required: true },
-    avgRatings: {
+    ratings: {
       bubbles: Number,
       sweetness: Number,
       flavorIntensity: Number,
-      flavorAuth: Number,
-      flavorTruth: Number,
+      flavorAccuracy: Number,
+      overall: Number,
     },
     numRatings: Number,
     abv: Number,

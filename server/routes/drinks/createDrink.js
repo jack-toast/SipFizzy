@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
 const Drink = require('../../models/drinkModel');

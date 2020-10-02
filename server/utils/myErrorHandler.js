@@ -4,6 +4,8 @@ const myErrorHandler = (error, req, res, next) => {
     return;
   }
 
+  req.log.error(error);
+
   res.status(error.status || 500);
   res.json({
     status: error.status || 500,

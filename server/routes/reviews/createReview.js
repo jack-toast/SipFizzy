@@ -8,9 +8,20 @@ module.exports = ash(async (req, res) => {
   if (!body)
     throw createHttpError(400, 'you must provide a proper review object');
 
+  // Prevent dupes
+  const existingReview = await Review.findOne({
+    userId: body.userId,
+    drinkId: body.drinkId,
+  });
+  if (existingReview) {
+    throw createHttpError(400, 'User already wrote a review for that drink');
+  }
+
+  // Create the new review
   const newReview = new Review(body);
   if (!newReview) throw createHttpError(400, 'couldnt create new review');
 
+  // Save it
   const review = await newReview.save();
   if (!review) throw createHttpError(500, 'failed to save new review. sorry');
 

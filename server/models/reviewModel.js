@@ -25,8 +25,8 @@ const reviewSchema = new Schema(
       bubbles: Number,
       sweetness: Number,
       flavorIntensity: Number,
-      flavorAuth: Number,
-      flavorTruth: Number,
+      flavorAccuracy: Number,
+      overall: Number,
     },
     meta: {
       upvotes: Number,

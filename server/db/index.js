@@ -10,6 +10,7 @@ mongoose
   .connect(dbConnectionUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .catch((e) => {
     console.error('Connection Error', e.message);
