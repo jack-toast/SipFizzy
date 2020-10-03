@@ -2,7 +2,7 @@ const ash = require('express-async-handler');
 const flatten = require('flat');
 const createHttpError = require('http-errors');
 const { isEmpty } = require('lodash');
-const Drink = require('../../models/drinkModel');
+const Drink = require('../../models/drink.model');
 
 /**
  * Note: Why use findOneAndUpdate vs findOne -> modify -> save ?

@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const createHttpError = require('http-errors');
-const Review = require('../../models/reviewModel');
+const Review = require('../../models/review.model');
 
 module.exports = asyncHandler(async (req, res) => {
   const reviews = await Review.find({});

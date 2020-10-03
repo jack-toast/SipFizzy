@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
-const Drink = require('../../models/drinkModel');
+const Drink = require('../../models/drink.model');
 
 // Create (await)
 module.exports = ash(async (req, res) => {

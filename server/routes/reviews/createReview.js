@@ -1,6 +1,6 @@
 const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
-const Review = require('../../models/reviewModel');
+const Review = require('../../models/review.model');
 
 module.exports = ash(async (req, res) => {
   const { body } = req;

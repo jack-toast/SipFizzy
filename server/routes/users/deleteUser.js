@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const createHttpError = require('http-errors');
-const User = require('../../models/userModel');
+const User = require('../../models/user.model');
 
 module.exports = asyncHandler(async (req, res) => {
   const user = await User.findOneAndDelete({ _id: req.params.id });
