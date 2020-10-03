@@ -1,5 +1,7 @@
 const ash = require('express-async-handler');
+const flatten = require('flat');
 const createHttpError = require('http-errors');
+const { isEmpty } = require('lodash');
 const Drink = require('../../models/drinkModel');
 
 /**
@@ -16,36 +18,40 @@ module.exports = ash(async (req, res) => {
   if (!body)
     throw createHttpError(400, 'You must provide a body to update a drink');
 
-  // defining the allowed update variables, sort of
   const {
-    ratings,
-    numRatings,
     abv,
     calories,
-    flavors,
-    createdBy,
     editedBy,
+    flavors,
     name,
+    numRatings,
+    ratings = {},
   } = body;
 
-  const newDrink = await Drink.findOneAndUpdate(
+  const update = {
+    abv,
+    calories,
+    editedBy,
+    flavors,
+    name,
+    numRatings,
+    ...(!isEmpty(ratings) && flatten({ ratings })),
+  };
+  req.log.debug({ update }, `updating drink: ${req.params.drinkId}`);
+
+  const updatedDrink = await Drink.findOneAndUpdate(
     { _id: req.params.drinkId },
-    {
-      ...(name !== undefined && { name }),
-      ...(ratings !== undefined && { ratings }),
-      ...(numRatings !== undefined && { numRatings }),
-      ...(abv !== undefined && { abv }),
-      ...(calories !== undefined && { calories }),
-      ...(flavors !== undefined && { flavors }),
-      ...(createdBy !== undefined && { createdBy }),
-      ...(editedBy !== undefined && { editedBy }),
-    },
-    { new: true }
+    update,
+    { new: true, omitUndefined: true }
   );
+
+  if (!updatedDrink) {
+    throw createHttpError(404, 'Drink not found');
+  }
 
   res.status(200).json({
     success: true,
     message: 'drink updated',
-    drink: newDrink,
+    drink: updatedDrink,
   });
 });

@@ -9,7 +9,7 @@ const deleteDrink = require('./deleteDrink');
 drinks.post('/', createDrink);
 drinks.get('/', getDrinks);
 drinks.get('/:drinkId', getDrink);
-drinks.put('/:drinkId', updateDrink);
+drinks.patch('/:drinkId', updateDrink);
 drinks.delete('/:drinkId', deleteDrink);
 
 module.exports = drinks;

@@ -10,7 +10,7 @@ const reviews = express.Router();
 reviews.post('/', createReview);
 reviews.get('/', getReviews);
 reviews.get('/:reviewId', getReview);
-reviews.put('/:reviewId', updateReview);
+reviews.patch('/:reviewId', updateReview);
 reviews.delete('/:reviewId', deleteReview);
 
 module.exports = reviews;

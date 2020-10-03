@@ -9,7 +9,7 @@ const createHttpError = require('http-errors');
 
 // my imports
 const db = require('./db');
-const myErrorHandler = require('./utils/myErrorHandler');
+const myErrorHandler = require('./middlewares/myErrorHandler');
 const routes = require('./routes');
 
 // logging setup
