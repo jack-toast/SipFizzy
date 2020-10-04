@@ -13,7 +13,9 @@ routes.get('/', (req, res) => {
 });
 
 routes.use('/drinks', drinks);
-routes.use('/users', users);
 routes.use('/reviews', reviews);
+// routes.use('/users', users);
+
+routes.use('/', users);
 
 module.exports = routes;
