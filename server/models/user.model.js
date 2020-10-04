@@ -47,12 +47,6 @@ const UserSchema = new Schema(
   },
   {
     timestamps: true,
-    toJSON: {
-      visibleFields: 'username reviews isAdmin image bio',
-    },
-    toObject: {
-      visibleFields: 'username reviews isAdmin image bio',
-    },
   }
 );
 

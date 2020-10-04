@@ -25,6 +25,13 @@ module.exports = ash(async (req, res) => {
   res.status(200).json({
     success: true,
     message: 'user created successfully',
-    userId: user.id,
+    user: {
+      id: user.id,
+      email,
+      isAdmin,
+      bio,
+      image,
+      username,
+    },
   });
 });
