@@ -1,8 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 
 const { Schema, SchemaTypes } = mongoose;
 
-const drinkSchema = new Schema(
+const DrinkSchema = new Schema(
   {
     name: { type: String, required: true },
     ratings: {
@@ -28,4 +29,10 @@ const drinkSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Drink', drinkSchema);
+DrinkSchema.virtual('id').get(function idVirtual() {
+  return this._id.toHexString();
+});
+
+DrinkSchema.set('toJSON', { virtuals: true });
+
+module.exports = mongoose.model('Drink', DrinkSchema);

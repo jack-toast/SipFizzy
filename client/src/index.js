@@ -4,8 +4,11 @@ import './index.css';
 import WebFont from 'webfontloader';
 import { StylesProvider } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+// import { SnackbarProvider } from 'notistack';
 import App from './Components/AppRoot';
 import * as serviceWorker from './serviceWorker';
+import store from './Redux/store';
 
 WebFont.load({
   google: {
@@ -18,9 +21,13 @@ document.title = 'Fizzy Finder';
 ReactDOM.render(
   <React.StrictMode>
     <StylesProvider injectFirst>
-      <Router>
-        <App />
-      </Router>
+      <Provider store={store}>
+        <Router>
+          {/* <SnackbarProvider maxSnack={3} preventDuplicate dense> */}
+          <App />
+          {/* </SnackbarProvider> */}
+        </Router>
+      </Provider>
     </StylesProvider>
   </React.StrictMode>,
   document.getElementById('root')
