@@ -5,6 +5,9 @@ const getUsers = require('./getUsers');
 const getUser = require('./getUser');
 const deleteUser = require('./deleteUser');
 const syncUserReviews = require('./syncUserReviews');
+const loginUser = require('./loginUser');
+const getAuthedUser = require('./getAuthedUser');
+const auth = require('../../middlewares/auth');
 
 // Look to github API for reference
 // https://docs.github.com/en/free-pro-team@latest/rest/reference/users
@@ -14,8 +17,8 @@ const users = express.Router();
 
 // Auth actions
 users.post('/signup', createUser);
-// users.post('/login', userLogin);
-// users.get('/user', getAuthedUser);
+users.post('/login', loginUser);
+users.get('/user', auth, getAuthedUser);
 // users.patch('/user', updateAuthedUser);
 // users.ost
 

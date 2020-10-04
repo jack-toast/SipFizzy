@@ -22,16 +22,22 @@ module.exports = ash(async (req, res) => {
   const user = await newUser.save();
   if (!user) throw createHttpError(500, 'failed to save new user. sorry');
 
-  res.status(200).json({
-    success: true,
-    message: 'user created successfully',
-    user: {
-      id: user.id,
-      email,
-      isAdmin,
-      bio,
-      image,
-      username,
-    },
-  });
+  const token = user.generateAuthToken();
+  console.log('token');
+
+  res
+    .header('x-auth-token', token)
+    .status(200)
+    .json({
+      success: true,
+      message: 'user created successfully',
+      user: {
+        id: user.id,
+        email,
+        isAdmin,
+        bio,
+        image,
+        username,
+      },
+    });
 });

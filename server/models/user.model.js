@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const jwt = require('jsonwebtoken');
@@ -57,10 +58,9 @@ const UserSchema = new Schema(
 // how to generate JWT_PRIVATE_KEY
 // crypto.randomBytes(64).toString('hex'))
 
-UserSchema.methods.generateAuthToken = () => {
+UserSchema.methods.generateAuthToken = function generateAuthToken() {
   return jwt.sign(
-    // eslint-disable-next-line no-underscore-dangle
-    { _id: this._id, isAdmin: this.isAdmin },
+    { id: this._id, isAdmin: this.isAdmin },
     process.env.JWT_PRIVATE_KEY
   );
 };
