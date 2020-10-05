@@ -3,7 +3,7 @@
  */
 
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { pink, cyan, amber, lime } from '@material-ui/core/colors';
+import { pink, cyan, amber, blue } from '@material-ui/core/colors';
 
 const baseTheme = {
   typography: {
@@ -17,7 +17,7 @@ export const MUI_LIGHT_THEME = responsiveFontSizes(
     palette: {
       ...baseTheme.palette,
       primary: pink,
-      secondary: lime,
+      secondary: blue,
       type: 'light',
       // background: {
       //   default: '#f4f4f4',

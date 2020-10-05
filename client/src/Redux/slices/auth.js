@@ -1,58 +1,46 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getDrinks } from '../../APIs/drinksAPI';
+import { getCurrentUserAPI } from '../../APIs/authAPI';
 
-export const fetchDrinks = createAsyncThunk(
-  'drinks/getDrinks',
+export const fetchCurrentUser = createAsyncThunk(
+  'users/getCurrentUser',
   async (_, { getState, requestId }) => {
-    const { currentRequestId, loading } = getState().drinks;
+    const { currentRequestId, loading } = getState().auth;
     if (loading !== 'pending' || requestId !== currentRequestId) {
-      return [];
+      return null;
     }
 
-    const response = await getDrinks();
-    return response.drinks;
+    const response = await getCurrentUserAPI();
+    return response.user;
   }
 );
 
-const drinksSlice = createSlice({
-  name: 'drinks',
+const authSlice = createSlice({
+  name: 'auth',
   initialState: {
-    drinks: {},
+    currentUser: null,
     loading: 'idle',
-    drinkOrder: [],
+    authToken: undefined,
     currentRequestId: undefined,
     error: null,
   },
-  reducers: {
-    addDrink: {
-      reducer: (state, { payload }) => {
-        state.drinks[payload.id] = payload;
-      },
-    },
-  },
-
+  reducers: {},
   extraReducers: {
-    [fetchDrinks.pending]: (state, action) => {
+    [fetchCurrentUser.pending]: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending';
         state.currentRequestId = action.meta.requestId;
       }
     },
-    [fetchDrinks.fulfilled]: (state, action) => {
+    [fetchCurrentUser.fulfilled]: (state, action) => {
       const { requestId } = action.meta;
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle';
-        const newDrinkIds = [];
-        action.payload.forEach((drink) => {
-          state.drinks[drink.id] = drink;
-          newDrinkIds.push(drink.id);
-        });
-        state.drinkOrder = newDrinkIds;
+        state.currentUser = action.payload;
         state.currentRequestId = undefined;
       }
     },
-    [fetchDrinks.rejected]: (state, action) => {
+    [fetchCurrentUser.rejected]: (state, action) => {
       const { requestId } = action.meta;
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle';
@@ -63,6 +51,4 @@ const drinksSlice = createSlice({
   },
 });
 
-export const { addDrink } = drinksSlice.actions;
-
-export default drinksSlice.reducer;
+export default authSlice.reducer;

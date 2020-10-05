@@ -2,6 +2,7 @@ const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
 const User = require('../../models/user.model');
 
+// matches '/login'
 module.exports = ash(async (req, res) => {
   const { body } = req;
 

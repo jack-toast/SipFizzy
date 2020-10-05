@@ -1,24 +1,29 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { BubbleChartOutlined } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
+import { Face } from '@material-ui/icons';
 import styles from './styles.module.scss';
 
 const AppToolbar = () => {
   return (
-    <AppBar position="fixed" color="primary">
+    <AppBar position="fixed" color="transparent" elevation={1}>
       <Toolbar>
         <NavLink to="/" className={styles.NavLink}>
-          <BubbleChartOutlined />
-          <Typography variant="h5">Fizzy Finder</Typography>
-          <BubbleChartOutlined />
+          <Typography variant="h5">Sip Fizzy</Typography>
         </NavLink>
         <NavLink
-          to="/review"
+          to="/drinks"
           className={clsx(styles.NavLink, styles.SecondaryLink)}
         >
-          <Typography variant="h6">Reviews</Typography>
+          <Typography variant="h6">Drinks</Typography>
+        </NavLink>
+        <NavLink
+          to="/account"
+          className={styles.NavLink}
+          style={{ marginLeft: 'auto' }}
+        >
+          <Face color="inherit" />
         </NavLink>
       </Toolbar>
     </AppBar>

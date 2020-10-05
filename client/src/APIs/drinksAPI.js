@@ -1,11 +1,10 @@
-import { has } from 'lodash';
-
 const { default: ky } = require('ky');
 
-const baseURL = 'http://localhost:42069';
+const baseURL = process.env.REACT_APP_API_URL;
 
 // eslint-disable-next-line no-unused-vars
-const getDrinks = async (options = {}) => {
+const getDrinks = async () => {
+  console.log('process.env', process.env);
   const res = await ky(`${baseURL}/drinks`).json();
   return res;
 };

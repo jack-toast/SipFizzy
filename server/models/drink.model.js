@@ -25,6 +25,7 @@ const DrinkSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: 'User',
     },
+    image: String,
   },
   { timestamps: true }
 );

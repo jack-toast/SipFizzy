@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
 import { Switch, Route } from 'react-router-dom';
-import { MUI_LIGHT_THEME, MUI_DARK_THEME } from '../../muiThemes';
+import { useDispatch } from 'react-redux';
+import { MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import HomeView from '../../Views/HomeView';
-import ReviewView from '../../Views/ReviewView';
+import DrinksView from '../../Views/DrinksView';
+import Account from '../../Views/Account';
+import { fetchCurrentUser } from '../../Redux/slices/auth';
 
 const useStyles = makeStyles((theme) => ({
   // '@global': {
@@ -29,6 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 const AppRoot = () => {
   const muiClasses = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (async () => {
+      const authCheckResponse = await dispatch(fetchCurrentUser());
+      console.log('authCheckResponse', authCheckResponse);
+    })();
+    return () => {};
+  }, []);
+
   return (
     <MuiThemeProvider theme={MUI_LIGHT_THEME}>
       <CssBaseline />
@@ -36,8 +48,11 @@ const AppRoot = () => {
       <div>
         <div className={muiClasses.toolbar} />
         <Switch>
-          <Route path="/review">
-            <ReviewView />
+          <Route path="/drinks">
+            <DrinksView />
+          </Route>
+          <Route path="/account">
+            <Account />
           </Route>
           <Route path="/">
             <HomeView />

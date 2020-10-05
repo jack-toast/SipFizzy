@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
 import drinks from './slices/drinks';
+import auth from './slices/auth';
 
 const reducer = combineReducers({
   drinks,
+  auth,
 });
 
 const store = configureStore({
