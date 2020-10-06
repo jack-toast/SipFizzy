@@ -1,7 +1,20 @@
 .Root {
-  padding: 1rem;
+  padding: 0.8rem;
   display: flex;
+  flex-direction: column;
   margin-top: 0.5rem;
+}
+
+.Summary {
+  display: flex;
+  align-items: center;
+}
+
+.DescriptionContainer {
+  margin-left: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .Subtitle {

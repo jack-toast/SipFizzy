@@ -14,7 +14,7 @@ const possibleSubtitles = [
 
 const AccountDetails = () => {
   const {
-    currentUser: { reviews, username, bio = '' },
+    currentUser: { reviews, username },
   } = useSelector((state) => state.auth);
 
   const subtitle = useMemo(() => {

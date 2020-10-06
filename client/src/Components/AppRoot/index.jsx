@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
-import { Switch, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
-import HomeView from '../../Views/HomeView';
-import DrinksView from '../../Views/DrinksView';
-import Account from '../../Views/Account';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
+import RootSwitch from './RootSwitch';
 
 const useStyles = makeStyles((theme) => ({
   // '@global': {
@@ -38,7 +35,7 @@ const AppRoot = () => {
   useEffect(() => {
     (async () => dispatch(fetchCurrentUser()))();
     return () => {};
-  }, []);
+  }, [dispatch]);
 
   return (
     <MuiThemeProvider theme={MUI_LIGHT_THEME}>
@@ -46,17 +43,7 @@ const AppRoot = () => {
       <AppToolbar />
       <div>
         <div className={muiClasses.toolbar} />
-        <Switch>
-          <Route path="/drinks">
-            <DrinksView />
-          </Route>
-          <Route path="/account">
-            <Account />
-          </Route>
-          <Route path="/">
-            <HomeView />
-          </Route>
-        </Switch>
+        <RootSwitch />
       </div>
     </MuiThemeProvider>
   );

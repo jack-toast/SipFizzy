@@ -1,4 +1,4 @@
-import { CircularProgress, Input, Typography } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
 import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ const Account = () => {
     };
     requestCurrentUser();
     return () => {};
-  }, []);
+  }, [dispatch]);
 
   if ((loading !== 'idle' && !currentUser) || isEmpty(currentUser)) {
     return (
