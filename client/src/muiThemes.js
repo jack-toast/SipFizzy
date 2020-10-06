@@ -19,9 +19,10 @@ export const MUI_LIGHT_THEME = responsiveFontSizes(
       primary: pink,
       secondary: blue,
       type: 'light',
-      // background: {
-      //   default: '#f4f4f4',
-      // },
+      background: {
+        paper: '#fff',
+        default: '#f8f8f8',
+      },
     },
   })
 );

@@ -30,14 +30,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+console.log('MUI_LIGHT_THEME', MUI_LIGHT_THEME);
+
 const AppRoot = () => {
   const muiClasses = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-    (async () => {
-      const authCheckResponse = await dispatch(fetchCurrentUser());
-      console.log('authCheckResponse', authCheckResponse);
-    })();
+    (async () => dispatch(fetchCurrentUser()))();
     return () => {};
   }, []);
 

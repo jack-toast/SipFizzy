@@ -22,12 +22,20 @@ const drinksSlice = createSlice({
     loading: 'idle',
     drinkOrder: [],
     currentRequestId: undefined,
+    activeDrinkId: null,
+    modalOpen: false,
     error: null,
   },
   reducers: {
     addDrink: {
       reducer: (state, { payload }) => {
         state.drinks[payload.id] = payload;
+      },
+    },
+    setActiveDrink: {
+      reducer: (state, { payload }) => {
+        state.activeDrinkId = payload;
+        state.modalOpen = true;
       },
     },
   },
@@ -63,6 +71,6 @@ const drinksSlice = createSlice({
   },
 });
 
-export const { addDrink } = drinksSlice.actions;
+export const { addDrink, setActiveDrink } = drinksSlice.actions;
 
 export default drinksSlice.reducer;

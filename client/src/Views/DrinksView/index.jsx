@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 
-import { Button, Container, LinearProgress, Paper } from '@material-ui/core';
+import { Container, LinearProgress } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import clsx from 'clsx';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { fetchDrinks } from '../../Redux/slices/drinks';
 import styles from './styles.module.scss';
+import DrinkRow from './DrinkRow';
 
 const DrinksView = () => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
-  const { loading, drinks, drinkOrder } = useSelector((state) => state.drinks);
+  const match = useRouteMatch();
+  const { loading, drinkOrder } = useSelector((state) => state.drinks);
 
   const requestNewDrinks = async () => {
     try {
@@ -45,16 +48,16 @@ const DrinksView = () => {
       >
         <LinearProgress />
       </div>
-      <Container maxWidth="md">
-        <Button onClick={requestNewDrinks}>fetch drinks</Button>
-        <div>
+      <Switch>
+        <Route path={`${match.path}/:drinkId`}>
+          <div>show details for drink</div>
+        </Route>
+        <Container maxWidth="md">
           {drinkOrder.map((drinkId) => {
-            const drink = drinks[`${drinkId}`];
-            // console.log('drink', drink);
-            return <Paper key={`drinks-row-${drinkId}`}>{drink.name}</Paper>;
+            return <DrinkRow key={`drinks-row-${drinkId}`} drinkId={drinkId} />;
           })}
-        </div>
-      </Container>
+        </Container>
+      </Switch>
     </>
   );
 };

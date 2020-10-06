@@ -23,7 +23,7 @@ const Account = () => {
     return () => {};
   }, []);
 
-  if (loading !== 'idle') {
+  if ((loading !== 'idle' && !currentUser) || isEmpty(currentUser)) {
     return (
       <div
         style={{

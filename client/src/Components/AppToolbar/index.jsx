@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 const AppToolbar = () => {
   return (
-    <AppBar position="fixed" color="transparent" elevation={1}>
+    <AppBar position="fixed" color="default" elevation={1}>
       <Toolbar>
         <NavLink to="/" className={styles.NavLink}>
           <Typography variant="h5">Sip Fizzy</Typography>
