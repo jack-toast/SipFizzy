@@ -1,13 +1,14 @@
-import { Input } from '@material-ui/core';
-import { get } from 'lodash';
+import { CircularProgress, Input, Typography } from '@material-ui/core';
+import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
+import AccountDetails from './AccountDetails';
 import LoginForm from './LoginForm/index';
 
 const Account = () => {
   const dispatch = useDispatch();
-  const { currentUser, error, loading } = useSelector((state) => state.auth);
+  const { currentUser, loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const requestCurrentUser = async () => {
@@ -22,13 +23,27 @@ const Account = () => {
     return () => {};
   }, []);
 
-  return (
-    <div>
-      <div>{`loading: ${loading}`}</div>
-      <div>{`error.message: ${error?.message}`}</div>
-      <LoginForm />
-    </div>
-  );
+  if (loading !== 'idle') {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <CircularProgress />
+        <Typography>loading...</Typography>
+      </div>
+    );
+  }
+
+  if (!currentUser || isEmpty(currentUser)) {
+    return <LoginForm />;
+  }
+
+  return <AccountDetails />;
 };
 
 export default Account;

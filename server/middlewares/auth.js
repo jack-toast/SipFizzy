@@ -2,11 +2,11 @@ const createHttpError = require('http-errors');
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const token =
-    req.headers['x-access-token'] ||
-    req.headers['x-auth-token'] ||
-    req.headers.authorization;
-  if (!token) throw createHttpError(401, 'No token provided.');
+  const authHeader = req.headers.authorization;
+  if (!authHeader) throw createHttpError(401, 'No token provided.');
+
+  // We only accept the "Bearer XXX.YYY.ZZZ" form around here
+  const token = authHeader.split(' ')[1];
 
   try {
     const decodedUser = jwt.verify(token, process.env.JWT_PRIVATE_KEY);

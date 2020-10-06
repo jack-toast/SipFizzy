@@ -8,6 +8,7 @@ module.exports = ash(async (req, res) => {
 
   if (!body) throw createHttpError(400, 'no credentials given');
 
+  // JY TODO - allow login with email or username
   if (!body.email) throw createHttpError(400, 'email required');
   if (!body.password) throw createHttpError(400, 'password required');
 
@@ -26,6 +27,7 @@ module.exports = ash(async (req, res) => {
     .header('x-auth-token', token)
     .status(200)
     .json({
+      accessToken: token,
       success: true,
       message: 'User logged in.',
       user: {

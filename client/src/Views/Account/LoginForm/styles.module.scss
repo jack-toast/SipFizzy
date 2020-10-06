@@ -16,7 +16,9 @@
 
 .Input {
   margin-top: 1rem;
+  width: 100%;
 }
+// k5YPS$45J@VsPExqriYwHq6
 
 .Checkbox {
   align-self: flex-start;
@@ -36,4 +38,10 @@
   :not(:first-child) {
     margin-left: 0.5rem;
   }
+}
+
+.CheckExistingContainer {
+  align-self: center;
+  display: flex;
+  align-items: center;
 }

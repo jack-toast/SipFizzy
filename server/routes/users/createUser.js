@@ -1,5 +1,6 @@
 const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
+const validatePassword = require('../../helpers/validatePassword');
 const User = require('../../models/user.model');
 
 module.exports = ash(async (req, res) => {
@@ -17,10 +18,29 @@ module.exports = ash(async (req, res) => {
   newUser.isAdmin = isAdmin;
   newUser.bio = bio;
   newUser.image = image;
+
+  const passwordValidationResults = validatePassword({
+    password,
+    giveReasons: true,
+  });
+
+  console.log('passwordValidationResults', passwordValidationResults);
+
+  if (passwordValidationResults.length) {
+    throw createHttpError(
+      400,
+      `Invalid Password: ${passwordValidationResults.join(', ')}`
+    );
+  }
+
   newUser.setPassword(password);
 
   const user = await newUser.save();
-  if (!user) throw createHttpError(500, 'failed to save new user. sorry');
+  if (!user)
+    throw createHttpError(
+      500,
+      'Sign up failed. Please try again and/or yell at Jack'
+    );
 
   const token = user.generateAuthToken();
   console.log('token');
