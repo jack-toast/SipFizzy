@@ -22,11 +22,7 @@ const DrinkRow = ({ drinkId }) => {
   const [hoverRef, isHovered] = useHover();
   const [showDeets, setShowDeets] = useState(false);
 
-  const {
-    name,
-    ratings: { overall },
-    numRatings,
-  } = drink;
+  const { name, score, numRatings } = drink;
 
   // add an on-exit handler to the drink modal
 
@@ -65,9 +61,9 @@ const DrinkRow = ({ drinkId }) => {
                 <GrTest />
               </div>
             )}
-            {overall && (
+            {score && (
               <Typography className={styles.OverallScore}>
-                {`${(overall * 6.9).toFixed(1)}/6.9`}
+                {`${score.toFixed(0)}/69`}
               </Typography>
             )}
             <Tooltip title="Review Drink">

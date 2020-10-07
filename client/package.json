@@ -11,6 +11,8 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "clsx": "^1.1.1",
+    "formik": "^2.1.7",
+    "formik-material-ui": "^3.0.0",
     "keymirror": "^0.1.1",
     "ky": "^0.23.0",
     "lodash": "^4.17.19",
@@ -28,7 +30,8 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "reselect": "^4.0.0",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

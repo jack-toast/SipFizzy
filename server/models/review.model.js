@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const qualityDef = require('./qualityDef');
 
 const { Schema, SchemaTypes } = mongoose;
 
@@ -21,12 +22,24 @@ const reviewSchema = new Schema(
       required: true,
       index: true,
     },
-    ratings: {
-      bubbles: Number,
-      sweetness: Number,
-      flavorIntensity: Number,
-      flavorAccuracy: Number,
-      overall: Number,
+    qualities: {
+      flavorAccuracy: qualityDef,
+      flavorIntensity: qualityDef,
+      bubbles: qualityDef,
+      body: qualityDef,
+      smell: qualityDef,
+      sweetness: qualityDef,
+      sour: qualityDef,
+      salty: qualityDef,
+      umami: qualityDef,
+      bitter: qualityDef,
+    },
+    score: {
+      type: Number,
+      required: true,
+      default: 69,
+      min: 0,
+      max: 100,
     },
     meta: {
       upvotes: Number,

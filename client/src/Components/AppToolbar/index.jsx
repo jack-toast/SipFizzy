@@ -2,8 +2,9 @@ import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { Face } from '@material-ui/icons';
+import { Face, LocalDrinkOutlined } from '@material-ui/icons';
 import styles from './styles.module.scss';
+import AccessControl from '../AccessControl';
 
 const AppToolbar = () => {
   return (
@@ -18,13 +19,16 @@ const AppToolbar = () => {
         >
           <Typography variant="h6">Drinks</Typography>
         </NavLink>
-        <NavLink
-          to="/account"
-          className={styles.NavLink}
-          style={{ marginLeft: 'auto' }}
-        >
-          <Face color="inherit" />
-        </NavLink>
+        <div className={styles.RightItems}>
+          <AccessControl waitForError>
+            <NavLink to="/createdrink" className={styles.NavLink}>
+              <LocalDrinkOutlined />
+            </NavLink>
+          </AccessControl>
+          <NavLink to="/account" className={styles.NavLink}>
+            <Face color="inherit" />
+          </NavLink>
+        </div>
       </Toolbar>
     </AppBar>
   );

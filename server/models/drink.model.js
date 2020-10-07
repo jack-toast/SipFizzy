@@ -1,21 +1,33 @@
 /* eslint-disable no-underscore-dangle */
 const mongoose = require('mongoose');
+const qualityDef = require('./qualityDef');
 
 const { Schema, SchemaTypes } = mongoose;
 
 const DrinkSchema = new Schema(
   {
     name: { type: String, required: true },
-    ratings: {
-      bubbles: Number,
-      sweetness: Number,
-      flavorIntensity: Number,
-      flavorAccuracy: Number,
-      overall: Number,
+    qualities: {
+      flavorAccuracy: qualityDef,
+      flavorIntensity: qualityDef,
+      bubbles: qualityDef,
+      body: qualityDef,
+      smell: qualityDef,
+      sweetness: qualityDef,
+      sour: qualityDef,
+      salty: qualityDef,
+      umami: qualityDef,
+      bitter: qualityDef,
+    },
+    score: {
+      type: Number,
+      default: 69,
+      min: 0,
+      max: 100,
     },
     numRatings: Number,
-    abv: Number,
-    calories: Number,
+    abv: { type: Number, min: 0, max: 100 },
+    calories: { type: Number, min: 0, max: 1000 },
     flavors: [String],
     createdBy: {
       type: SchemaTypes.ObjectId,

@@ -1,35 +1,7 @@
-import { isString } from 'lodash';
-
-const { default: ky } = require('ky');
+import kyReceiveKey from './kyReceiveKey';
+import kyUseKey from './kyUseKey';
 
 const baseURL = process.env.REACT_APP_API_URL;
-
-const AUTH_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
-
-const kyUseKey = ky.extend({
-  hooks: {
-    beforeRequest: [
-      (request) => {
-        const token = localStorage.getItem(AUTH_TOKEN_KEY) || '';
-        if (!!token && isString(token))
-          request.headers.set('Authorization', `Bearer ${token}`);
-      },
-    ],
-  },
-});
-
-const kyReceiveKey = ky.extend({
-  hooks: {
-    afterResponse: [
-      async (request, options, response) => {
-        const { accessToken } = await response.json();
-        if (accessToken) {
-          localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
-        }
-      },
-    ],
-  },
-});
 
 export const getCurrentUserAPI = async () => {
   const res = await kyUseKey(`${baseURL}/user`);

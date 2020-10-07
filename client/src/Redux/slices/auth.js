@@ -18,7 +18,7 @@ export const fetchCurrentUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    currentUser: null,
+    currentUser: {},
     loading: 'idle',
     authToken: undefined,
     currentRequestId: undefined,
