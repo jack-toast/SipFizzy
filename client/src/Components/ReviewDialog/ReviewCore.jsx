@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import {
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from '@material-ui/core';
 import fakeDrink from './fakeDrink';
 
 import styles from './styles.module.scss';
+import ReviewForm from '../ReviewForm';
 
 const ReviewCore = ({ drinkId, open }) => {
   const drinkFromRedux = useSelector((state) => state.drinks.drinks[drinkId]);
-  const [safeDrink, setSafeDrink] = useState({ ...fakeDrink });
+  const [drink, setDrink] = useState({ ...fakeDrink });
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   useEffect(() => {
     if (!open) return undefined;
     if (!drinkFromRedux) return undefined;
-    setSafeDrink({ ...drinkFromRedux });
+    setDrink({ ...drinkFromRedux });
     return () => {};
   }, [open, drinkFromRedux]);
 
   useEffect(() => {
-    console.log('safeDrink', safeDrink);
+    console.log('safeDrink', drink);
     return () => {};
-  }, [safeDrink]);
+  }, [drink]);
 
   /**
    * JY TODO
@@ -39,26 +45,28 @@ const ReviewCore = ({ drinkId, open }) => {
    * - Maybe a simple bar chart?
    */
 
+  if (!drink) {
+    return (
+      <>
+        <DialogTitle>Sorry, someone (jack) messed up</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Someone (Jack), fucked up the API, so that drink couldn&apos;t be
+            loaded. Don&apos;t worry, he will be drawn and quartered for this...
+          </DialogContentText>
+        </DialogContent>
+      </>
+    );
+  }
+
   return (
     <>
-      <DialogTitle>{`Review - ${safeDrink.name}`}</DialogTitle>
+      <DialogTitle>{`Review - ${drink.name}`}</DialogTitle>
       <DialogContent className={styles.DialogContent}>
-        <TextField
-          label="One-liner"
-          value={title}
-          required
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <TextField
-          label="Gimme them deets"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          multiline
-        />
+        <ReviewForm onSubmit={(...vals) => console.log('submit vals', vals)} />
       </DialogContent>
       <div>
-        <pre>{JSON.stringify(safeDrink, null, 2)}</pre>
+        <pre>{JSON.stringify(drink, null, 2)}</pre>
       </div>
     </>
   );

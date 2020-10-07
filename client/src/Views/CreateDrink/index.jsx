@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Paper, Typography } from '@material-ui/core';
-import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
+import { Field, FieldArray, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
 import * as Yup from 'yup';
 import styles from './styles.module.scss';
@@ -18,7 +18,7 @@ const CreateDrinkSchema = Yup.object().shape({
   calories: Yup.number()
     .min(0, 'Doubt it')
     .max(1000, "That's a big can")
-    .required('Bro, we gotta know'),
+    .required('Yup, I need this one too'),
   flavors: Yup.array()
     .of(
       Yup.string()
@@ -42,15 +42,15 @@ const CreateDrink = () => {
   };
   return (
     <div className={styles.Root}>
-      <Paper className={styles.Paper}>
+      <Paper className={styles.Paper} elevation={3}>
         <Typography align="center" variant="h6" gutterBottom>
           Add a Drink
         </Typography>
         <Formik
           initialValues={{
             name: '',
-            abv: -1,
-            calories: -1,
+            abv: '',
+            calories: '',
             flavors: [''],
           }}
           validationSchema={CreateDrinkSchema}
@@ -64,28 +64,34 @@ const CreateDrink = () => {
                   name="name"
                   label="Drink Name"
                   variant="outlined"
+                  helperText="Brand - Name of Drink"
                 />
-                <ErrorMessage name="name" component="div" />
                 <Field
                   component={TextField}
                   type="number"
                   name="abv"
                   label="ABV"
                   variant="outlined"
+                  helperText="0% to 100%"
                 />
-                <ErrorMessage name="abv" component="div" />
                 <Field
                   component={TextField}
                   type="number"
                   name="calories"
                   label="Calories"
                   variant="outlined"
+                  helperText="0 to 1000 (large can?)"
                 />
-                <ErrorMessage name="calories" component="div" />
                 <FieldArray
                   name="flavors"
                   render={(arrayHelpers) => (
                     <>
+                      <Typography
+                        className={styles.SectionHeader}
+                        variant="overline"
+                      >
+                        Flavors
+                      </Typography>
                       {values.flavors.map((flavor, index) => (
                         <div
                           // eslint-disable-next-line react/no-array-index-key
@@ -95,15 +101,18 @@ const CreateDrink = () => {
                           <Field
                             name={`flavors.${index}`}
                             component={TextField}
+                            variant="outlined"
                             label={`Flavor ${index + 1}`}
                           />
-                          <Button
-                            onClick={() => {
-                              arrayHelpers.remove(index);
-                            }}
-                          >
-                            remove
-                          </Button>
+                          {index !== 0 && (
+                            <Button
+                              onClick={() => {
+                                arrayHelpers.remove(index);
+                              }}
+                            >
+                              remove
+                            </Button>
+                          )}
                         </div>
                       ))}
                       <Button

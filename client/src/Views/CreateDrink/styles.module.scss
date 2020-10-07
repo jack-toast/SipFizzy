@@ -17,9 +17,13 @@
   display: flex;
   flex-direction: column;
 
-  > div {
+  > * {
     margin-top: 0.5rem;
   }
+}
+
+.SectionHeader {
+  margin-top: 1rem;
 }
 
 .FlavorRow {
