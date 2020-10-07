@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
 } from '@material-ui/core';
 import fakeDrink from './fakeDrink';
 
@@ -15,8 +14,6 @@ import ReviewForm from '../ReviewForm';
 const ReviewCore = ({ drinkId, open }) => {
   const drinkFromRedux = useSelector((state) => state.drinks.drinks[drinkId]);
   const [drink, setDrink] = useState({ ...fakeDrink });
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
   useEffect(() => {
     if (!open) return undefined;
@@ -45,6 +42,11 @@ const ReviewCore = ({ drinkId, open }) => {
    * - Maybe a simple bar chart?
    */
 
+  const handleSubmitReview = async (vals, other) => {
+    console.log('vals', vals);
+    console.log('other', other);
+  };
+
   if (!drink) {
     return (
       <>
@@ -61,13 +63,10 @@ const ReviewCore = ({ drinkId, open }) => {
 
   return (
     <>
-      <DialogTitle>{`Review - ${drink.name}`}</DialogTitle>
+      <DialogTitle>{`Sippin - ${drink.name}`}</DialogTitle>
       <DialogContent className={styles.DialogContent}>
-        <ReviewForm onSubmit={(...vals) => console.log('submit vals', vals)} />
+        <ReviewForm handleSubmitForm={handleSubmitReview} />
       </DialogContent>
-      <div>
-        <pre>{JSON.stringify(drink, null, 2)}</pre>
-      </div>
     </>
   );
 };

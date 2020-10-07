@@ -8,8 +8,10 @@ const reviewSchema = new Schema(
     title: {
       type: String,
       required: true,
+      min: 2,
+      max: 100,
     },
-    description: { type: String },
+    description: { type: String, required: true, min: 2, max: 1000 },
     drinkId: {
       type: SchemaTypes.ObjectId,
       ref: 'Drink',
@@ -30,8 +32,8 @@ const reviewSchema = new Schema(
       smell: qualityDef,
       sweetness: qualityDef,
       sour: qualityDef,
-      salty: qualityDef,
-      umami: qualityDef,
+      // salty: qualityDef,
+      // umami: qualityDef,
       bitter: qualityDef,
     },
     score: {
