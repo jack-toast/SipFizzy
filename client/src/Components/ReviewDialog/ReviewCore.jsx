@@ -10,6 +10,7 @@ import fakeDrink from './fakeDrink';
 
 import styles from './styles.module.scss';
 import ReviewForm from '../ReviewForm';
+import { createReviewAPI } from '../../APIs/reviewsAPI';
 
 const ReviewCore = ({ drinkId, open }) => {
   const drinkFromRedux = useSelector((state) => state.drinks.drinks[drinkId]);
@@ -45,6 +46,12 @@ const ReviewCore = ({ drinkId, open }) => {
   const handleSubmitReview = async (vals, other) => {
     console.log('vals', vals);
     console.log('other', other);
+    try {
+      const createReviewResponse = await createReviewAPI({ ...vals, drinkId });
+      console.log('createReviewResponse', createReviewResponse);
+    } catch (err) {
+      console.log('err', err);
+    }
   };
 
   if (!drink) {

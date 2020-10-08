@@ -18,9 +18,7 @@ const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
       {label && (
         <div className={styles.LabelRow}>
           <Typography variant="subtitle1">{label}</Typography>
-          <Typography variant="button">
-            {(internalValue * 10).toFixed(1)}
-          </Typography>
+          <Typography variant="button">{internalValue.toFixed(1)}</Typography>
         </div>
       )}
       <Slider
@@ -31,7 +29,7 @@ const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
         max={max}
         valueLabelDisplay="auto"
         step={step}
-        valueLabelFormat={(val) => (val * 10).toFixed(1)}
+        valueLabelFormat={(val) => val.toFixed(1)}
         onChange={(e, val) => setInternalValue(val)}
         onChangeCommitted={(e, val) => helpers.setValue(val)}
       />

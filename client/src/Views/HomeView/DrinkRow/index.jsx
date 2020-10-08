@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Button,
@@ -15,16 +15,25 @@ import { useHistory } from 'react-router-dom';
 import { LocalBar } from '@material-ui/icons';
 import styles from './styles.module.scss';
 import useHover from '../../../Hooks/useHover';
+import { fetchReviews } from '../../../Redux/slices/reviews';
+import DrinkReviews from '../../../Components/DrinkReviews';
 
 const DrinkRow = ({ drinkId }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const drink = useSelector((state) => state.drinks.drinks[drinkId]);
   const [hoverRef, isHovered] = useHover();
   const [showDeets, setShowDeets] = useState(false);
-
   const { name, score, numRatings } = drink;
 
-  // add an on-exit handler to the drink modal
+  useEffect(() => {
+    if (!showDeets) return undefined;
+    (async () => {
+      const resso = await dispatch(fetchReviews({ drinkId }));
+      console.log('resso', resso);
+    })();
+    return () => {};
+  }, [showDeets, JSON.stringify(drink?.reviews)]);
 
   const handleClickRow = () => {
     setShowDeets((c) => !c);
@@ -55,12 +64,10 @@ const DrinkRow = ({ drinkId }) => {
         <div className={styles.DescriptionContainer}>
           <Typography variant="h6">{name}</Typography>
           <div className={styles.Subtitle}>
-            {numRatings && (
-              <div className={styles.NumRatingsContainer}>
-                <Typography>{`${numRatings}`}</Typography>
-                <GrTest />
-              </div>
-            )}
+            <div className={styles.NumRatingsContainer}>
+              <Typography>{`${numRatings || 0}`}</Typography>
+              <GrTest />
+            </div>
             {score && (
               <Typography className={styles.OverallScore}>
                 {`${score.toFixed(0)}/69`}
@@ -78,8 +85,11 @@ const DrinkRow = ({ drinkId }) => {
           </div>
         </div>
       </div>
-      <Collapse in={showDeets}>
-        <pre>{JSON.stringify(drink, null, 2)}</pre>
+      <Collapse in={showDeets} mountOnEnter unmountOnExit>
+        <div className={styles.ExpandedContent}>
+          {/* render drink stats */}
+          <DrinkReviews drinkId={drinkId} />
+        </div>
       </Collapse>
     </Paper>
   );

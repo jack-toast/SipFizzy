@@ -3,7 +3,7 @@ const qualityDef = require('./qualityDef');
 
 const { Schema, SchemaTypes } = mongoose;
 
-const reviewSchema = new Schema(
+const ReviewSchema = new Schema(
   {
     title: {
       type: String,
@@ -32,8 +32,6 @@ const reviewSchema = new Schema(
       smell: qualityDef,
       sweetness: qualityDef,
       sour: qualityDef,
-      // salty: qualityDef,
-      // umami: qualityDef,
       bitter: qualityDef,
     },
     score: {
@@ -44,11 +42,14 @@ const reviewSchema = new Schema(
       max: 100,
     },
     meta: {
-      upvotes: Number,
-      downvotes: Number,
+      upvotes: { type: Number, default: 0 },
+      downvotes: { type: Number, default: 0 },
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Review', reviewSchema);
+ReviewSchema.set('toJSON', { virtuals: true });
+
+const Review = mongoose.model('Review', ReviewSchema);
+module.exports = Review;

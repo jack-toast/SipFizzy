@@ -1,12 +1,20 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 import drinks from './slices/drinks';
 import auth from './slices/auth';
+import reviews from './slices/reviews';
+
+// configure middleware
+const logger = createLogger({
+  duration: true,
+  collapsed: true,
+});
 
 const reducer = combineReducers({
   drinks,
   auth,
+  reviews,
 });
 
 const store = configureStore({

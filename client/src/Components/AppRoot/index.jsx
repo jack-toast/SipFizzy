@@ -5,6 +5,8 @@ import { MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
 import RootSwitch from './RootSwitch';
+import { fetchDrinks } from '../../Redux/slices/drinks';
+import ReviewDialog from '../ReviewDialog';
 
 const useStyles = makeStyles((theme) => ({
   // '@global': {
@@ -34,6 +36,7 @@ const AppRoot = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => dispatch(fetchCurrentUser()))();
+    (async () => dispatch(fetchDrinks()))();
     return () => {};
   }, [dispatch]);
 
@@ -45,6 +48,7 @@ const AppRoot = () => {
         <div className={muiClasses.toolbar} />
         <RootSwitch />
       </div>
+      <ReviewDialog />
     </MuiThemeProvider>
   );
 };

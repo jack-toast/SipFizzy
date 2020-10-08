@@ -9,7 +9,6 @@ export const fetchDrinks = createAsyncThunk(
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return [];
     }
-
     const response = await getDrinks();
     return response.drinks;
   }

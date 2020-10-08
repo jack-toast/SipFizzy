@@ -8,7 +8,6 @@ const ReviewDialog = () => {
   const history = useHistory();
   const match = useRouteMatch('/drinks/:drinkId');
   const drinkId = useMemo(() => {
-    console.log('match', match);
     return get(match, 'params.drinkId', '');
   }, [JSON.stringify(match)]);
 
@@ -21,7 +20,12 @@ const ReviewDialog = () => {
 
   const dialogOpen = !!drinkId;
   return (
-    <Dialog open={dialogOpen} maxWidth="lg" onClose={handleCloseDialog}>
+    <Dialog
+      open={dialogOpen}
+      maxWidth="sm"
+      fullWidth
+      onClose={handleCloseDialog}
+    >
       <ReviewCore drinkId={drinkId} open={dialogOpen} />
     </Dialog>
   );

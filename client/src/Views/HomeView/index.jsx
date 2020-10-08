@@ -1,8 +1,19 @@
+import { Container } from '@material-ui/core';
 import React from 'react';
-import styles from './styles.module.scss';
+import { useSelector } from 'react-redux';
+import FadeProgressBar from '../../Components/FadeProgressBar';
+import TopDrinks from './TopDrinks';
 
 const HomeView = () => {
-  return <div className={styles.Root} />;
+  const { loading } = useSelector((state) => state.drinks);
+  return (
+    <>
+      <FadeProgressBar active={loading !== 'idle'} />
+      <Container maxWidth="md">
+        <TopDrinks />
+      </Container>
+    </>
+  );
 };
 
 HomeView.propTypes = {};

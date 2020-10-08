@@ -1,6 +1,6 @@
 module.exports = {
   type: Number,
   min: 0,
-  max: 1,
-  default: 0.69,
+  max: 10,
+  default: 6.9,
 };

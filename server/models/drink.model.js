@@ -25,9 +25,9 @@ const DrinkSchema = new Schema(
       min: 0,
       max: 100,
     },
-    numRatings: Number,
-    abv: { type: Number, min: 0, max: 100 },
-    calories: { type: Number, min: 0, max: 1000 },
+    numRatings: { type: Number, default: 0, min: 0 },
+    abv: { type: Number, min: 0, max: 100, default: 5 },
+    calories: { type: Number, min: 0, max: 1000, default: 100 },
     flavors: [String],
     createdBy: {
       type: SchemaTypes.ObjectId,
@@ -37,15 +37,12 @@ const DrinkSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: 'User',
     },
-    image: String,
+    image: { type: String, default: '' },
   },
   { timestamps: true }
 );
 
-DrinkSchema.virtual('id').get(function idVirtual() {
-  return this._id.toHexString();
-});
-
 DrinkSchema.set('toJSON', { virtuals: true });
 
-module.exports = mongoose.model('Drink', DrinkSchema);
+const Drink = mongoose.model('Drink', DrinkSchema);
+module.exports = Drink;

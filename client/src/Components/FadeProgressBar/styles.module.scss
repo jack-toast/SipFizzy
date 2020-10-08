@@ -1,7 +1,7 @@
 .ProgressContainer {
   opacity: 0;
 
-  transition: ease 150ms opacity;
+  transition: ease 50ms opacity;
   &.show {
     opacity: 1;
   }
