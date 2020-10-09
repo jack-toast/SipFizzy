@@ -6,15 +6,16 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import fakeDrink from './fakeDrink';
 
+import { useSnackbar } from 'notistack';
 import styles from './styles.module.scss';
 import ReviewForm from '../ReviewForm';
 import { createReviewAPI } from '../../APIs/reviewsAPI';
 
-const ReviewCore = ({ drinkId, open }) => {
+const ReviewCore = ({ drinkId, open, onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const drinkFromRedux = useSelector((state) => state.drinks.drinks[drinkId]);
-  const [drink, setDrink] = useState({ ...fakeDrink });
+  const [drink, setDrink] = useState({});
 
   useEffect(() => {
     if (!open) return undefined;
@@ -22,11 +23,6 @@ const ReviewCore = ({ drinkId, open }) => {
     setDrink({ ...drinkFromRedux });
     return () => {};
   }, [open, drinkFromRedux]);
-
-  useEffect(() => {
-    console.log('safeDrink', drink);
-    return () => {};
-  }, [drink]);
 
   /**
    * JY TODO
@@ -44,13 +40,22 @@ const ReviewCore = ({ drinkId, open }) => {
    */
 
   const handleSubmitReview = async (vals, other) => {
-    console.log('vals', vals);
-    console.log('other', other);
     try {
-      const createReviewResponse = await createReviewAPI({ ...vals, drinkId });
-      console.log('createReviewResponse', createReviewResponse);
+      await createReviewAPI({ ...vals, drinkId });
+      enqueueSnackbar('Review Added', {
+        variant: 'success',
+        autoHideDuration: 1500,
+      });
+      onClose();
     } catch (err) {
-      console.log('err', err);
+      console.log('error encountered creating review', err);
+      console.log('vals + other', { vals, other });
+
+      enqueueSnackbar(err.message, {
+        autoHideDuration: 3000,
+        variant: 'error',
+      });
+      onClose();
     }
   };
 
@@ -60,7 +65,7 @@ const ReviewCore = ({ drinkId, open }) => {
         <DialogTitle>Sorry, someone (jack) messed up</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Someone (Jack), fucked up the API, so that drink couldn&apos;t be
+            Someone (Jack), screwed up the API, so that drink couldn&apos;t be
             loaded. Don&apos;t worry, he will be drawn and quartered for this...
           </DialogContentText>
         </DialogContent>
@@ -81,6 +86,7 @@ const ReviewCore = ({ drinkId, open }) => {
 ReviewCore.propTypes = {
   drinkId: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ReviewCore;

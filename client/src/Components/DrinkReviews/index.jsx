@@ -1,57 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { shallowEqual, useSelector } from 'react-redux';
-import { filter } from 'lodash';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { has } from 'lodash';
+import { makeSelectReviewsForDrink } from '../../Redux/selectors/reviewsSelectors';
+import ReviewRow from '../ReviewRow';
+import { fetchReviews } from '../../Redux/slices/reviews';
 
-const DrinkReviews = ({ drinkId, shouldFetch }) => {
-  const reviews = useSelector(
-    (state) => filter(state.reviews.reviews, (r) => r.drinkId === drinkId),
-    shallowEqual
-  );
-  const reviewsLoading = useSelector((state) => state.reviews.loading);
+const DrinkReviews = ({ drinkId }) => {
+  const dispatch = useDispatch();
+  const selectReviewsForDrink = useMemo(makeSelectReviewsForDrink, []);
+  const reviews = useSelector((state) => selectReviewsForDrink(state, drinkId));
+  const activeDrinkMap = useSelector((state) => state.reviews.activeDrinkMap);
   useEffect(() => {
-    console.log('reviews', reviews);
+    if (has(activeDrinkMap[drinkId])) return undefined;
+    dispatch(fetchReviews({ drinkId }));
     return () => {};
-  }, [reviews]);
-
-  const renderLoading = () => {
-    if (reviewsLoading === 'idle') return null;
-    return (
-      <div style={{ alignSelf: 'center' }}>
-        <CircularProgress />
-      </div>
-    );
-  };
-
-  if (!reviews || !reviews.length) {
-    return (
-      <>
-        {renderLoading()}
-        <Typography>Brb, lemme get those for ya</Typography>
-      </>
-    );
-  }
-
-  return reviews.map((r) => {
-    return (
-      <>
-        {renderLoading()}
-        <div>
-          <pre>{JSON.stringify(r, null, 2)}</pre>
-        </div>
-      </>
-    );
-  });
+  }, []);
+  return reviews.map((review) => <ReviewRow review={review} key={review.id} />);
 };
 
 DrinkReviews.propTypes = {
   drinkId: PropTypes.string.isRequired,
-  shouldFetch: PropTypes.bool,
-};
-
-DrinkReviews.defaultProps = {
-  shouldFetch: false,
 };
 
 export default DrinkReviews;

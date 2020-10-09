@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { get } from 'lodash';
 import { getReviews } from '../../APIs/reviewsAPI';
 
 export const fetchReviews = createAsyncThunk(
   'reviews/getReviews',
-  async (argsObj, { getState, requestId }) => {
-    // See reviewsAPI.js for argsObj info
-    const { currentRequestId, loading } = getState().reviews;
-    if (loading !== 'pending' || requestId !== currentRequestId) {
+  async ({ drinkId }, { getState, requestId }) => {
+    const { activeDrinkMap } = getState().reviews;
+    if (get(activeDrinkMap, drinkId) !== requestId) {
       return [];
     }
-    const response = await getReviews(argsObj);
+    const response = await getReviews({ drinkId });
     return response.reviews;
   }
 );
@@ -20,9 +20,7 @@ const reviewsSlice = createSlice({
   initialState: {
     reviews: {},
     loading: 'idle',
-    currentRequestId: undefined,
-    // activeReviewId: null,
-    // modalOpen: false,
+    activeDrinkMap: {},
     error: null,
   },
   reducers: {
@@ -31,38 +29,32 @@ const reviewsSlice = createSlice({
         state.reviews[payload.id] = payload;
       },
     },
-    // setActiveReview: {
-    //   reducer: (state, { payload }) => {
-    //     state.activeReviewId = payload;
-    //     state.modalOpen = true;
-    //   },
-    // },
   },
 
   extraReducers: {
     [fetchReviews.pending]: (state, action) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
-        state.currentRequestId = action.meta.requestId;
-      }
+      state.activeDrinkMap[action.meta.arg.drinkId] = action.meta.requestId;
+      state.loading = 'pending';
     },
     [fetchReviews.fulfilled]: (state, action) => {
-      const { requestId } = action.meta;
-      if (state.loading === 'pending' && state.currentRequestId === requestId) {
-        state.loading = 'idle';
-        action.payload.forEach((review) => {
-          state.reviews[review.id] = review;
-        });
-        state.currentRequestId = undefined;
-      }
+      action.payload.forEach((review) => {
+        state.reviews[review.id] = review;
+      });
+      const newActiveDrinkMap = { ...state.activeDrinkMap };
+      delete newActiveDrinkMap[action.meta.arg.drinkId];
+      state.activeDrinkMap = newActiveDrinkMap;
+      state.loading = Object.keys(newActiveDrinkMap).length
+        ? 'pending'
+        : 'idle';
     },
     [fetchReviews.rejected]: (state, action) => {
-      const { requestId } = action.meta;
-      if (state.loading === 'pending' && state.currentRequestId === requestId) {
-        state.loading = 'idle';
-        state.error = action.error;
-        state.currentRequestId = undefined;
-      }
+      state.error = action.error;
+      const newActiveDrinkMap = { ...state.activeDrinkMap };
+      delete newActiveDrinkMap[action.meta.arg.drinkId];
+      state.activeDrinkMap = newActiveDrinkMap;
+      state.loading = Object.keys(newActiveDrinkMap).length
+        ? 'pending'
+        : 'idle';
     },
   },
 });

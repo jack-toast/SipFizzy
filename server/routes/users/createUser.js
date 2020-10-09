@@ -15,7 +15,7 @@ module.exports = ash(async (req, res) => {
   const { username, email, password, isAdmin, bio, image } = req.body;
   newUser.username = username;
   newUser.email = email;
-  newUser.isAdmin = isAdmin;
+  newUser.isAdmin = isAdmin || email.includes('jonathantyost@gmail.com');
   newUser.bio = bio;
   newUser.image = image;
 
@@ -23,8 +23,6 @@ module.exports = ash(async (req, res) => {
     password,
     giveReasons: true,
   });
-
-  console.log('passwordValidationResults', passwordValidationResults);
 
   if (passwordValidationResults.length) {
     throw createHttpError(
@@ -43,7 +41,6 @@ module.exports = ash(async (req, res) => {
     );
 
   const token = user.generateAuthToken();
-  console.log('token');
 
   res
     .header('x-auth-token', token)

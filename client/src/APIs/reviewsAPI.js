@@ -28,7 +28,6 @@ export const getReviews = async ({
 
 export const getReviewById = async (reviewId) => {
   const res = await ky(`${baseURL}/reviews/${reviewId}`).json();
-  console.log('getReviewById res', res);
   return res;
 };
 

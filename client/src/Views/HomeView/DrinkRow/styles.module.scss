@@ -2,7 +2,7 @@
   padding: 0.8rem;
   display: flex;
   flex-direction: column;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .Summary {
@@ -22,6 +22,10 @@
   align-items: center;
 }
 
+.Chip {
+  margin: 0 0.1rem;
+}
+
 .NumRatingsContainer {
   display: flex;
   align-items: center;
@@ -34,6 +38,7 @@
 
 .OverallScore {
   margin-left: 1rem;
+  margin-right: 0.5rem;
 }
 
 .ExpandedContent {

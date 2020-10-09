@@ -30,7 +30,7 @@ const ReviewForm = ({ handleSubmitForm, className }) => {
       initialValues={{
         title: '',
         description: '',
-        score: 69,
+        score: 50,
         qualities: {
           flavorAccuracy: initScores[0],
           flavorIntensity: initScores[1],
@@ -95,7 +95,7 @@ const ReviewForm = ({ handleSubmitForm, className }) => {
               step={0.1}
             />
             <FormikMuiSlider
-              label="Body (is it thicc?)"
+              label="Body"
               name="qualities.body"
               min={0}
               max={10}

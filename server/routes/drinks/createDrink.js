@@ -8,9 +8,6 @@ const User = require('../../models/user.model');
 module.exports = ash(async (req, res) => {
   const { body } = req;
 
-  console.log('req.user', req.user);
-  console.log('req.body', req.body);
-
   if (!body)
     throw createHttpError(400, 'you must provide a proper drink object');
 

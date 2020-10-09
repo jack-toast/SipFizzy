@@ -26,7 +26,11 @@ const ReviewDialog = () => {
       fullWidth
       onClose={handleCloseDialog}
     >
-      <ReviewCore drinkId={drinkId} open={dialogOpen} />
+      <ReviewCore
+        drinkId={drinkId}
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+      />
     </Dialog>
   );
 };

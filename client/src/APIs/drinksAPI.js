@@ -21,6 +21,5 @@ export const createDrinkAPI = async ({ name, abv, calories, flavors }) => {
       json: { name, abv, calories, flavors },
     })
     .json();
-  console.log('create drink res', res);
   return res;
 };
