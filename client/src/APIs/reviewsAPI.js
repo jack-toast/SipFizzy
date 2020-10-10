@@ -31,16 +31,10 @@ export const getReviewById = async (reviewId) => {
   return res;
 };
 
-export const createReviewAPI = async ({
-  title,
-  description,
-  score,
-  qualities,
-  drinkId,
-}) => {
+export const createReviewAPI = async (reviewArgs) => {
   const res = await kyUseKey
     .post(`${baseURL}/reviews`, {
-      json: { title, description, score, qualities, drinkId },
+      json: { ...reviewArgs },
       throwHttpErrors: false,
     })
     .json();

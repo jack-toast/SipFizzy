@@ -26,8 +26,8 @@ const closeSnack = (key) => () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <StylesProvider injectFirst>
-      <Provider store={store}>
+    <Provider store={store}>
+      <StylesProvider injectFirst>
         <Router>
           <SnackbarProvider
             maxSnack={3}
@@ -47,8 +47,8 @@ ReactDOM.render(
             <App />
           </SnackbarProvider>
         </Router>
-      </Provider>
-    </StylesProvider>
+      </StylesProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

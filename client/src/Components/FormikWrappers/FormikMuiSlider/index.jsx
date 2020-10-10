@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
   // props MUST contain a 'name' value that maps to the formik value with the same name
   const [, meta, helpers] = useField(props);
+
   // This makes the slider snappy, but avoids potentially sluggish onChange calls
   const [internalValue, setInternalValue] = useState(meta.value);
 

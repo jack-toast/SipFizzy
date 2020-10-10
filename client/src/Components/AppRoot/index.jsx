@@ -6,7 +6,7 @@ import AppToolbar from '../AppToolbar';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
 import RootSwitch from './RootSwitch';
 import { fetchDrinks } from '../../Redux/slices/drinks';
-import ReviewDialog from '../ReviewDialog';
+import ReviewDialog from '../ReviewComponents/ReviewDialog';
 
 const useStyles = makeStyles((theme) => ({
   // '@global': {
@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
 }));
-
-console.log('MUI_LIGHT_THEME', MUI_LIGHT_THEME);
 
 const AppRoot = () => {
   const muiClasses = useStyles();

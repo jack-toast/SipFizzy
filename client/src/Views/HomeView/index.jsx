@@ -10,7 +10,7 @@ const HomeView = () => {
     <>
       <FadeProgressBar active={loading !== 'idle'} />
       <Container maxWidth="sm">
-        <div style={{ padding: '0.25rem' }} />
+        <div style={{ padding: '1rem' }} />
         <TopDrinks />
       </Container>
     </>

@@ -8,13 +8,17 @@ import {
 } from '@material-ui/core';
 
 import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router-dom';
+import { get, has } from 'lodash';
 import styles from './styles.module.scss';
 import ReviewForm from '../ReviewForm';
-import { createReviewAPI } from '../../APIs/reviewsAPI';
+import { createReviewAPI } from '../../../APIs/reviewsAPI';
 
 const ReviewCore = ({ drinkId, open, onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
   const drinkFromRedux = useSelector((state) => state.drinks.drinks[drinkId]);
+  const username = useSelector((state) => state.auth.currentUser.username);
   const [drink, setDrink] = useState({});
 
   useEffect(() => {
@@ -40,8 +44,27 @@ const ReviewCore = ({ drinkId, open, onClose }) => {
    */
 
   const handleSubmitReview = async (vals, other) => {
+    if (!username) {
+      enqueueSnackbar('You must be signed in to leave a review', {
+        variant: 'error',
+        autoHideDuration: 4000,
+      });
+      onClose();
+      setTimeout(() => {
+        history.push('/account');
+      }, 2000);
+      return;
+    }
     try {
-      await createReviewAPI({ ...vals, drinkId });
+      const createReviewResp = await createReviewAPI({
+        ...vals,
+        drinkId,
+        username,
+      });
+      if (has(createReviewResp, 'status') && createReviewResp.status !== 200) {
+        console.log('createReviewResp', createReviewResp);
+        throw new Error(createReviewResp.message || 'Couldnt create review');
+      }
       enqueueSnackbar('Review Added', {
         variant: 'success',
         autoHideDuration: 1500,
@@ -75,7 +98,7 @@ const ReviewCore = ({ drinkId, open, onClose }) => {
 
   return (
     <>
-      <DialogTitle>{`Sippin - ${drink.name}`}</DialogTitle>
+      <DialogTitle>{`New Sip - ${drink.name}`}</DialogTitle>
       <DialogContent className={styles.DialogContent}>
         <ReviewForm handleSubmitForm={handleSubmitReview} />
       </DialogContent>

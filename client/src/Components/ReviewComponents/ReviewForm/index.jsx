@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import { TextField } from 'formik-material-ui';
 import { random, range } from 'lodash';
 import styles from './styles.module.scss';
-import FormikMuiSlider from '../FormikMuiSlider';
+import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider';
 import DrinkReviewSchema from './DrinkReviewSchema';
+import FormikMuiRating from '../../FormikWrappers/FormikMuiRating';
 
 const getInitScore = (x, { amp = 1, omega = 1, phi = 0, shift = 0 }) => {
   return amp * Math.sin(omega * x * Math.PI - phi) + shift;
@@ -48,6 +49,15 @@ const ReviewForm = ({ handleSubmitForm, className }) => {
       {({ isSubmitting }) => {
         return (
           <Form className={clsx(styles.FormRoot, className)}>
+            <Typography>Overall Score</Typography>
+            <FormikMuiRating
+              name="score"
+              size="large"
+              maxValue={100}
+              classes={{
+                root: styles.ScoreRoot,
+              }}
+            />
             <Field
               component={TextField}
               name="title"
@@ -63,15 +73,6 @@ const ReviewForm = ({ handleSubmitForm, className }) => {
               multiline
               variant="outlined"
               helperText="Let it all out - good or bad"
-            />
-            <Field
-              className={styles.Input}
-              component={TextField}
-              name="score"
-              type="number"
-              label="Score"
-              variant="outlined"
-              helperText="0 to 100"
             />
             <FormikMuiSlider
               label="Flavor Accuracy"

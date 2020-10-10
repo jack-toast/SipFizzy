@@ -31,7 +31,7 @@ module.exports = ash(async (req, res) => {
   if (!userId) throw createHttpError(401, 'sign in required');
 
   // Prevent dupes
-  // temporarily remove dupe blocking code. uncomment once you figure out your shizz
+  // Disabled because I don't want to make 5 accounts to flesh out the page...
   // const existingReview = await Review.findOne({
   //   userId,
   //   drinkId: body.drinkId,

@@ -24,6 +24,10 @@ const ReviewSchema = new Schema(
       required: true,
       index: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
     qualities: {
       flavorAccuracy: qualityDef,
       flavorIntensity: qualityDef,

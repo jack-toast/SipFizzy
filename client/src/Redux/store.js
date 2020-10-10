@@ -4,6 +4,7 @@ import { createLogger } from 'redux-logger';
 import drinks from './slices/drinks';
 import auth from './slices/auth';
 import reviews from './slices/reviews';
+import theme from './slices/theme';
 
 // configure middleware
 const logger = createLogger({
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   drinks,
   auth,
   reviews,
+  theme,
 });
 
 const store = configureStore({
