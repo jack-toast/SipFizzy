@@ -28,21 +28,6 @@ const ReviewCore = ({ drinkId, open, onClose }) => {
     return () => {};
   }, [open, drinkFromRedux]);
 
-  /**
-   * JY TODO
-   * Add sliders for ratings or use the MUI ratings components
-   * This component should be re-usable:
-   * - Creating a review (authed)
-   * - Modifying an existing review (authed)
-   *
-   * - Viewing someone elses review shouldn't require the modal.
-   * - That should happen more in-line.
-   *
-   * - That's where we could use some better data-visualization.
-   * - Radar Graph - https://nivo.rocks/radar/
-   * - Maybe a simple bar chart?
-   */
-
   const handleSubmitReview = async (vals, other) => {
     if (!username) {
       enqueueSnackbar('You must be signed in to leave a review', {

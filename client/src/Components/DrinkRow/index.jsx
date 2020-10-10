@@ -15,9 +15,10 @@ import { GrTest } from 'react-icons/gr';
 import { useHistory } from 'react-router-dom';
 import { LocalBar } from '@material-ui/icons';
 import styles from './styles.module.scss';
-import DrinkReviews from '../../../Components/DrinkReviews';
-import FadeProgressBar from '../../../Components/FadeProgressBar';
-import { selectReviewsLoadingForDrink } from '../../../Redux/selectors/reviewsSelectors';
+import DrinkReviews from '../DrinkReviews';
+import FadeProgressBar from '../FadeProgressBar';
+import { selectReviewsLoadingForDrink } from '../../Redux/selectors/reviewsSelectors';
+import DrinkStats from '../DrinkStats';
 
 const flavorToColorMap = {
   grapefruit: '#f0bda6',
@@ -38,7 +39,7 @@ const DrinkRow = ({ drinkId }) => {
   }, [JSON.stringify(drink.flavors)]);
 
   const [showDeets, setShowDeets] = useState(
-    drinkId === '5f7e659156a1ab3880e488a5'
+    drinkId === '5f7ff7418e80e037f59fbe88'
   );
   const {
     name = 'delete me please',
@@ -116,7 +117,7 @@ const DrinkRow = ({ drinkId }) => {
         {/* <div className={styles.ExpandedContent}> */}
         {/* render drink stats */}
         <FadeProgressBar active={reviewsLoading} />
-
+        <DrinkStats drink={drink} />
         <DrinkReviews drinkId={drinkId} />
       </Collapse>
     </>

@@ -2,20 +2,20 @@ import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import {
-  Brightness2Rounded,
-  Brightness5Rounded,
+  // Brightness2Rounded,
+  // Brightness5Rounded,
   Face,
   LocalDrinkOutlined,
 } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import AccessControl from '../AccessControl';
-import { toggleTheme } from '../../Redux/slices/theme';
+// import { toggleTheme } from '../../Redux/slices/theme';
 
 const AppToolbar = () => {
-  const dispatch = useDispatch();
-  const useDark = useSelector((state) => state.theme.useDark);
-  const handleToggleTheme = () => dispatch(toggleTheme());
+  // const dispatch = useDispatch();
+  // const useDark = useSelector((state) => state.theme.useDark);
+  // const handleToggleTheme = () => dispatch(toggleTheme());
   return (
     <AppBar position="fixed" color="default" elevation={1}>
       <Toolbar>
@@ -31,7 +31,7 @@ const AppToolbar = () => {
           <NavLink to="/account" className={styles.NavLink}>
             <Face color="inherit" />
           </NavLink>
-          <div
+          {/* <div
             className={styles.NavLink}
             onClick={handleToggleTheme}
             role="button"
@@ -41,7 +41,7 @@ const AppToolbar = () => {
             }}
           >
             {useDark ? <Brightness5Rounded /> : <Brightness2Rounded />}
-          </div>
+          </div> */}
         </div>
       </Toolbar>
     </AppBar>

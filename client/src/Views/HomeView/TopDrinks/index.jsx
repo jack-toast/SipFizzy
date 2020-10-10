@@ -1,7 +1,7 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import DrinkRow from '../DrinkRow';
+import DrinkRow from '../../../Components/DrinkRow';
 
 const TopDrinks = () => {
   const { drinkOrder } = useSelector((state) => state.drinks);
