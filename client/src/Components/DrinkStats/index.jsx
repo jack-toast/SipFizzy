@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { ResponsiveRadar } from '@nivo/radar';
+import { Paper } from '@material-ui/core';
 import MyPropTypes from '../../MyPropTypes';
 import styles from './styles.module.scss';
 
@@ -20,13 +21,10 @@ const DrinkStats = ({ drink }) => {
     }));
     return [...foo];
   }, []);
-  useEffect(() => {
-    console.log('data', data);
-    return () => {};
-  }, [data]);
+
   if (!drink) return null;
   return (
-    <div className={styles.Root}>
+    <Paper className={styles.Root} elevation={2}>
       <ResponsiveRadar
         data={data}
         margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
@@ -35,7 +33,7 @@ const DrinkStats = ({ drink }) => {
         curve="catmullRomClosed"
         // i like dick my name is jack
       />
-    </div>
+    </Paper>
   );
 };
 

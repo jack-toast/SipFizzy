@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ThumbDownRounded, ThumbUpRounded } from '@material-ui/icons';
 import { Collapse, Paper, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
+import { DateTime } from 'luxon';
 import styles from './styles.module.scss';
 import MyPropTypes from '../../../MyPropTypes';
 
@@ -23,11 +24,22 @@ const ReviewRow = ({ review }) => {
     );
   };
 
+  const renderDate = () => {
+    // eslint-disable-next-line new-cap
+    const date = new DateTime.fromISO(createdAt);
+    return (
+      <Typography variant="body2">
+        {date.toLocaleString(DateTime.DATE_MED)}
+      </Typography>
+    );
+  };
+
   return (
     <Paper
       className={styles.Root}
       onClick={() => setExpanded((c) => !c)}
       tabIndex={0}
+      elevation={2}
       onKeyDown={({ key }) => {
         if (key === 'Enter') handleClickRow();
       }}
@@ -41,12 +53,13 @@ const ReviewRow = ({ review }) => {
           <Typography>{title}</Typography>
           <div className={styles.Subtitle}>
             {renderUsername()}
-            <Typography>{createdAt}</Typography>
+            {renderDate()}
+            {/* <Typography>{createdAt}</Typography> */}
           </div>
         </div>
       </div>
       <Collapse in={expanded}>
-        <Typography>{description}</Typography>
+        <Typography className={styles.Description}>{description}</Typography>
       </Collapse>
     </Paper>
   );

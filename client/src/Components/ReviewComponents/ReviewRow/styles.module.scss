@@ -1,7 +1,7 @@
 .Root {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0 0 2rem;
+  margin: 0.5rem 0.75rem 0 0.75rem;
   padding: 0.5rem 1rem;
 }
 
@@ -25,4 +25,9 @@
 .UserLink {
   text-decoration: none;
   color: unset;
+  margin-right: 0.5rem;
+}
+
+.Description {
+  margin-top: 0.5rem;
 }

@@ -72,6 +72,7 @@ const DrinkRow = ({ drinkId }) => {
         onClick={handleClickRow}
         role="button"
         tabIndex="0"
+        elevation={showDeets ? 3 : 1}
         onKeyPress={handleKeyPress}
         key={`drink-row-${drinkId}`}
         className={styles.Root}
