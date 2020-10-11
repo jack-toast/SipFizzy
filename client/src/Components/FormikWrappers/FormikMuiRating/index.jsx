@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useField } from 'formik';
 
@@ -24,8 +24,11 @@ const FormikMuiRating = ({
   const [, meta, helpers] = useField(props);
 
   const [hoverValue, setHoverValue] = useState(-1);
-  const scaleFactor = useMemo(() => maxValue / max, [max]);
-  const scaledValue = useMemo(() => meta.value / scaleFactor);
+  const scaleFactor = useMemo(() => maxValue / max, [maxValue, max]);
+  const scaledValue = useMemo(() => meta.value / scaleFactor, [
+    scaleFactor,
+    meta.value,
+  ]);
 
   const handleChange = (e, v) => {
     helpers.setValue(v * scaleFactor);

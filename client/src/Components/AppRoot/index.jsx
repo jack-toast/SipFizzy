@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { MUI_LIGHT_THEME } from '../../muiThemes';
+import { useDispatch, useSelector } from 'react-redux';
+import { MUI_DARK_THEME, MUI_LIGHT_THEME } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
 import RootSwitch from './RootSwitch';
-import { fetchDrinks } from '../../Redux/slices/drinks';
+import { fetchDrinksOptId } from '../../Redux/slices/drinks';
 import ReviewDialog from '../ReviewComponents/ReviewDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,15 +31,16 @@ const useStyles = makeStyles((theme) => ({
 
 const AppRoot = () => {
   const muiClasses = useStyles();
+  const useDark = useSelector((state) => state.theme.useDark);
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => dispatch(fetchCurrentUser()))();
-    (async () => dispatch(fetchDrinks()))();
+    (async () => dispatch(fetchDrinksOptId()))();
     return () => {};
   }, [dispatch]);
 
   return (
-    <MuiThemeProvider theme={MUI_LIGHT_THEME}>
+    <MuiThemeProvider theme={useDark ? MUI_DARK_THEME : MUI_LIGHT_THEME}>
       <CssBaseline />
       <AppToolbar />
       <div>

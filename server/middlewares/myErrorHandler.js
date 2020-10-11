@@ -4,13 +4,19 @@ const myErrorHandler = (error, req, res, next) => {
     return;
   }
 
-  req.log.error(error);
+  // req.log.error(error.name);
+  console.log('error handler', JSON.stringify(error, null, 2));
 
-  res.status(error.status || 500);
-  res.json({
-    status: error.status || 500,
+  let status = 500;
+  if (error.status) status = error.status;
+  else if (error.name === 'ValidationError') {
+    status = 400;
+  }
+
+  res.status(status).json({
+    status,
+    error,
     message: error.message || 'Unknown Error Occurred',
-    stack: error.stack,
   });
 };
 

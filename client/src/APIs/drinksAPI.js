@@ -10,8 +10,23 @@ export const getDrinks = async () => {
   return res;
 };
 
+export const getDrinksOptId = async ({ drinkId } = {}) => {
+  const res = await ky(
+    `${baseURL}/drinks${drinkId ? `/${drinkId}` : ''}`
+  ).json();
+  return res;
+};
+
 export const getDrinkById = async ({ drinkId }) => {
   const res = await ky(`${baseURL}/drinks/${drinkId}`).json();
+  return res;
+};
+
+export const syncDrinkScoresAPI = async () => {
+  const res = await kyUseKey(`${baseURL}/drinks/syncScores`, {
+    throwHttpErrors: false,
+  }).json();
+  console.log('res', res);
   return res;
 };
 

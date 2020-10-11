@@ -1,4 +1,3 @@
-import { wait } from '@testing-library/react';
 import { useMemo } from 'react';
 
 const { useSelector } = require('react-redux');

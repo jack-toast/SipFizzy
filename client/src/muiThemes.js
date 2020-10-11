@@ -21,7 +21,7 @@ export const MUI_LIGHT_THEME = responsiveFontSizes(
       type: 'light',
       background: {
         paper: '#fff',
-        default: '#f8f8f8',
+        default: '#f6f6f6',
       },
     },
   })

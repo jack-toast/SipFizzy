@@ -1,6 +1,11 @@
-import { Container, Typography } from '@material-ui/core';
+import { Button, Container, Divider, Typography } from '@material-ui/core';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { deleteFakeReviewsAPI } from '../../../APIs/reviewsAPI';
+import { syncDrinkScoresAPI } from '../../../APIs/drinksAPI';
+import AccessControl from '../../../Components/AccessControl';
+
+import styles from './styles.module.scss';
 
 const arrPickRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -21,8 +26,22 @@ const AccountDetails = () => {
     return arrPickRandom(possibleSubtitles);
   }, []);
 
-  const renderReviewSummary = (review) => {
-    return <div>{review.description}</div>;
+  const deleteFakeReviews = async () => {
+    try {
+      const resp = await deleteFakeReviewsAPI();
+      console.log('resp', resp);
+    } catch (err) {
+      console.log('err', err);
+    }
+  };
+
+  const syncDrinkScores = async () => {
+    try {
+      const resp = await syncDrinkScoresAPI();
+      console.log('resp', resp);
+    } catch (err) {
+      console.log('err', err);
+    }
   };
 
   return (
@@ -34,7 +53,29 @@ const AccountDetails = () => {
         {subtitle}
       </Typography>
 
-      <Typography style={{ marginTop: '2rem' }} variant="h3">
+      <AccessControl>
+        <div className={styles.AdminControlsContainer}>
+          <Typography variant="h4">Admin Stuff</Typography>
+          <Divider className={styles.AdminDivider} />
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={deleteFakeReviews}
+          >
+            Delete fake reviews
+          </Button>
+
+          <Button
+            onClick={syncDrinkScores}
+            color="secondary"
+            variant="outlined"
+          >
+            Re-sync Drink Score
+          </Button>
+        </div>
+      </AccessControl>
+
+      {/* <Typography style={{ marginTop: '2rem' }} variant="h3">
         Your Reviews
       </Typography>
       {!reviews.length && (
@@ -42,7 +83,7 @@ const AccountDetails = () => {
           jk, you don&apos;t have any... Nerd
         </Typography>
       )}
-      {reviews.map((review) => renderReviewSummary(review))}
+      {reviews.map((review) => renderReviewSummary(review))} */}
     </Container>
   );
 };

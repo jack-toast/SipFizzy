@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getDrinks } from '../../APIs/drinksAPI';
+import { getDrinksOptId } from '../../APIs/drinksAPI';
 
-export const fetchDrinks = createAsyncThunk(
-  'drinks/getDrinks',
-  async (_, { getState, requestId }) => {
+export const fetchDrinksOptId = createAsyncThunk(
+  'drinks/fetchDrinksOptId',
+  async ({ drinkId } = {}, { getState, requestId }) => {
     const { currentRequestId, loading } = getState().drinks;
     if (loading !== 'pending' || requestId !== currentRequestId) {
       return [];
     }
-    const response = await getDrinks();
+    const response = await getDrinksOptId({ drinkId });
     return response.drinks;
   }
 );
@@ -21,8 +21,6 @@ const drinksSlice = createSlice({
     loading: 'idle',
     drinkOrder: [],
     currentRequestId: undefined,
-    activeDrinkId: null,
-    modalOpen: false,
     error: null,
   },
   reducers: {
@@ -31,35 +29,30 @@ const drinksSlice = createSlice({
         state.drinks[payload.id] = payload;
       },
     },
-    setActiveDrink: {
-      reducer: (state, { payload }) => {
-        state.activeDrinkId = payload;
-        state.modalOpen = true;
-      },
-    },
   },
 
   extraReducers: {
-    [fetchDrinks.pending]: (state, action) => {
+    [fetchDrinksOptId.pending]: (state, action) => {
       if (state.loading === 'idle') {
         state.loading = 'pending';
         state.currentRequestId = action.meta.requestId;
       }
     },
-    [fetchDrinks.fulfilled]: (state, action) => {
+    [fetchDrinksOptId.fulfilled]: (state, action) => {
       const { requestId } = action.meta;
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle';
-        const newDrinkIds = [];
+        const currentOrder = [...state.drinkOrder];
         action.payload.forEach((drink) => {
           state.drinks[drink.id] = drink;
-          newDrinkIds.push(drink.id);
+          if (!currentOrder.includes(drink.id)) {
+            state.drinkOrder.push(drink.id);
+          }
         });
-        state.drinkOrder = newDrinkIds;
         state.currentRequestId = undefined;
       }
     },
-    [fetchDrinks.rejected]: (state, action) => {
+    [fetchDrinksOptId.rejected]: (state, action) => {
       const { requestId } = action.meta;
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
         state.loading = 'idle';
@@ -70,6 +63,6 @@ const drinksSlice = createSlice({
   },
 });
 
-export const { addDrink, setActiveDrink } = drinksSlice.actions;
+export const { addDrink } = drinksSlice.actions;
 
 export default drinksSlice.reducer;

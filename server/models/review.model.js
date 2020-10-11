@@ -26,7 +26,8 @@ const ReviewSchema = new Schema(
     },
     username: {
       type: String,
-      required: true,
+      // required: true,
+      required: '{PATH} is required',
     },
     qualities: {
       flavorAccuracy: qualityDef,
@@ -41,7 +42,7 @@ const ReviewSchema = new Schema(
     score: {
       type: Number,
       required: true,
-      default: 69,
+      default: 68.9,
       min: 0,
       max: 100,
     },

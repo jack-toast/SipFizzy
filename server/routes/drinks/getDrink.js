@@ -9,5 +9,6 @@ module.exports = ash(async (req, res) => {
   res.status(200).json({
     success: true,
     drink,
+    drinks: [drink],
   });
 });

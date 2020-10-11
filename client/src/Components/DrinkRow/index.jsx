@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Button,
@@ -12,27 +12,22 @@ import {
 } from '@material-ui/core';
 import { GrTest } from 'react-icons/gr';
 
-import { useHistory } from 'react-router-dom';
 import { LocalBar } from '@material-ui/icons';
 import styles from './styles.module.scss';
 import DrinkReviews from '../DrinkReviews';
 import FadeProgressBar from '../FadeProgressBar';
 import { selectReviewsLoadingForDrink } from '../../Redux/selectors/reviewsSelectors';
 import DrinkStats from '../DrinkStats';
-
-const flavorToColorMap = {
-  grapefruit: '#f0bda6',
-};
+import { openReviewDialog } from '../../Redux/slices/reviewDialog';
 
 const DrinkRow = ({ drinkId }) => {
-  const history = useHistory();
+  const dispatch = useDispatch();
   const drink = useSelector((state) => state.drinks.drinks[drinkId]);
   const reviewsLoading = useSelector((state) =>
     selectReviewsLoadingForDrink(state, drinkId)
   );
 
   const avatarStyle = useMemo(() => {
-    const pretendFlavor = ['grapefruit'];
     return {
       background: `linear-gradient(6.9deg, #ffdcce, #eea195)`,
     };
@@ -58,7 +53,8 @@ const DrinkRow = ({ drinkId }) => {
 
   const handleClickAddReview = (e) => {
     e.stopPropagation();
-    history.push(`/drinks/${drinkId}`);
+    dispatch(openReviewDialog(drinkId));
+    // history.push(`/addReview/${drinkId}`);
   };
 
   // Use a linear background gradient for the drink logo depending on the flavors!

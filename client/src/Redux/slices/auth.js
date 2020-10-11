@@ -24,7 +24,13 @@ const authSlice = createSlice({
     currentRequestId: undefined,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addReview: {
+      reducer: (state, { payload }) => {
+        state.currentUser.reviews.push(payload.id);
+      },
+    },
+  },
   extraReducers: {
     [fetchCurrentUser.pending]: (state, action) => {
       if (state.loading === 'idle') {
@@ -50,5 +56,7 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const { addReview } = authSlice.actions;
 
 export default authSlice.reducer;

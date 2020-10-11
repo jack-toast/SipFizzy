@@ -1,4 +1,6 @@
+/* eslint-disable no-unreachable */
 import ky from 'ky';
+import { get } from 'lodash';
 import kyUseKey from './kyUseKey';
 
 const baseURL = process.env.REACT_APP_API_URL;
@@ -31,12 +33,23 @@ export const getReviewById = async (reviewId) => {
   return res;
 };
 
+export const deleteFakeReviewsAPI = async () => {
+  const res = await kyUseKey.delete(`${baseURL}/reviews/deleteFakes`).json();
+  console.log('res', res);
+  return res;
+};
+
 export const createReviewAPI = async (reviewArgs) => {
+  if (!reviewArgs.username)
+    throw new Error('You must be logged in to add a review');
   const res = await kyUseKey
     .post(`${baseURL}/reviews`, {
       json: { ...reviewArgs },
       throwHttpErrors: false,
     })
     .json();
+  if (!get(res, 'success')) {
+    throw new Error(res.message || 'Unknown Error Occurred');
+  }
   return res;
 };

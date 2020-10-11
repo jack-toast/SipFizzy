@@ -1,24 +1,9 @@
 const ash = require('express-async-handler');
 const createHttpError = require('http-errors');
-const { isNumber } = require('lodash');
+const { getIncAvg, getObjIncAvg } = require('../../helpers/incAverageHelper');
 const Drink = require('../../models/drink.model');
 const Review = require('../../models/review.model');
 const User = require('../../models/user.model');
-
-const getIncAvg = (numRatings, existingScore, newScore) => {
-  // Short circuit any default values we may have given
-  if (numRatings === 0 || !isNumber(existingScore)) return newScore;
-  return existingScore + (newScore - existingScore) / numRatings;
-};
-
-const getObjIncAvg = (numRatings, existingQualities, newQualities) => {
-  if (numRatings === 0) return { ...newQualities };
-  const retQualities = {};
-  Object.entries(newQualities).forEach(([key, newQual]) => {
-    retQualities[key] = getIncAvg(numRatings, existingQualities[key], newQual);
-  });
-  return retQualities;
-};
 
 module.exports = ash(async (req, res) => {
   const { body } = req;

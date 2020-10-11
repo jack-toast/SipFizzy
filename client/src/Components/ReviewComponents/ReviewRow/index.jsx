@@ -5,10 +5,10 @@ import { NavLink } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import styles from './styles.module.scss';
 import MyPropTypes from '../../../MyPropTypes';
+import ExpandButton from '../../Shared/ExpandButton';
 
 const ReviewRow = ({ review }) => {
   const [expanded, setExpanded] = useState(false);
-  const handleClickRow = () => setExpanded((c) => !c);
   const { username, title, createdAt, description } = review;
 
   const renderUsername = () => {
@@ -35,15 +35,7 @@ const ReviewRow = ({ review }) => {
   };
 
   return (
-    <Paper
-      className={styles.Root}
-      onClick={() => setExpanded((c) => !c)}
-      tabIndex={0}
-      elevation={2}
-      onKeyDown={({ key }) => {
-        if (key === 'Enter') handleClickRow();
-      }}
-    >
+    <Paper className={styles.Root}>
       <div className={styles.Header}>
         <div className={styles.Votes}>
           <ThumbUpRounded />
@@ -57,6 +49,10 @@ const ReviewRow = ({ review }) => {
             {/* <Typography>{createdAt}</Typography> */}
           </div>
         </div>
+        <ExpandButton
+          onClick={() => setExpanded((c) => !c)}
+          expanded={expanded}
+        />
       </div>
       <Collapse in={expanded}>
         <Typography className={styles.Description}>{description}</Typography>

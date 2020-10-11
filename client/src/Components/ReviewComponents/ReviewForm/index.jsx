@@ -4,7 +4,9 @@ import { Field, Form, Formik } from 'formik';
 import { Button, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import { TextField } from 'formik-material-ui';
-import { random, range } from 'lodash';
+import { clamp, random, range } from 'lodash';
+import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider';
 import DrinkReviewSchema from './DrinkReviewSchema';
@@ -15,23 +17,27 @@ const getInitScore = (x, { amp = 1, omega = 1, phi = 0, shift = 0 }) => {
 };
 
 const getInitScores = (numScores = 8) => {
-  const omega = 1 / random(3.1, 6.2);
-  const amp = random(1, 2.2);
+  const omega = random(3.12, 4.44);
+  const amp = random(2, 5);
   const phi = random(-6.0, 6);
-  const shift = 5;
+  const shift = random(amp, 10 - amp);
   return range(numScores).map((x) =>
-    getInitScore(x, { amp, omega, shift, phi })
+    clamp(getInitScore(x, { amp, omega, shift, phi }), 0, 10)
   );
 };
 
 const ReviewForm = ({ handleSubmitForm, className }) => {
+  const errorMessage = useSelector(
+    (state) => state.reviewDialog?.error?.message
+  );
   const initScores = useMemo(() => getInitScores(8), []);
+  const fakeReviewID = useMemo(() => nanoid(4), []);
   return (
     <Formik
       initialValues={{
-        title: '',
-        description: '',
-        score: 50,
+        title: `FAKE REVIEW TITLE (${fakeReviewID})`,
+        description: `FAKE REVIEW DESCRIPTION (${fakeReviewID})`,
+        score: random(0.1, 100),
         qualities: {
           flavorAccuracy: initScores[0],
           flavorIntensity: initScores[1],
@@ -130,6 +136,7 @@ const ReviewForm = ({ handleSubmitForm, className }) => {
               max={10}
               step={0.1}
             />
+            <Typography color="error">{errorMessage}</Typography>
             <Button
               className={styles.SubmitButton}
               type="submit"
