@@ -1,13 +1,10 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import WebFont from 'webfontloader';
-import { IconButton, StylesProvider } from '@material-ui/core';
+import { StylesProvider } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { SnackbarProvider } from 'notistack';
-import { Close } from '@material-ui/icons';
 import App from './Components/AppRoot';
 import * as serviceWorker from './serviceWorker';
 import store from './Redux/store';
@@ -20,17 +17,19 @@ WebFont.load({
 
 document.title = 'Sip Fizzy';
 
-const notistackRef = React.createRef();
-const closeSnack = (key) => () => {
-  notistackRef.current.closeSnackbar(key);
-};
+// JY TODO - Figure out typing for refs that don't point to a dom node...
+// const notistackRef = React.createRef<any>();
+// const closeSnack = (key: string | number) => () => {
+//   if (notistackRef.current !== null)
+//     notistackRef.current.closeSnackbar(key);
+// };
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <StylesProvider injectFirst>
         <Router>
-          <SnackbarProvider
+          {/* <SnackbarProvider
             maxSnack={3}
             preventDuplicate
             dense
@@ -44,14 +43,14 @@ ReactDOM.render(
                 <Close />
               </IconButton>
             )}
-          >
-            <App />
-          </SnackbarProvider>
+          > */}
+          <App />
+          {/* </SnackbarProvider> */}
         </Router>
       </StylesProvider>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

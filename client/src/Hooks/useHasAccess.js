@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const { useSelector } = require('react-redux');
+import { useSelector } from 'react-redux';
 
 const useHasAccess = ({ waitForError = false } = {}) => {
   const {

@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { createLogger } from 'redux-logger';
 
 import auth from './slices/auth';
@@ -13,7 +14,7 @@ const logger = createLogger({
   collapsed: true,
 });
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   auth,
   drinks,
   reviewDialog,
@@ -21,8 +22,12 @@ const reducer = combineReducers({
   theme,
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
+
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
 });

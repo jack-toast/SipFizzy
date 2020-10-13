@@ -1,16 +1,25 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useHasAccess from '../Hooks/useHasAccess';
 
-const PrivateRoute = ({ waitForError, redirect, children, ...rest }) => {
+type PrivateRouteProps = {
+  waitForError?: boolean;
+  children: React.ReactNode;
+  redirect?: string;
+  path: string;
+};
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
+  waitForError,
+  redirect = '/',
+  children,
+  ...rest
+}) => {
   const { hasAccess, loading } = useHasAccess({ waitForError });
 
   if (loading) return null;
-  return (
-    <Route {...rest}>{hasAccess ? children : <Redirect to={redirect} />}</Route>
-  );
+  return <Route {...rest}>{hasAccess ? children : <Redirect to={redirect} />}</Route>;
 };
 
 PrivateRoute.propTypes = {

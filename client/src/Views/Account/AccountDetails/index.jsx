@@ -57,19 +57,11 @@ const AccountDetails = () => {
         <div className={styles.AdminControlsContainer}>
           <Typography variant="h4">Admin Stuff</Typography>
           <Divider className={styles.AdminDivider} />
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={deleteFakeReviews}
-          >
+          <Button color="secondary" variant="outlined" onClick={deleteFakeReviews}>
             Delete fake reviews
           </Button>
 
-          <Button
-            onClick={syncDrinkScores}
-            color="secondary"
-            variant="outlined"
-          >
+          <Button onClick={syncDrinkScores} color="secondary" variant="outlined">
             Re-sync Drink Score
           </Button>
         </div>

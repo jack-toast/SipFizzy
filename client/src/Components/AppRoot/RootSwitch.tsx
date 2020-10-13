@@ -5,7 +5,7 @@ import CreateDrink from '../../Views/CreateDrink';
 import HomeView from '../../Views/HomeView';
 import PrivateRoute from '../PrivateRoute';
 
-const RootSwitch = () => (
+const RootSwitch: React.FC = () => (
   <Switch>
     <PrivateRoute waitForError path="/createdrink">
       <CreateDrink />
