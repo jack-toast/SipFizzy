@@ -19,6 +19,7 @@
 
 .Subtitle {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -29,7 +30,7 @@
 .NumRatingsContainer {
   display: flex;
   align-items: center;
-  min-width: 2rem;
+  // min-width: 2rem;
 
   > p {
     margin-right: 0.25em;
@@ -37,7 +38,7 @@
 }
 
 .OverallScore {
-  margin-left: 1rem;
+  margin-left: 0.75rem;
   margin-right: 0.5rem;
 }
 

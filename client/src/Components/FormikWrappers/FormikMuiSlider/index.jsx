@@ -19,26 +19,29 @@ const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
       {label && (
         <div className={styles.LabelRow}>
           <Typography variant="subtitle1">{label}</Typography>
-          <Typography variant="button">{internalValue.toFixed(1)}</Typography>
+          <Typography variant="button" align="right">
+            {internalValue.toFixed(1)}
+          </Typography>
         </div>
       )}
-      <Slider
-        value={internalValue}
-        onMouseDown={() => !meta.touched && helpers.setTouched(true)}
-        // onBlur={() => field.onBlur()}
-        min={min}
-        max={max}
-        valueLabelDisplay="auto"
-        step={step}
-        valueLabelFormat={(val) => val.toFixed(1)}
-        onChange={(e, val) => setInternalValue(val)}
-        onChangeCommitted={(e, val) => helpers.setValue(val)}
-      />
-      {meta.error && meta.touched && (
-        <Typography color="error" variant="caption">
-          {meta.error}
-        </Typography>
-      )}
+      <div className={styles.SliderAndErrorContainer}>
+        <Slider
+          value={internalValue}
+          onMouseDown={() => !meta.touched && helpers.setTouched(true)}
+          min={min}
+          max={max}
+          valueLabelDisplay="auto"
+          step={step}
+          valueLabelFormat={(val) => val.toFixed(1)}
+          onChange={(e, val) => setInternalValue(val)}
+          onChangeCommitted={(e, val) => helpers.setValue(val)}
+        />
+        {meta.error && meta.touched ? (
+          <Typography color="error" variant="caption">
+            {meta.error}
+          </Typography>
+        ) : null}
+      </div>
     </>
   );
 };

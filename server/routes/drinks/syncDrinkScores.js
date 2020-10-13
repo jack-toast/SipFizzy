@@ -15,56 +15,27 @@ const defaultVals = {
     smell: 6.9,
     sweetness: 6.9,
     sour: 6.9,
-    salty: 6.9,
-    umami: 6.9,
     bitter: 6.9,
   },
   score: 69,
 };
 
 const updateDrinkInfo = async (drink, reviews) => {
-  // console.log('drink', drink);
-  // console.log(`reviews for ${drink._id}`, reviews);
-  // if (!reviews.length) {
-  //   drink.numRatings = defaultVals.numRatings;
-  //   drink.qualities = defaultVals.qualities;
-  //   drink.score = defaultVals.score;
-
-  //   console.log('drink (no reviews)', drink);
-  //   // try {
-  //   //   const saveRes = await drink.save();
-  //   //   console.log(`save drink ${drink.id}`, saveRes);
-  //   // } catch (err) {
-  //   //   console.log('err', err);
-  //   // }
-  //   // return;
-  // }
   const numRatings = reviews.length;
-  console.log('numRatings', numRatings);
   if (numRatings === 0) {
-    drink.numRatings = numRatings;
+    drink.numRatings = 0;
     drink.score = defaultVals.score;
     drink.qualities = { ...defaultVals.qualities };
   } else {
-    const newScore = reviews.reduce((ret, curr) => ret + curr, 0) / numRatings;
-    const newQualities = reviews.reduce(
-      (ret, { qualities }, index) => {
-        return getObjIncAvg(index, ret, qualities);
-      },
-      { ...defaultVals.qualities }
-    );
+    drink.score =
+      reviews.reduce((ret, curr) => ret + curr.score, 0) / numRatings;
+    drink.qualities = reviews.reduce((acc, currentReview, index) => {
+      return getObjIncAvg(index, acc, currentReview.qualities.toObject());
+    }, defaultVals.qualities);
     drink.numRatings = numRatings;
-    drink.score = newScore;
-    drink.qualities = newQualities;
   }
 
-  // console.log(`numR(${numRatings}) - drink ${drink.id}`, drink);
-  // try {
-  //   const drinkSaveRes = await drink.save();
-  //   console.log(`drink save ${drink.name}`, drinkSaveRes);
-  // } catch (err) {
-  //   console.log('err', err);
-  // }
+  return drink.save();
 };
 
 module.exports = ash(async (req, res) => {
@@ -72,21 +43,22 @@ module.exports = ash(async (req, res) => {
   const reviews = await Review.find({});
   if (!drinks || !drinks.length) throw createHttpError(404, 'no drinks found');
 
-  // we need to update numRatings, score, and qualities
+  const savePromises = await Promise.allSettled(
+    drinks.map((drink) =>
+      updateDrinkInfo(
+        drink,
+        reviews.filter((r) => r.drinkId.toString() === drink.id)
+      )
+    )
+  );
 
-  console.log('reviews', reviews);
-  console.log('drinks', drinks);
-
-  drinks.forEach((drink) => {
-    updateDrinkInfo(
-      drink,
-      // eslint-disable-next-line no-underscore-dangle
-      [...reviews.filter((r) => drink._id === r.drinkId)]
-    );
-  });
+  const failedSaves = savePromises
+    .filter(({ status }) => status !== 'fulfilled')
+    .map(({ reason }) => reason.message || reason);
 
   res.status(200).json({
     success: true,
-    message: 'we dun did it',
+    message: `sync complete. num errors: ${failedSaves.length}`,
+    errors: failedSaves,
   });
 });

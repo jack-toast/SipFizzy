@@ -26,7 +26,6 @@ export const syncDrinkScoresAPI = async () => {
   const res = await kyUseKey(`${baseURL}/drinks/syncScores`, {
     throwHttpErrors: false,
   }).json();
-  console.log('res', res);
   return res;
 };
 

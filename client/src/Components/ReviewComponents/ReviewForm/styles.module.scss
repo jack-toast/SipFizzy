@@ -11,6 +11,18 @@
   margin-bottom: 1rem;
 }
 
+.SlidersContainer {
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: 600px) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0rem 1rem;
+    align-items: center;
+  }
+}
+
 .SubmitButton {
   margin-top: 1rem;
 }

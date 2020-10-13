@@ -7,10 +7,6 @@ const getIncAvg = (numEntries, currentAvg, newValue) => {
 };
 
 const getObjIncAvg = (numEntries, existingObj, newObj) => {
-  console.log(
-    `numEntries: ${numEntries}, ${JSON.stringify(existingObj)}, ${newObj}`
-  );
-  if (numEntries === 0) return { ...newObj };
   const retQualities = {};
   Object.entries(newObj).forEach(([key, newVal]) => {
     retQualities[key] = getIncAvg(numEntries, existingObj[key], newVal);

@@ -25,11 +25,25 @@ const selectDrinkForDialog = createSelector(
   }
 );
 
+const selectExistingReview = createSelector(
+  (state) => state.reviewDialog.reviewId,
+  (state) => state.reviews.reviews,
+  (reviewId, reviews) => {
+    return get(reviews, reviewId, null);
+  }
+);
+
 const ReviewDialog = () => {
   const dispatch = useDispatch();
   const { dialogOpen } = useSelector((state) => state.reviewDialog);
+  const existingReview = useSelector(selectExistingReview);
   const { name } = useSelector(selectDrinkForDialog);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    console.log('existingReview', existingReview);
+    return () => {};
+  }, [existingReview]);
 
   useEffect(() => {
     if (dialogOpen) setShowSuccessMessage(false);
@@ -60,13 +74,16 @@ const ReviewDialog = () => {
       fullWidth={!showSuccessMessage}
       onClose={handleCloseDialog}
     >
-      <Collapse in={!showSuccessMessage}>
+      <Collapse in={!showSuccessMessage} mountOnEnter unmountOnExit>
         <DialogTitle>{getTitle()}</DialogTitle>
         <DialogContent className={styles.DialogContent}>
-          <ReviewForm handleSubmitForm={handleSubmitReviewThunk} />
+          <ReviewForm
+            handleSubmitForm={handleSubmitReviewThunk}
+            existingValues={{ ...existingReview }}
+          />
         </DialogContent>
       </Collapse>
-      <Collapse in={showSuccessMessage}>
+      <Collapse in={showSuccessMessage} mountOnEnter unmountOnExit>
         <div className={styles.SuccessMessageContainer}>
           <Typography variant="h4">Thank you!</Typography>
           <Button

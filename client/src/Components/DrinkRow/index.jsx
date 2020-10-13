@@ -34,7 +34,8 @@ const DrinkRow = ({ drinkId }) => {
   }, [JSON.stringify(drink.flavors)]);
 
   const [showDeets, setShowDeets] = useState(
-    drinkId === '5f7ff7418e80e037f59fbe88'
+    false
+    // drinkId === '5f7ff7418e80e037f59fbe88'
   );
   const {
     name = 'delete me please',

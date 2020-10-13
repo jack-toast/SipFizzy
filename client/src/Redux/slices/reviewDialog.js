@@ -32,11 +32,12 @@ export const createReview = createAsyncThunk(
 const reviewDialogSlice = createSlice({
   name: 'reviewDialog',
   initialState: {
-    drinkId: null,
-    dialogOpen: false,
-    loading: 'idle',
-    error: null,
     currentRequestId: undefined,
+    dialogOpen: false,
+    drinkId: null,
+    error: null,
+    loading: 'idle',
+    reviewId: null,
   },
   reducers: {
     openReviewDialog: {
@@ -48,6 +49,15 @@ const reviewDialogSlice = createSlice({
     closeReviewDialog: {
       reducer: (state) => {
         state.dialogOpen = false;
+        state.reviewId = null;
+      },
+    },
+    openReviewEditorDialog: {
+      reducer: (state, { payload }) => {
+        const { drinkId, reviewId } = payload;
+        state.drinkId = drinkId;
+        state.reviewId = reviewId;
+        state.dialogOpen = true;
       },
     },
   },
@@ -79,6 +89,7 @@ const reviewDialogSlice = createSlice({
 export const {
   openReviewDialog,
   closeReviewDialog,
+  openReviewEditorDialog,
 } = reviewDialogSlice.actions;
 
 export default reviewDialogSlice.reducer;

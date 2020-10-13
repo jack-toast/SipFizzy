@@ -15,8 +15,6 @@ const DrinkSchema = new Schema(
       smell: qualityDef,
       sweetness: qualityDef,
       sour: qualityDef,
-      salty: qualityDef,
-      umami: qualityDef,
       bitter: qualityDef,
     },
     score: {
