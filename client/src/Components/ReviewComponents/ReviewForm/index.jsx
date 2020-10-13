@@ -6,11 +6,11 @@ import clsx from 'clsx';
 import { TextField } from 'formik-material-ui';
 import { clamp, isEmpty, random, range } from 'lodash';
 import { nanoid } from 'nanoid';
-import { useSelector } from 'react-redux';
 import styles from './styles.module.scss';
 import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider';
 import DrinkReviewSchema from './DrinkReviewSchema';
 import FormikMuiRating from '../../FormikWrappers/FormikMuiRating';
+import { useTypedSelector } from '../../../Redux/store';
 
 const getInitScore = (x, { amp = 1, omega = 1, phi = 0, shift = 0 }) => {
   return amp * Math.sin(omega * x * Math.PI - phi) + shift;
@@ -21,15 +21,11 @@ const getInitScores = (numScores = 8) => {
   const amp = random(2, 5);
   const phi = random(-6.0, 6);
   const shift = random(amp, 10 - amp);
-  return range(numScores).map((x) =>
-    clamp(getInitScore(x, { amp, omega, shift, phi }), 0, 10)
-  );
+  return range(numScores).map((x) => clamp(getInitScore(x, { amp, omega, shift, phi }), 0, 10));
 };
 
 const ReviewForm = ({ handleSubmitForm, className, existingValues }) => {
-  const errorMessage = useSelector(
-    (state) => state.reviewDialog?.error?.message
-  );
+  const errorMessage = useTypedSelector((state) => state.reviewDialog?.error?.message);
   const initScores = useMemo(() => getInitScores(8), []);
   const fakeReviewID = useMemo(() => nanoid(4), []);
   const initialValues = useMemo(() => {
@@ -108,20 +104,8 @@ const ReviewForm = ({ handleSubmitForm, className, existingValues }) => {
                 max={10}
                 step={0.1}
               />
-              <FormikMuiSlider
-                label="Body"
-                name="qualities.body"
-                min={0}
-                max={10}
-                step={0.1}
-              />
-              <FormikMuiSlider
-                label="Smell"
-                name="qualities.smell"
-                min={0}
-                max={10}
-                step={0.1}
-              />
+              <FormikMuiSlider label="Body" name="qualities.body" min={0} max={10} step={0.1} />
+              <FormikMuiSlider label="Smell" name="qualities.smell" min={0} max={10} step={0.1} />
               <FormikMuiSlider
                 label="Sweetness"
                 name="qualities.sweetness"
@@ -129,13 +113,7 @@ const ReviewForm = ({ handleSubmitForm, className, existingValues }) => {
                 max={10}
                 step={0.1}
               />
-              <FormikMuiSlider
-                label="Sour"
-                name="qualities.sour"
-                min={0}
-                max={10}
-                step={0.1}
-              />
+              <FormikMuiSlider label="Sour" name="qualities.sour" min={0} max={10} step={0.1} />
               <FormikMuiSlider
                 label="Bitterness"
                 name="qualities.bitter"

@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import {
-  EditRounded,
-  ThumbDownRounded,
-  ThumbUpRounded,
-} from '@material-ui/icons';
+import { EditRounded, ThumbDownRounded, ThumbUpRounded } from '@material-ui/icons';
 import { Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { DateTime } from 'luxon';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 import MyPropTypes from '../../../MyPropTypes';
 import ExpandButton from '../../Shared/ExpandButton';
 import { openReviewEditorDialog } from '../../../Redux/slices/reviewDialog';
+import { useTypedSelector } from '../../../Redux/store';
 
 const ReviewRow = ({ review }) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-  const currentUser = useSelector((state) => state.auth.currentUser);
+  const currentUser = useTypedSelector((state) => state.auth.currentUser);
   const { username, title, createdAt, description, userId } = review;
 
   const handleClickEditReview = () => {
@@ -25,18 +22,14 @@ const ReviewRow = ({ review }) => {
       openReviewEditorDialog({
         drinkId: review.drinkId,
         reviewId: review.id,
-      })
+      }),
     );
   };
 
   const renderUsername = () => {
     if (!username) return null;
     return (
-      <NavLink
-        to="/"
-        className={styles.UserLink}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <NavLink to="/" className={styles.UserLink} onClick={(e) => e.stopPropagation()}>
         <Typography color="textSecondary">{`@${username}`}</Typography>
       </NavLink>
     );
@@ -45,11 +38,7 @@ const ReviewRow = ({ review }) => {
   const renderDate = () => {
     // eslint-disable-next-line new-cap
     const date = new DateTime.fromISO(createdAt);
-    return (
-      <Typography variant="body2">
-        {date.toLocaleString(DateTime.DATE_MED)}
-      </Typography>
-    );
+    return <Typography variant="body2">{date.toLocaleString(DateTime.DATE_MED)}</Typography>;
   };
 
   const renderEditIcon = () => {
@@ -89,10 +78,7 @@ const ReviewRow = ({ review }) => {
             {/* <Typography>{createdAt}</Typography> */}
           </div>
         </div>
-        <ExpandButton
-          onClick={() => setExpanded((c) => !c)}
-          expanded={expanded}
-        />
+        <ExpandButton onClick={() => setExpanded((c) => !c)} expanded={expanded} />
       </div>
       <Collapse in={expanded}>
         <Typography className={styles.Description}>{description}</Typography>

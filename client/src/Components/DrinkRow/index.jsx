@@ -1,17 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  Avatar,
-  Button,
-  Chip,
-  Collapse,
-  Paper,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { Avatar, Button, Chip, Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { GrTest } from 'react-icons/gr';
 
+import { useTypedSelector } from '../../Redux/store';
 import { LocalBar } from '@material-ui/icons';
 import styles from './styles.module.scss';
 import DrinkReviews from '../DrinkReviews';
@@ -22,10 +15,8 @@ import { openReviewDialog } from '../../Redux/slices/reviewDialog';
 
 const DrinkRow = ({ drinkId }) => {
   const dispatch = useDispatch();
-  const drink = useSelector((state) => state.drinks.drinks[drinkId]);
-  const reviewsLoading = useSelector((state) =>
-    selectReviewsLoadingForDrink(state, drinkId)
-  );
+  const drink = useTypedSelector((state) => state.drinks.drinks[drinkId]);
+  const reviewsLoading = useTypedSelector((state) => selectReviewsLoadingForDrink(state, drinkId));
 
   const avatarStyle = useMemo(() => {
     return {
@@ -34,15 +25,10 @@ const DrinkRow = ({ drinkId }) => {
   }, [JSON.stringify(drink.flavors)]);
 
   const [showDeets, setShowDeets] = useState(
-    false
+    false,
     // drinkId === '5f7ff7418e80e037f59fbe88'
   );
-  const {
-    name = 'delete me please',
-    score = -0.4,
-    numRatings = -1,
-    flavors = [],
-  } = drink;
+  const { name = 'delete me please', score = -0.4, numRatings = -1, flavors = [] } = drink;
 
   const handleClickRow = () => {
     setShowDeets((c) => !c);
@@ -86,9 +72,7 @@ const DrinkRow = ({ drinkId }) => {
                 <GrTest />
               </div>
               {score && (
-                <Typography className={styles.OverallScore}>
-                  {`${score.toFixed(0)}/100`}
-                </Typography>
+                <Typography className={styles.OverallScore}>{`${score.toFixed(0)}/100`}</Typography>
               )}
               {flavors.map((flavor) => (
                 <Chip

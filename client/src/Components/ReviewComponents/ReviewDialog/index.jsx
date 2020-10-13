@@ -8,12 +8,10 @@ import {
 } from '@material-ui/core';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createSelector } from 'reselect';
-import {
-  closeReviewDialog,
-  createReview,
-} from '../../../Redux/slices/reviewDialog';
+import { closeReviewDialog, createReview } from '../../../Redux/slices/reviewDialog';
+import { useTypedSelector } from '../../../Redux/store';
 import ReviewForm from '../ReviewForm';
 import styles from './styles.module.scss';
 
@@ -22,7 +20,7 @@ const selectDrinkForDialog = createSelector(
   (state) => state.drinks.drinks,
   (drinkId, drinks) => {
     return get(drinks, drinkId, {});
-  }
+  },
 );
 
 const selectExistingReview = createSelector(
@@ -30,14 +28,14 @@ const selectExistingReview = createSelector(
   (state) => state.reviews.reviews,
   (reviewId, reviews) => {
     return get(reviews, reviewId, null);
-  }
+  },
 );
 
 const ReviewDialog = () => {
   const dispatch = useDispatch();
-  const { dialogOpen } = useSelector((state) => state.reviewDialog);
-  const existingReview = useSelector(selectExistingReview);
-  const { name } = useSelector(selectDrinkForDialog);
+  const { dialogOpen } = useTypedSelector((state) => state.reviewDialog);
+  const existingReview = useTypedSelector(selectExistingReview);
+  const { name } = useTypedSelector(selectDrinkForDialog);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
@@ -86,11 +84,7 @@ const ReviewDialog = () => {
       <Collapse in={showSuccessMessage} mountOnEnter unmountOnExit>
         <div className={styles.SuccessMessageContainer}>
           <Typography variant="h4">Thank you!</Typography>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleCloseDialog}
-          >
+          <Button color="primary" variant="contained" onClick={handleCloseDialog}>
             Get back out there tiger
           </Button>
           <Typography variant="caption">

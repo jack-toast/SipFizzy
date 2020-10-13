@@ -1,11 +1,11 @@
-import { Container } from '@material-ui/core';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { Container } from '@material-ui/core';
 import FadeProgressBar from '../../Components/FadeProgressBar';
+import { useTypedSelector } from '../../Redux/store';
 import TopDrinks from './TopDrinks';
 
-const HomeView = () => {
-  const { loading } = useSelector((state) => state.drinks);
+const HomeView: React.FC = () => {
+  const { loading } = useTypedSelector((state) => state.drinks);
   return (
     <>
       <FadeProgressBar active={loading !== 'idle'} />

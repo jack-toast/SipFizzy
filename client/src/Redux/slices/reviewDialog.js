@@ -4,7 +4,7 @@ import { addReview as userAddReview } from './auth';
 import { fetchDrinksOptId } from './drinks';
 
 /* eslint-disable no-param-reassign */
-const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const createReview = createAsyncThunk(
   'reviewDialog/createReview',
@@ -26,7 +26,7 @@ export const createReview = createAsyncThunk(
     dispatch(addReview(resp.review));
     dispatch(userAddReview(resp.review));
     return resp.review;
-  }
+  },
 );
 
 const reviewDialogSlice = createSlice({

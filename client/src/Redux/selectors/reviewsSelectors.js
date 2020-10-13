@@ -1,6 +1,6 @@
 import { filter, has, isEqual } from 'lodash';
 
-const { createSelectorCreator, defaultMemoize } = require('reselect');
+import { createSelectorCreator, defaultMemoize } from 'reselect';
 
 const createMemoSelector = createSelectorCreator(defaultMemoize, isEqual);
 
@@ -9,7 +9,7 @@ const selectReviews = (state) => state.reviews.reviews;
 const selectReviewsLoadingForDrink = createMemoSelector(
   (state) => state.reviews.activeDrinkMap,
   (_, drinkId) => drinkId,
-  (activeDrinkMap, drinkId) => has(activeDrinkMap, drinkId)
+  (activeDrinkMap, drinkId) => has(activeDrinkMap, drinkId),
 );
 
 const makeSelectReviewsForDrink = () =>
@@ -18,11 +18,7 @@ const makeSelectReviewsForDrink = () =>
     (_, drinkId) => drinkId,
     (reviews, drinkId) => {
       return filter(reviews, (r) => r.drinkId === drinkId);
-    }
+    },
   );
 
-export {
-  selectReviews,
-  makeSelectReviewsForDrink,
-  selectReviewsLoadingForDrink,
-};
+export { selectReviews, makeSelectReviewsForDrink, selectReviewsLoadingForDrink };

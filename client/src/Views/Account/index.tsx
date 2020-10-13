@@ -1,14 +1,15 @@
 import { CircularProgress, Typography } from '@material-ui/core';
 import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
+import { useTypedSelector } from '../../Redux/store';
 import AccountDetails from './AccountDetails';
 import LoginForm from './LoginForm/index';
 
-const Account = () => {
+const Account: React.FC = () => {
   const dispatch = useDispatch();
-  const { currentUser, loading } = useSelector((state) => state.auth);
+  const { currentUser, loading } = useTypedSelector((state) => state.auth);
 
   useEffect(() => {
     const requestCurrentUser = async () => {
@@ -20,7 +21,7 @@ const Account = () => {
       }
     };
     requestCurrentUser();
-    return () => {};
+    return undefined;
   }, [dispatch]);
 
   if (loading !== 'idle') {

@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useTypedSelector } from '../Redux/store';
 
 const useHasAccess = ({ waitForError = false } = {}) => {
   const {
     currentUser: { isAdmin },
     loading: authLoading,
     error,
-  } = useSelector((state) => state.auth);
+  } = useTypedSelector((state) => state.auth);
 
   const loading = useMemo(() => {
     if (isAdmin) return false;

@@ -12,7 +12,7 @@ export const fetchReviews = createAsyncThunk(
     }
     const response = await getReviews({ drinkId });
     return response.reviews;
-  }
+  },
 );
 
 const reviewsSlice = createSlice({
@@ -43,18 +43,14 @@ const reviewsSlice = createSlice({
       const newActiveDrinkMap = { ...state.activeDrinkMap };
       delete newActiveDrinkMap[action.meta.arg.drinkId];
       state.activeDrinkMap = newActiveDrinkMap;
-      state.loading = Object.keys(newActiveDrinkMap).length
-        ? 'pending'
-        : 'idle';
+      state.loading = Object.keys(newActiveDrinkMap).length ? 'pending' : 'idle';
     },
     [fetchReviews.rejected]: (state, action) => {
       state.error = action.error;
       const newActiveDrinkMap = { ...state.activeDrinkMap };
       delete newActiveDrinkMap[action.meta.arg.drinkId];
       state.activeDrinkMap = newActiveDrinkMap;
-      state.loading = Object.keys(newActiveDrinkMap).length
-        ? 'pending'
-        : 'idle';
+      state.loading = Object.keys(newActiveDrinkMap).length ? 'pending' : 'idle';
     },
   },
 });

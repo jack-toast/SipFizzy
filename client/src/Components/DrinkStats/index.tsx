@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { ResponsiveRadar } from '@nivo/radar';
 import { Paper } from '@material-ui/core';
 import { capitalize, get } from 'lodash';
-import MyPropTypes from '../../MyPropTypes';
 import styles from './styles.module.scss';
 
 const qualityLabelMap = {
@@ -16,7 +15,16 @@ const qualityLabelMap = {
   bitter: 'Bitterness',
 };
 
-const DrinkStats = ({ drink }) => {
+interface Props {
+  drink: {
+    name: string;
+    qualities: {
+      [key: string]: number;
+    };
+  };
+}
+
+const DrinkStats: React.FC<Props> = ({ drink }: Props) => {
   const data = useMemo(() => {
     console.log('crunching numbers');
     return [
@@ -40,7 +48,7 @@ const DrinkStats = ({ drink }) => {
       <div className={styles.ChartContainer}>
         <ResponsiveRadar
           data={data}
-          // margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
+          legends={[]}
           margin={{ top: 50, right: 0, bottom: 50, left: 0 }}
           keys={[drink.name]}
           indexBy="quality"
@@ -53,10 +61,6 @@ const DrinkStats = ({ drink }) => {
       </div>
     </Paper>
   );
-};
-
-DrinkStats.propTypes = {
-  drink: MyPropTypes.drink.isRequired,
 };
 
 export default DrinkStats;

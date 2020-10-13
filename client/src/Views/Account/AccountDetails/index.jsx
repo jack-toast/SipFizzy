@@ -1,11 +1,11 @@
 import { Button, Container, Divider, Typography } from '@material-ui/core';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { deleteFakeReviewsAPI } from '../../../APIs/reviewsAPI';
 import { syncDrinkScoresAPI } from '../../../APIs/drinksAPI';
 import AccessControl from '../../../Components/AccessControl';
 
 import styles from './styles.module.scss';
+import { useTypedSelector } from '../../../Redux/store';
 
 const arrPickRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -20,7 +20,7 @@ const possibleSubtitles = [
 const AccountDetails = () => {
   const {
     currentUser: { reviews, username },
-  } = useSelector((state) => state.auth);
+  } = useTypedSelector((state) => state.auth);
 
   const subtitle = useMemo(() => {
     return arrPickRandom(possibleSubtitles);

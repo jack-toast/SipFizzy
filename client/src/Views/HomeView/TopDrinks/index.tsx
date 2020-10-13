@@ -1,10 +1,10 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import DrinkRow from '../../../Components/DrinkRow';
+import { useTypedSelector } from '../../../Redux/store';
 
-const TopDrinks = () => {
-  const { drinkOrder } = useSelector((state) => state.drinks);
+const TopDrinks: React.FC = () => {
+  const { drinkOrder } = useTypedSelector((state) => state.drinks);
   if (!drinkOrder.length) return null;
 
   return (
