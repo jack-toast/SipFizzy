@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Field, Form, Formik } from 'formik';
 import { Button, Typography } from '@material-ui/core';
 import clsx from 'clsx';
@@ -11,8 +10,9 @@ import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider';
 import DrinkReviewSchema from './DrinkReviewSchema';
 import FormikMuiRating from '../../FormikWrappers/FormikMuiRating';
 import { useTypedSelector } from '../../../Redux/store';
+import { NewReview } from '../../../MyTypes/review';
 
-const getInitScore = (x, { amp = 1, omega = 1, phi = 0, shift = 0 }) => {
+const getInitScore = (x: number, { amp = 1, omega = 1, phi = 0, shift = 0 }) => {
   return amp * Math.sin(omega * x * Math.PI - phi) + shift;
 };
 
@@ -24,7 +24,16 @@ const getInitScores = (numScores = 8) => {
   return range(numScores).map((x) => clamp(getInitScore(x, { amp, omega, shift, phi }), 0, 10));
 };
 
-const ReviewForm = ({ handleSubmitForm, className, existingValues }) => {
+type ReviewFormProps = {
+  handleSubmitForm: (reviewArgs: NewReview) => void | Promise<any>;
+  className?: string;
+  existingValues?: NewReview | null;
+};
+const ReviewForm: React.FC<ReviewFormProps> = ({
+  handleSubmitForm,
+  className,
+  existingValues,
+}: ReviewFormProps) => {
   const errorMessage = useTypedSelector((state) => state.reviewDialog?.error?.message);
   const initScores = useMemo(() => getInitScores(8), []);
   const fakeReviewID = useMemo(() => nanoid(4), []);
@@ -137,18 +146,6 @@ const ReviewForm = ({ handleSubmitForm, className, existingValues }) => {
       }}
     </Formik>
   );
-};
-
-ReviewForm.propTypes = {
-  handleSubmitForm: PropTypes.func.isRequired,
-  className: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  existingValues: PropTypes.object,
-};
-
-ReviewForm.defaultProps = {
-  className: '',
-  existingValues: null,
 };
 
 export default ReviewForm;

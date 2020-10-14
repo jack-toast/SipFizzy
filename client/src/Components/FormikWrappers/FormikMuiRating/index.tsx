@@ -7,21 +7,25 @@ import { Rating } from '@material-ui/lab';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
 
-/**
- * Wrapper to use Mui Lab's Rating component with Formik
- *
- * @param {String} label foo bar
- */
-const FormikMuiRating = ({ className, classes, label, max, maxValue, size, ...props }) => {
+const FormikMuiRating: React.FC<any> = ({
+  className,
+  classes,
+  label,
+  max,
+  maxValue,
+  size,
+  ...props
+}) => {
   const [, meta, helpers] = useField(props);
 
   const [hoverValue, setHoverValue] = useState(-1);
   const scaleFactor = useMemo(() => maxValue / max, [maxValue, max]);
   const scaledValue = useMemo(() => meta.value / scaleFactor, [scaleFactor, meta.value]);
 
-  const handleChange = (e, v) => {
-    helpers.setValue(v * scaleFactor);
-    setHoverValue(v);
+  const handleChange = (e: any, v: number | null) => {
+    const safeVal = v !== null ? v : scaledValue;
+    helpers.setValue(safeVal * scaleFactor);
+    setHoverValue(safeVal);
     if (!meta.touched) helpers.setTouched(true);
   };
 

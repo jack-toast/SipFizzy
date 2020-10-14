@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-wrap-multilines */
 import React, { useState } from 'react';
 import {
   Button,
@@ -14,7 +13,7 @@ import { has } from 'lodash';
 import styles from './styles.module.scss';
 import { loginUserAPI, signupUserAPI } from '../../../APIs/authAPI';
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   const [existingUser, setExistingUser] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -30,8 +29,7 @@ const LoginForm = () => {
         password,
       });
       console.log('resp', resp);
-      if (!resp.status !== 200)
-        throw new Error(resp.message || 'Could not sign up');
+      if (!resp.success) throw new Error(resp.message || 'Could not sign up');
     } catch (err) {
       console.log('err', err);
       const { message = '' } = err;
@@ -48,8 +46,7 @@ const LoginForm = () => {
       });
       console.log('resp', resp);
       console.log('resp status', resp.status);
-      if (has(resp, 'status') && !resp.status !== 200)
-        throw new Error(resp.message || 'Could not sign in');
+      if (has(resp, 'status') && !resp.ok) throw new Error(resp.message || 'Could not sign in');
     } catch (err) {
       console.log('err', err);
       const { message = '' } = err;
@@ -73,10 +70,7 @@ const LoginForm = () => {
         </Typography>
         <Divider />
 
-        <Collapse
-          in={!existingUser}
-          classes={{ wrapperInner: styles.CollapseInnerWrapper }}
-        >
+        <Collapse in={!existingUser} classes={{ wrapperInner: styles.CollapseInnerWrapper }}>
           <TextField
             className={styles.Input}
             value={username}
@@ -135,7 +129,5 @@ const LoginForm = () => {
     </div>
   );
 };
-
-LoginForm.propTypes = {};
 
 export default LoginForm;

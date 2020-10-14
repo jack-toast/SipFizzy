@@ -17,35 +17,12 @@ WebFont.load({
 
 document.title = 'Sip Fizzy';
 
-// JY TODO - Figure out typing for refs that don't point to a dom node...
-// const notistackRef = React.createRef<any>();
-// const closeSnack = (key: string | number) => () => {
-//   if (notistackRef.current !== null)
-//     notistackRef.current.closeSnackbar(key);
-// };
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
         <StylesProvider injectFirst={true}>
-          {/* <SnackbarProvider
-            maxSnack={3}
-            preventDuplicate
-            dense
-            ref={notistackRef}
-            action={(key) => (
-              <IconButton
-                size="small"
-                onClick={closeSnack(key)}
-                color="inherit"
-              >
-                <Close />
-              </IconButton>
-            )}
-          > */}
           <App />
-          {/* </SnackbarProvider> */}
         </StylesProvider>
       </Router>
     </Provider>

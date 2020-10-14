@@ -49,7 +49,6 @@ interface Props {
 const DrinkStats: React.FC<Props> = ({ drink }: Props) => {
   const useDark = useTypedSelector((state) => state.theme.useDark);
   const data = useMemo(() => {
-    console.log('crunching numbers');
     return [
       'flavorAccuracy',
       'flavorIntensity',

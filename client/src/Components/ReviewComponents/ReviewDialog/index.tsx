@@ -46,11 +46,6 @@ const ReviewDialog: React.FC = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
-    console.log('existingReview', existingReview);
-    return undefined;
-  }, [existingReview]);
-
-  useEffect(() => {
     if (dialogOpen) setShowSuccessMessage(false);
     return undefined;
   }, [dialogOpen]);
@@ -69,7 +64,6 @@ const ReviewDialog: React.FC = () => {
   };
 
   const getTitle = () => {
-    console.log('selectedDrink', selectedDrink);
     return `New Sip - ${get(selectedDrink, 'name') || 'unknown (tell jack)'}`;
   };
 
@@ -83,10 +77,7 @@ const ReviewDialog: React.FC = () => {
       <Collapse in={!showSuccessMessage} mountOnEnter unmountOnExit>
         <DialogTitle>{getTitle()}</DialogTitle>
         <DialogContent className={styles.DialogContent}>
-          <ReviewForm
-            handleSubmitForm={handleSubmitReviewThunk}
-            existingValues={{ ...existingReview }}
-          />
+          <ReviewForm handleSubmitForm={handleSubmitReviewThunk} existingValues={existingReview} />
         </DialogContent>
       </Collapse>
       <Collapse in={showSuccessMessage} mountOnEnter unmountOnExit>

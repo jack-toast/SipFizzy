@@ -21,7 +21,6 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const { username, title, createdAt, description, userId } = review;
 
   const handleClickEditReview = () => {
-    console.log('open review editor');
     dispatch(
       openReviewEditorDialog({
         drinkId: review.drinkId,

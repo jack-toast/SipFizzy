@@ -1,30 +1,15 @@
+import React from 'react';
 import { Button, Container, Divider, Typography } from '@material-ui/core';
-import React, { useMemo } from 'react';
 import { deleteFakeReviewsAPI } from '../../../APIs/reviewsAPI';
 import { syncDrinkScoresAPI } from '../../../APIs/drinksAPI';
 import AccessControl from '../../../Components/AccessControl';
-
 import styles from './styles.module.scss';
 import { useTypedSelector } from '../../../Redux/store';
+import { selectCurrentUser } from '../../../Redux/selectors/authSelectors';
+import { get } from 'lodash';
 
-const arrPickRandom = (arr) => {
-  return arr[Math.floor(Math.random() * arr.length)];
-};
-
-const possibleSubtitles = [
-  'What are we drinking today?',
-  'Fucking hell you look like shit!',
-  'Go sip yourself',
-];
-
-const AccountDetails = () => {
-  const {
-    currentUser: { reviews, username },
-  } = useTypedSelector((state) => state.auth);
-
-  const subtitle = useMemo(() => {
-    return arrPickRandom(possibleSubtitles);
-  }, []);
+const AccountDetails: React.FC = () => {
+  const currentUser = useTypedSelector(selectCurrentUser);
 
   const deleteFakeReviews = async () => {
     try {
@@ -47,10 +32,7 @@ const AccountDetails = () => {
   return (
     <Container maxWidth="md">
       <Typography style={{ marginTop: '1.5rem' }} variant="h3" gutterBottom>
-        {`Hey ${username},`}
-      </Typography>
-      <Typography variant="caption" gutterBottom>
-        {subtitle}
+        {`Hey ${get(currentUser, 'username', 'Bob')},`}
       </Typography>
 
       <AccessControl>
@@ -66,16 +48,6 @@ const AccountDetails = () => {
           </Button>
         </div>
       </AccessControl>
-
-      {/* <Typography style={{ marginTop: '2rem' }} variant="h3">
-        Your Reviews
-      </Typography>
-      {!reviews.length && (
-        <Typography variant="caption">
-          jk, you don&apos;t have any... Nerd
-        </Typography>
-      )}
-      {reviews.map((review) => renderReviewSummary(review))} */}
     </Container>
   );
 };

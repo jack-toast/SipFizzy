@@ -9,18 +9,25 @@ export type Drink = {
     sour: number;
     bitter: number;
   };
-  score: number;
+  abv: number;
+  calories: number;
+  createdAt: string;
+  createdBy: string;
+  editedBy: string;
+  flavors: string[];
+  id: string;
+  image: string;
+  name: string;
   numRatings: number;
+  score: number;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+};
+
+export type NewDrink = {
   abv: number;
   calories: number;
   flavors: string[];
-  image: string;
-  _id: string;
   name: string;
-  createdBy: string;
-  editedBy: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  id: string;
 };

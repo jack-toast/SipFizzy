@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
-import { Collapse, Container, useTheme } from '@material-ui/core';
+import React from 'react';
+import { Container } from '@material-ui/core';
 import FadeProgressBar from '../../Components/FadeProgressBar';
 import { useTypedSelector } from '../../Redux/store';
 import TopDrinks from './TopDrinks';
-import { isEmpty } from 'lodash';
 
 const HomeView: React.FC = () => {
-  const theme = useTheme();
   const { loading } = useTypedSelector((state) => state.drinks);
-
-  useEffect(() => {
-    console.log('theme', theme);
-    return undefined;
-  }, [theme]);
 
   return (
     <>
