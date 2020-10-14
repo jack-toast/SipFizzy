@@ -27,8 +27,8 @@ document.title = 'Sip Fizzy';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <StylesProvider injectFirst>
-        <Router>
+      <Router>
+        <StylesProvider injectFirst={true}>
           {/* <SnackbarProvider
             maxSnack={3}
             preventDuplicate
@@ -46,8 +46,8 @@ ReactDOM.render(
           > */}
           <App />
           {/* </SnackbarProvider> */}
-        </Router>
-      </StylesProvider>
+        </StylesProvider>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

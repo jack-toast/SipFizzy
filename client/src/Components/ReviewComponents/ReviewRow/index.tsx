@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditRounded, ThumbDownRounded, ThumbUpRounded } from '@material-ui/icons';
 import { Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
-import MyPropTypes from '../../../MyPropTypes';
 import ExpandButton from '../../Shared/ExpandButton';
 import { openReviewEditorDialog } from '../../../Redux/slices/reviewDialog';
 import { useTypedSelector } from '../../../Redux/store';
+import { Review } from '../../../MyTypes/review';
 
-const ReviewRow = ({ review }) => {
+type Props = {
+  review: Review;
+};
+const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const currentUser = useTypedSelector((state) => state.auth.currentUser);
@@ -75,7 +78,6 @@ const ReviewRow = ({ review }) => {
           <div className={styles.Subtitle}>
             {renderUsername()}
             {renderDate()}
-            {/* <Typography>{createdAt}</Typography> */}
           </div>
         </div>
         <ExpandButton onClick={() => setExpanded((c) => !c)} expanded={expanded} />
@@ -85,10 +87,6 @@ const ReviewRow = ({ review }) => {
       </Collapse>
     </Paper>
   );
-};
-
-ReviewRow.propTypes = {
-  review: MyPropTypes.review.isRequired,
 };
 
 export default ReviewRow;

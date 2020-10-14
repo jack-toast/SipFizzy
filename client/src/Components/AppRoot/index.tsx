@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { MuiThemeProvider, CssBaseline, makeStyles } from '@material-ui/core';
+import React, { useEffect, useMemo } from 'react';
+import { CssBaseline, makeStyles } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { MUI_DARK_THEME, MUI_LIGHT_THEME } from '../../muiThemes';
+import { getMuiTheme } from '../../muiThemes';
 import AppToolbar from '../AppToolbar';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
 import RootSwitch from './RootSwitch';
@@ -10,10 +11,7 @@ import ReviewDialog from '../ReviewComponents/ReviewDialog';
 import { useTypedSelector } from '../../Redux/store';
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: theme.spacing(1),
-    },
+  toolbarSpacer: {
     ...theme.mixins.toolbar,
   },
 }));
@@ -28,16 +26,18 @@ const AppRoot: React.FC = () => {
     return undefined;
   }, [dispatch]);
 
+  const theme = useMemo(() => {
+    return getMuiTheme(useDark);
+  }, [useDark]);
+
   return (
-    <MuiThemeProvider theme={useDark ? MUI_DARK_THEME : MUI_LIGHT_THEME}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppToolbar />
-      <div>
-        <div className={muiClasses.toolbar} />
-        <RootSwitch />
-      </div>
+      <div className={muiClasses.toolbarSpacer} />
+      <RootSwitch />
       <ReviewDialog />
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

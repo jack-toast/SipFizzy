@@ -1,6 +1,6 @@
 import kyUseKey from './kyUseKey';
 
-const { default: ky } = require('ky');
+import ky from 'ky';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
@@ -11,9 +11,7 @@ export const getDrinks = async () => {
 };
 
 export const getDrinksOptId = async ({ drinkId } = {}) => {
-  const res = await ky(
-    `${baseURL}/drinks${drinkId ? `/${drinkId}` : ''}`
-  ).json();
+  const res = await ky(`${baseURL}/drinks${drinkId ? `/${drinkId}` : ''}`).json();
   return res;
 };
 

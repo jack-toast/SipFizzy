@@ -1,11 +1,26 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
-import { Face, LocalDrinkOutlined } from '@material-ui/icons';
+import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { NavLink, useHistory } from 'react-router-dom';
+import {
+  Brightness2Rounded,
+  Brightness7Rounded,
+  Face,
+  LocalDrinkOutlined,
+} from '@material-ui/icons';
 import styles from './styles.module.scss';
 import AccessControl from '../AccessControl';
+import { useDispatch } from 'react-redux';
+import { toggleTheme } from '../../Redux/slices/themeSlice';
+import { useTypedSelector } from '../../Redux/store';
 
 const AppToolbar: React.FC = () => {
+  const history = useHistory();
+  const useDark = useTypedSelector((state) => state.theme.useDark);
+  const dispatch = useDispatch();
+  const handleClickThemeToggle = () => {
+    dispatch(toggleTheme());
+  };
+
   return (
     <AppBar position="fixed" color="default" elevation={1}>
       <Toolbar>
@@ -14,13 +29,16 @@ const AppToolbar: React.FC = () => {
         </NavLink>
         <div className={styles.RightItems}>
           <AccessControl>
-            <NavLink to="/createdrink" className={styles.NavLink}>
+            <IconButton onClick={() => history.push('/createdrink')}>
               <LocalDrinkOutlined />
-            </NavLink>
+            </IconButton>
           </AccessControl>
-          <NavLink to="/account" className={styles.NavLink}>
-            <Face color="inherit" />
-          </NavLink>
+          <IconButton onClick={() => history.push('/account')}>
+            <Face />
+          </IconButton>
+          <IconButton onClick={handleClickThemeToggle}>
+            {useDark ? <Brightness7Rounded /> : <Brightness2Rounded />}
+          </IconButton>
         </div>
       </Toolbar>
     </AppBar>

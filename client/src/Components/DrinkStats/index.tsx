@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { ResponsiveRadar } from '@nivo/radar';
-import { Paper } from '@material-ui/core';
-import { capitalize, get } from 'lodash';
+import { Paper, useTheme } from '@material-ui/core';
+import { get } from 'lodash';
 import styles from './styles.module.scss';
+import { useTypedSelector } from '../../Redux/store';
 
 const qualityLabelMap = {
   flavorAccuracy: 'Flavor Accuracy',
@@ -15,6 +16,27 @@ const qualityLabelMap = {
   bitter: 'Bitterness',
 };
 
+type LabelProps = {
+  id: string;
+  anchor: string;
+};
+const CustomLabel: any = ({ id, anchor }: LabelProps) => {
+  const theme = useTheme();
+  return (
+    <text
+      dominantBaseline="central"
+      textAnchor={anchor}
+      style={{
+        fontSize: '12px',
+        fontWeight: 'bold',
+        fill: `${theme.palette.text.secondary || 'gray'}`,
+      }}
+    >
+      {id}
+    </text>
+  );
+};
+
 interface Props {
   drink: {
     name: string;
@@ -25,6 +47,7 @@ interface Props {
 }
 
 const DrinkStats: React.FC<Props> = ({ drink }: Props) => {
+  const useDark = useTypedSelector((state) => state.theme.useDark);
   const data = useMemo(() => {
     console.log('crunching numbers');
     return [
@@ -37,7 +60,7 @@ const DrinkStats: React.FC<Props> = ({ drink }: Props) => {
       'sour',
       'bitter',
     ].map((quality) => ({
-      quality: capitalize(get(qualityLabelMap, quality, quality)),
+      quality: get(qualityLabelMap, quality, quality),
       [drink.name]: drink.qualities[quality],
     }));
   }, [JSON.stringify(drink?.qualities)]);
@@ -45,15 +68,22 @@ const DrinkStats: React.FC<Props> = ({ drink }: Props) => {
   if (!drink) return null;
   return (
     <Paper className={styles.Root} elevation={2}>
-      <div className={styles.ChartContainer}>
+      <div
+        className={styles.ChartContainer}
+        style={{
+          ...(useDark && { color: 'rgba(0,0,0,0.87)' }),
+        }}
+      >
         <ResponsiveRadar
           data={data}
           legends={[]}
+          colors={{ scheme: 'set2' }}
           margin={{ top: 50, right: 0, bottom: 50, left: 0 }}
           keys={[drink.name]}
           indexBy="quality"
           maxValue={10}
           curve="catmullRomClosed"
+          gridLabel={CustomLabel}
           tooltipFormat={(val) => {
             return `${val.toFixed(1)}`;
           }}

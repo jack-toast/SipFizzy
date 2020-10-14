@@ -1,4 +1,4 @@
-const { default: ky } = require('ky');
+import ky from 'ky';
 
 const AUTH_TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
 

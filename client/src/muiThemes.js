@@ -3,45 +3,25 @@
  */
 
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { pink, cyan, amber, blue } from '@material-ui/core/colors';
 
-const baseTheme = {
-  typography: {
-    useNextVariants: true,
-  },
-};
-
-export const MUI_LIGHT_THEME = responsiveFontSizes(
-  createMuiTheme({
-    ...baseTheme,
-    palette: {
-      ...baseTheme.palette,
-      primary: pink,
-      secondary: blue,
-      type: 'light',
-      background: {
-        paper: '#fff',
-        default: '#f6f6f6',
+export const getMuiTheme = (useDark = false) => {
+  return responsiveFontSizes(
+    createMuiTheme({
+      typography: {
+        useNextVariants: true,
       },
-    },
-  })
-);
-
-export const MUI_DARK_THEME = responsiveFontSizes(
-  createMuiTheme({
-    ...baseTheme,
-    palette: {
-      ...baseTheme.palette,
-      primary: cyan,
-      secondary: amber,
-      type: 'dark',
-      // background: {
-      //   default: '#212121',
-      //   paper: '#333',
-      // },
-    },
-  })
-);
+      palette: {
+        primary: {
+          main: '#DB3267',
+        },
+        secondary: {
+          main: '#2B6FE9',
+        },
+        type: useDark ? 'dark' : 'light',
+      },
+    }),
+  );
+};
 
 export const drawerWidth = 240;
 

@@ -12,23 +12,12 @@ import styles from './styles.module.scss';
  *
  * @param {String} label foo bar
  */
-const FormikMuiRating = ({
-  className,
-  classes,
-  label,
-  max,
-  maxValue,
-  size,
-  ...props
-}) => {
+const FormikMuiRating = ({ className, classes, label, max, maxValue, size, ...props }) => {
   const [, meta, helpers] = useField(props);
 
   const [hoverValue, setHoverValue] = useState(-1);
   const scaleFactor = useMemo(() => maxValue / max, [maxValue, max]);
-  const scaledValue = useMemo(() => meta.value / scaleFactor, [
-    scaleFactor,
-    meta.value,
-  ]);
+  const scaledValue = useMemo(() => meta.value / scaleFactor, [scaleFactor, meta.value]);
 
   const handleChange = (e, v) => {
     helpers.setValue(v * scaleFactor);

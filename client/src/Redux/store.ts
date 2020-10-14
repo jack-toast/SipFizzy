@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { createLogger } from 'redux-logger';
 
 import auth from './slices/auth';
 import drinks from './slices/drinks';
 import reviewDialog from './slices/reviewDialog';
 import reviews from './slices/reviews';
-import theme from './slices/theme';
+import themeSlice from './slices/themeSlice';
 
 // configure middleware
 const logger = createLogger({
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   drinks,
   reviewDialog,
   reviews,
-  theme,
+  theme: themeSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -31,5 +31,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',
 });
+
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;

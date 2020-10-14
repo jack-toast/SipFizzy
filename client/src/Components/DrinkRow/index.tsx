@@ -9,25 +9,20 @@ import { LocalBar } from '@material-ui/icons';
 import styles from './styles.module.scss';
 import DrinkReviews from '../DrinkReviews';
 import FadeProgressBar from '../FadeProgressBar';
-import { selectReviewsLoadingForDrink } from '../../Redux/selectors/reviewsSelectors';
 import DrinkStats from '../DrinkStats';
 import { openReviewDialog } from '../../Redux/slices/reviewDialog';
+import { has } from 'lodash';
 
-const DrinkRow = ({ drinkId }) => {
+type Props = { drinkId: string };
+const DrinkRow: React.FC<Props> = ({ drinkId }) => {
   const dispatch = useDispatch();
   const drink = useTypedSelector((state) => state.drinks.drinks[drinkId]);
-  const reviewsLoading = useTypedSelector((state) => selectReviewsLoadingForDrink(state, drinkId));
+  const activeDrinkMap = useTypedSelector((state) => state.reviews.activeDrinkMap);
+  const reviewsLoading = useMemo(() => has(activeDrinkMap, drinkId), [drinkId, activeDrinkMap]);
 
-  const avatarStyle = useMemo(() => {
-    return {
-      background: `linear-gradient(6.9deg, #ffdcce, #eea195)`,
-    };
-  }, [JSON.stringify(drink.flavors)]);
+  const avatarStyle = { background: `linear-gradient(6.9deg, #ffdcce, #eea195)` };
 
-  const [showDeets, setShowDeets] = useState(
-    false,
-    // drinkId === '5f7ff7418e80e037f59fbe88'
-  );
+  const [showDeets, setShowDeets] = useState(drinkId === '5f7ff7418e80e037f59fbe88');
   const { name = 'delete me please', score = -0.4, numRatings = -1, flavors = [] } = drink;
 
   const handleClickRow = () => {
@@ -41,12 +36,7 @@ const DrinkRow = ({ drinkId }) => {
   const handleClickAddReview = (e) => {
     e.stopPropagation();
     dispatch(openReviewDialog(drinkId));
-    // history.push(`/addReview/${drinkId}`);
   };
-
-  // Use a linear background gradient for the drink logo depending on the flavors!
-  // Will allow you to load the images in the background
-  // or just load the images when expanding.
 
   if (!drink) return null;
   return (
@@ -54,7 +44,7 @@ const DrinkRow = ({ drinkId }) => {
       <Paper
         onClick={handleClickRow}
         role="button"
-        tabIndex="0"
+        tabIndex={0}
         elevation={showDeets ? 3 : 1}
         onKeyPress={handleKeyPress}
         key={`drink-row-${drinkId}`}
@@ -65,7 +55,9 @@ const DrinkRow = ({ drinkId }) => {
             <LocalBar />
           </Avatar>
           <div className={styles.DescriptionContainer}>
-            <Typography variant="h6">{name}</Typography>
+            <Typography variant="h6" color="textPrimary">
+              {name}
+            </Typography>
             <div className={styles.Subtitle}>
               <div className={styles.NumRatingsContainer}>
                 <Typography>{`${numRatings || 0}`}</Typography>
@@ -96,8 +88,6 @@ const DrinkRow = ({ drinkId }) => {
         </div>
       </Paper>
       <Collapse in={showDeets} mountOnEnter unmountOnExit>
-        {/* <div className={styles.ExpandedContent}> */}
-        {/* render drink stats */}
         <FadeProgressBar active={reviewsLoading} />
         <DrinkStats drink={drink} />
         <DrinkReviews drinkId={drinkId} />

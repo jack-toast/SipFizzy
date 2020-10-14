@@ -4,13 +4,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const themeSlice = createSlice({
   name: 'theme',
   initialState: {
-    useDark: false,
+    useDark: true,
   },
   reducers: {
-    toggleTheme: {
-      reducer: (state) => {
-        state.useDark = !state.useDark;
-      },
+    toggleTheme: (state) => {
+      state.useDark = !state.useDark;
     },
   },
 });

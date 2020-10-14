@@ -12,7 +12,7 @@ type Props = {
   drinkId: string;
 };
 
-const DrinkReviews: React.FC<Props> = ({ drinkId }: Props) => {
+const DrinkReviews: React.FC<Props> = ({ drinkId }) => {
   const dispatch = useDispatch();
   const allReviews = useSelector(selectReviews);
   const reviews = useMemo(() => {
@@ -23,7 +23,7 @@ const DrinkReviews: React.FC<Props> = ({ drinkId }: Props) => {
   const activeDrinkMap = useTypedSelector((state) => state.reviews.activeDrinkMap);
   useEffect(() => {
     if (has(activeDrinkMap, 'drinkId')) return undefined;
-    dispatch(fetchReviews(drinkId));
+    dispatch(fetchReviews({ drinkId }));
     return undefined;
   }, []);
   // return reviews.map((review) => <ReviewRow review={review} key={review.id} />);

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { IconButton, makeStyles } from '@material-ui/core';
 import { ExpandMoreRounded } from '@material-ui/icons';
 import clsx from 'clsx';
@@ -17,7 +16,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ExpandButton = ({ classes, className, expanded, onClick }) => {
+type Props = {
+  classes?: {
+    root: string;
+    icon: string;
+  };
+  className?: string;
+  expanded: boolean;
+  onClick: () => void;
+};
+const ExpandButton: React.FC<Props> = ({
+  classes = { root: '', icon: '' },
+  className = '',
+  expanded = false,
+  onClick,
+}: Props) => {
   const muiClasses = useStyles();
   return (
     <IconButton
@@ -31,21 +44,6 @@ const ExpandButton = ({ classes, className, expanded, onClick }) => {
       <ExpandMoreRounded className={clsx(classes.icon)} />
     </IconButton>
   );
-};
-
-ExpandButton.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object,
-  className: PropTypes.string,
-  expanded: PropTypes.bool,
-  onClick: PropTypes.func,
-};
-
-ExpandButton.defaultProps = {
-  classes: {},
-  className: '',
-  expanded: false,
-  onClick: null,
 };
 
 export default ExpandButton;
