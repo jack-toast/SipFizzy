@@ -27,8 +27,7 @@ export const deleteFakeReviewsAPI = async () => {
 };
 
 export const createReviewAPI = async (reviewArgs) => {
-  if (!reviewArgs.username)
-    throw new Error('You must be logged in to add a review');
+  if (!reviewArgs.username) throw new Error('You must be logged in to add a review');
   const res = await kyUseKey
     .post(`${baseURL}/reviews`, {
       json: { ...reviewArgs },

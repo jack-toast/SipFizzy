@@ -22,7 +22,7 @@ const AppRoot: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     (async () => dispatch(fetchCurrentUser()))();
-    (async () => dispatch(fetchDrinksOptId()))();
+    (async () => dispatch(fetchDrinksOptId({})))();
     return undefined;
   }, [dispatch]);
 

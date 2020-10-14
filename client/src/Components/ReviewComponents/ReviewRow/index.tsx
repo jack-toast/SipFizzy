@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { EditRounded, ThumbDownRounded, ThumbUpRounded } from '@material-ui/icons';
 import { Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
@@ -6,9 +6,10 @@ import { DateTime } from 'luxon';
 import { useDispatch } from 'react-redux';
 import styles from './styles.module.scss';
 import ExpandButton from '../../Shared/ExpandButton';
-import { openReviewEditorDialog } from '../../../Redux/slices/reviewDialog';
+import { openReviewEditorDialog } from '../../../Redux/slices/reviewDialogSlice';
 import { useTypedSelector } from '../../../Redux/store';
 import { Review } from '../../../MyTypes/review';
+import { selectCurrentUser } from '../../../Redux/selectors/authSelectors';
 
 type Props = {
   review: Review;
@@ -16,7 +17,7 @@ type Props = {
 const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-  const currentUser = useTypedSelector((state) => state.auth.currentUser);
+  const currentUser = useTypedSelector(selectCurrentUser);
   const { username, title, createdAt, description, userId } = review;
 
   const handleClickEditReview = () => {
@@ -39,13 +40,13 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   };
 
   const renderDate = () => {
-    // eslint-disable-next-line new-cap
-    const date = new DateTime.fromISO(createdAt);
+    const date = DateTime.fromISO(`${createdAt}`);
     return <Typography variant="body2">{date.toLocaleString(DateTime.DATE_MED)}</Typography>;
   };
 
   const renderEditIcon = () => {
     // eslint-disable-next-line no-underscore-dangle
+    if (!currentUser) return null;
     if (userId !== currentUser._id) return null;
     return (
       <Tooltip title="edit">

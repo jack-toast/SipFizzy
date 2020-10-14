@@ -19,7 +19,7 @@
     "noEmit": true,
     "jsx": "react",
     "checkJs": false,
-    "strict": false
+    "strict": true,
   },
   "include": [
     "src"

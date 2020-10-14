@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger';
 
 import auth from './slices/auth';
 import drinks from './slices/drinks';
-import reviewDialog from './slices/reviewDialog';
+import reviewDialog from './slices/reviewDialogSlice';
 import reviews from './slices/reviews';
 import themeSlice from './slices/themeSlice';
 

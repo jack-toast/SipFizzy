@@ -6,52 +6,59 @@ import {
   DialogTitle,
   Typography,
 } from '@material-ui/core';
-import { get } from 'lodash';
+import { get, has } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createSelector } from 'reselect';
-import { closeReviewDialog, createReview } from '../../../Redux/slices/reviewDialog';
-import { useTypedSelector } from '../../../Redux/store';
+import { NewReview } from '../../../MyTypes/review';
+import { selectDrinks } from '../../../Redux/selectors/drinksSelectors';
+import {
+  selectReviewDialogDrinkId,
+  selectReviewDialogReviewId,
+} from '../../../Redux/selectors/reviewDialogSelectors';
+import { closeReviewDialog, createReview } from '../../../Redux/slices/reviewDialogSlice';
+import { RootState, useTypedSelector } from '../../../Redux/store';
 import ReviewForm from '../ReviewForm';
 import styles from './styles.module.scss';
 
 const selectDrinkForDialog = createSelector(
-  (state) => state.reviewDialog.drinkId,
-  (state) => state.drinks.drinks,
+  selectReviewDialogDrinkId,
+  selectDrinks,
   (drinkId, drinks) => {
-    return get(drinks, drinkId, {});
+    if (has(drinks, drinkId)) return drinks[drinkId];
+    return {};
   },
 );
 
 const selectExistingReview = createSelector(
-  (state) => state.reviewDialog.reviewId,
-  (state) => state.reviews.reviews,
+  selectReviewDialogReviewId,
+  (state: RootState) => state.reviews.reviews,
   (reviewId, reviews) => {
     return get(reviews, reviewId, null);
   },
 );
 
-const ReviewDialog = () => {
+const ReviewDialog: React.FC = () => {
   const dispatch = useDispatch();
   const { dialogOpen } = useTypedSelector((state) => state.reviewDialog);
   const existingReview = useTypedSelector(selectExistingReview);
-  const { name } = useTypedSelector(selectDrinkForDialog);
+  const selectedDrink = useTypedSelector(selectDrinkForDialog);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     console.log('existingReview', existingReview);
-    return () => {};
+    return undefined;
   }, [existingReview]);
 
   useEffect(() => {
     if (dialogOpen) setShowSuccessMessage(false);
-    return () => {};
+    return undefined;
   }, [dialogOpen]);
 
-  const handleSubmitReviewThunk = async (reviewArgs) => {
+  const handleSubmitReviewThunk = async (reviewArgs: NewReview) => {
     const submissionResult = await dispatch(createReview(reviewArgs));
     console.log('submissionResult', submissionResult);
-    if (submissionResult.type.includes('fulfilled')) {
+    if (get(submissionResult, 'type', '').includes('fulfilled')) {
       setShowSuccessMessage(true);
     }
     return submissionResult;
@@ -62,7 +69,8 @@ const ReviewDialog = () => {
   };
 
   const getTitle = () => {
-    return `New Sip - ${name || 'unknown (tell jack)'}`;
+    console.log('selectedDrink', selectedDrink);
+    return `New Sip - ${get(selectedDrink, 'name') || 'unknown (tell jack)'}`;
   };
 
   return (

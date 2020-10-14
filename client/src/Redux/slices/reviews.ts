@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '../store';
 export const fetchReviews = createAsyncThunk<
   Review[],
   {
-    drinkId?: string;
+    drinkId: string;
   },
   {
     dispatch: AppDispatch;
@@ -28,16 +28,29 @@ export const fetchReviews = createAsyncThunk<
   return response.reviews as Review[];
 });
 
+type ReviewsSliceState = {
+  reviews: {
+    [key: string]: Review;
+  };
+  loading: 'idle' | 'pending';
+  activeDrinkMap: {
+    [key: string]: string;
+  };
+  error: any;
+};
+
+const initialState: ReviewsSliceState = {
+  reviews: {},
+  loading: 'idle',
+  activeDrinkMap: {},
+  error: null,
+};
+
 const reviewsSlice = createSlice({
   name: 'reviews',
-  initialState: {
-    reviews: {},
-    loading: 'idle',
-    activeDrinkMap: {},
-    error: null,
-  },
+  initialState: initialState,
   reducers: {
-    addReview: (state, action: PayloadAction<Drink, string>) => {
+    addReview: (state, action: PayloadAction<Review, string>) => {
       const { payload } = action;
       state.reviews[payload.id] = payload;
     },

@@ -1,22 +1,25 @@
-import { useMemo } from 'react';
-
-import { useTypedSelector } from '../Redux/store';
+import { get } from 'lodash';
+import { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 const useHasAccess = ({ waitForError = false } = {}) => {
-  const {
-    currentUser: { isAdmin },
-    loading: authLoading,
-    error,
-  } = useTypedSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
+  const isAdmin = useMemo(() => get(auth, 'currentUser.isAdmin', false), [auth]);
+
+  useEffect(() => {
+    console.log('auth', auth);
+    return undefined;
+  }, [auth]);
 
   const loading = useMemo(() => {
     if (isAdmin) return false;
+    const { loading: authLoading, error } = auth;
     if (authLoading !== 'idle') return true;
     return waitForError && error === null;
-  }, [isAdmin, authLoading, error, waitForError]);
+  }, [isAdmin, auth]);
 
   return {
-    hasAccess: !!isAdmin,
+    hasAccess: isAdmin,
     loading,
   };
 };

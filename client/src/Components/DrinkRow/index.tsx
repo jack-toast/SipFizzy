@@ -10,14 +10,17 @@ import styles from './styles.module.scss';
 import DrinkReviews from '../DrinkReviews';
 import FadeProgressBar from '../FadeProgressBar';
 import DrinkStats from '../DrinkStats';
-import { openReviewDialog } from '../../Redux/slices/reviewDialog';
+import { openReviewDialog } from '../../Redux/slices/reviewDialogSlice';
 import { has } from 'lodash';
+import { selectDrinks } from '../../Redux/selectors/drinksSelectors';
 
 type Props = { drinkId: string };
-const DrinkRow: React.FC<Props> = ({ drinkId }) => {
+const DrinkRow: React.FC<Props> = ({ drinkId }: Props) => {
   const dispatch = useDispatch();
-  const drink = useTypedSelector((state) => state.drinks.drinks[drinkId]);
+  const drinks = useTypedSelector(selectDrinks);
+  const drink = useMemo(() => drinks[drinkId], [drinks, drinkId]);
   const activeDrinkMap = useTypedSelector((state) => state.reviews.activeDrinkMap);
+
   const reviewsLoading = useMemo(() => has(activeDrinkMap, drinkId), [drinkId, activeDrinkMap]);
 
   const avatarStyle = { background: `linear-gradient(6.9deg, #ffdcce, #eea195)` };
@@ -29,12 +32,12 @@ const DrinkRow: React.FC<Props> = ({ drinkId }) => {
     setShowDeets((c) => !c);
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') handleClickRow();
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') handleClickRow();
   };
 
-  const handleClickAddReview = (e) => {
-    e.stopPropagation();
+  const handleClickAddReview = (event: React.MouseEvent) => {
+    event.stopPropagation();
     dispatch(openReviewDialog(drinkId));
   };
 
