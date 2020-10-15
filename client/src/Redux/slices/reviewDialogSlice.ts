@@ -32,7 +32,7 @@ export const createReview = createAsyncThunk<
   // add the new review!
   // should actually fetch that drink's data so that...
   // ... the avg score, qualities, numReviews, etc. get updated
-  dispatch(fetchDrinksOptId(resp.review.drinkId));
+  dispatch(fetchDrinksOptId({ drinkId: resp.review.drinkId }));
   dispatch(addReview(resp.review));
   dispatch(userAddReview(resp.review));
   return resp.review as Review;

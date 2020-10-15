@@ -35,9 +35,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   existingValues,
 }: ReviewFormProps) => {
   const errorMessage = useTypedSelector((state) => state.reviewDialog?.error?.message);
+
   const initScores = useMemo(() => getInitScores(8), []);
-  const fakeReviewID = useMemo(() => nanoid(4), []);
+
   const initialValues = useMemo(() => {
+    const fakeReviewID = nanoid(4);
     if (existingValues && !isEmpty(existingValues)) return existingValues;
     return {
       title: `FAKE REVIEW TITLE (${fakeReviewID})`,
@@ -55,11 +57,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       },
     };
   }, []);
+
   return (
     <Formik
-      initialValues={{
-        ...initialValues,
-      }}
+      initialValues={initialValues}
       validationSchema={DrinkReviewSchema}
       onSubmit={handleSubmitForm}
     >

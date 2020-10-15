@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Avatar, Button, Chip, Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { GrTest } from 'react-icons/gr';
@@ -97,10 +96,6 @@ const DrinkRow: React.FC<Props> = ({ drinkId }: Props) => {
       </Collapse>
     </>
   );
-};
-
-DrinkRow.propTypes = {
-  drinkId: PropTypes.string.isRequired,
 };
 
 export default DrinkRow;

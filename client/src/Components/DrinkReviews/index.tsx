@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { has } from 'lodash';
 import { Typography } from '@material-ui/core';
@@ -35,10 +34,6 @@ const DrinkReviews: React.FC<Props> = ({ drinkId }) => {
       ))}
     </>
   );
-};
-
-DrinkReviews.propTypes = {
-  drinkId: PropTypes.string.isRequired,
 };
 
 export default DrinkReviews;

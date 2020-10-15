@@ -7,7 +7,7 @@ const kyReceiveKey = ky.extend({
     afterResponse: [
       async (request, options, response) => {
         const { accessToken } = await response.json();
-        if (accessToken) {
+        if (accessToken && AUTH_TOKEN_KEY) {
           localStorage.setItem(AUTH_TOKEN_KEY, accessToken);
         }
       },

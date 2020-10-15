@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Slider, Typography } from '@material-ui/core';
 import { useField } from 'formik';
 
 import styles from './styles.module.scss';
 // JY TODO - contribute to the formit-material-ui repo
-// add slider support
 
-const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
+type Props = {
+  label: string;
+  min: number;
+  step: number;
+  max: number;
+  name: string;
+};
+const FormikMuiSlider: React.FC<Props> = ({ label, min, step, max, name }: Props) => {
   // props MUST contain a 'name' value that maps to the formik value with the same name
-  const [, meta, helpers] = useField(props);
+  const [, meta, helpers] = useField(name);
 
   // This makes the slider snappy, but avoids potentially sluggish onChange calls
   const [internalValue, setInternalValue] = useState(meta.value);
@@ -44,21 +49,6 @@ const FormikMuiSlider = ({ label, min, step, max, ...props }) => {
       </div>
     </>
   );
-};
-
-FormikMuiSlider.propTypes = {
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  label: PropTypes.string,
-  name: PropTypes.string.isRequired,
-};
-
-FormikMuiSlider.defaultProps = {
-  min: 0,
-  max: 100,
-  label: '',
-  step: 1,
 };
 
 export default FormikMuiSlider;

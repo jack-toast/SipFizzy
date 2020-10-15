@@ -1,22 +1,29 @@
 /* eslint-disable no-unreachable */
 import ky from 'ky';
-import { get } from 'lodash';
+import { NewReview, Review } from '../MyTypes/review';
 import kyUseKey from './kyUseKey';
 
 const baseURL = process.env.REACT_APP_API_URL;
 
 // JY TODO - look at github rest api. See what params they offer
 // owner, state, sort, direction, per_page, page, etc...
-export const getReviews = async ({ drinkId }) => {
+type GetReviewsArgs = {
+  drinkId: string;
+};
+type GetReviewsResponse = {
+  success: boolean;
+  reviews: Review[];
+};
+export const getReviews = async ({ drinkId }: GetReviewsArgs): Promise<GetReviewsResponse> => {
   const res = await ky(`${baseURL}/reviews`, {
     searchParams: {
       ...(drinkId && { drinkId }),
     },
   }).json();
-  return res;
+  return res as GetReviewsResponse;
 };
 
-export const getReviewById = async (reviewId) => {
+export const getReviewById = async (reviewId: string) => {
   const res = await ky(`${baseURL}/reviews/${reviewId}`).json();
   return res;
 };
@@ -26,15 +33,26 @@ export const deleteFakeReviewsAPI = async () => {
   return res;
 };
 
-export const createReviewAPI = async (reviewArgs) => {
+type CreateReviewArgs = {
+  username: string;
+  drinkId: string;
+};
+type CreateReviewResponse = {
+  success: boolean;
+  message: string;
+  id: string;
+  review: Review;
+};
+// type CreateReviewArgs = Foo & NewReview;
+export const createReviewAPI = async (reviewArgs: CreateReviewArgs & NewReview) => {
   if (!reviewArgs.username) throw new Error('You must be logged in to add a review');
-  const res = await kyUseKey
+  const res: CreateReviewResponse = await kyUseKey
     .post(`${baseURL}/reviews`, {
       json: { ...reviewArgs },
       throwHttpErrors: false,
     })
     .json();
-  if (!get(res, 'success')) {
+  if (!res.success || !res.id) {
     throw new Error(res.message || 'Unknown Error Occurred');
   }
   return res;

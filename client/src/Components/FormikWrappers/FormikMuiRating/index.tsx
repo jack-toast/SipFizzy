@@ -1,32 +1,41 @@
 import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useField } from 'formik';
-
 import { Typography } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
 
-const FormikMuiRating: React.FC<any> = ({
-  className,
-  classes,
-  label,
-  max,
-  maxValue,
+type Props = {
+  className?: string;
+  classes?: {
+    [key: string]: string;
+  };
+  label?: string;
+  max?: number;
+  maxValue?: number;
+  size?: 'medium' | 'small' | 'large' | undefined;
+  name: string;
+};
+const FormikMuiRating: React.FC<Props> = ({
+  className = '',
+  classes = {},
+  label = '',
+  max = 5,
+  maxValue = 5,
   size,
-  ...props
-}) => {
-  const [, meta, helpers] = useField(props);
+  name,
+}: Props) => {
+  const [, meta, helpers] = useField(name);
 
   const [hoverValue, setHoverValue] = useState(-1);
   const scaleFactor = useMemo(() => maxValue / max, [maxValue, max]);
   const scaledValue = useMemo(() => meta.value / scaleFactor, [scaleFactor, meta.value]);
 
-  const handleChange = (e: any, v: number | null) => {
-    const safeVal = v !== null ? v : scaledValue;
-    helpers.setValue(safeVal * scaleFactor);
-    setHoverValue(safeVal);
+  const handleChange = (v: number | null) => {
     if (!meta.touched) helpers.setTouched(true);
+    if (v === null) return;
+    helpers.setValue(v * scaleFactor);
+    setHoverValue(v);
   };
 
   const getLabelVal = () => {
@@ -48,7 +57,7 @@ const FormikMuiRating: React.FC<any> = ({
         value={scaledValue}
         max={max}
         size={size}
-        onChange={handleChange}
+        onChange={(e, v) => handleChange(v)}
         onChangeActive={(e, newHoverValue) => setHoverValue(newHoverValue)}
       />
       {meta.error && meta.touched ? (
@@ -58,38 +67,6 @@ const FormikMuiRating: React.FC<any> = ({
       ) : null}
     </div>
   );
-};
-
-FormikMuiRating.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string,
-    rating: PropTypes.string,
-    label: PropTypes.string,
-    error: PropTypes.string,
-  }),
-  className: PropTypes.string,
-  /** Label for the input ("Score", "Stars") for display */
-  label: PropTypes.string,
-  /** How many stars (or other icons) to show. */
-  max: PropTypes.number,
-  /** What is the max value coming from the form. Used to scale the value we pass to the Rating component */
-  maxValue: PropTypes.number,
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-};
-
-FormikMuiRating.defaultProps = {
-  className: '',
-  classes: {
-    root: '',
-    rating: '',
-    error: '',
-    label: '',
-  },
-  label: '',
-  max: 5,
-  maxValue: 5,
-  size: 'medium',
-  // precision: 0.5,
 };
 
 export default FormikMuiRating;

@@ -2,7 +2,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { get } from 'lodash';
 import { getReviews } from '../../APIs/reviewsAPI';
-import { Drink } from '../../MyTypes/drink';
 import { Review } from '../../MyTypes/review';
 import { AppDispatch, RootState } from '../store';
 
