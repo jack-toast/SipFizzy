@@ -11,9 +11,15 @@ function renderFadeProgressBar(props: Partial<Props> = {}) {
 }
 
 describe('<FadeProgressBar />', () => {
-  test('should not display progress bar', async () => {
-    const { findByTestId, container } = renderFadeProgressBar();
+  test('progress bar - render hidden', async () => {
+    const { findByTestId } = renderFadeProgressBar();
     const fadeProgressBar = await findByTestId('progress-container');
-    expect(container).toMatchSnapshot();
+    expect(fadeProgressBar).toMatchSnapshot('inactive-progress-bar');
+  });
+
+  test('progress bar - render active', async () => {
+    const { findByTestId } = renderFadeProgressBar({ active: true });
+    const fadeProgressBar = await findByTestId('progress-container');
+    expect(fadeProgressBar).toMatchSnapshot('active-progress-bar');
   });
 });
