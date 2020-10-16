@@ -2,14 +2,11 @@
  * Theme for the whole app. Should avoid the need to style component by component
  */
 
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes, Theme } from '@material-ui/core/styles';
 
-export const getMuiTheme = (useDark = false) => {
+export const getMuiTheme = (useDark = false): Theme => {
   return responsiveFontSizes(
     createMuiTheme({
-      typography: {
-        useNextVariants: true,
-      },
       palette: {
         primary: {
           main: '#DB3267',
