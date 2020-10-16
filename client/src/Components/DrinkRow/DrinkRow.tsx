@@ -14,6 +14,7 @@ import { has } from 'lodash';
 import { selectDrinks } from '../../Redux/selectors/drinksSelectors';
 
 type Props = { drinkId: string };
+
 const DrinkRow: React.FC<Props> = ({ drinkId }: Props) => {
   const dispatch = useDispatch();
   const drinks = useTypedSelector(selectDrinks);

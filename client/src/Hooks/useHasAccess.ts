@@ -5,10 +5,12 @@ import { useTypedSelector } from '../Redux/store';
 type UseHasAccessArgs = {
   waitForError?: boolean;
 };
+
 type UseHasAccess = {
   hasAccess: boolean;
   loading: boolean;
 };
+
 const useHasAccess = ({ waitForError = false }: UseHasAccessArgs = {}): UseHasAccess => {
   const auth = useTypedSelector((state) => state.auth);
   const isAdmin = useMemo(() => get(auth, 'currentUser.isAdmin', false), [auth]);

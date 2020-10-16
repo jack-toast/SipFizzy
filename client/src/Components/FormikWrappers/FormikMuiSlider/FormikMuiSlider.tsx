@@ -12,6 +12,7 @@ type Props = {
   max: number;
   name: string;
 };
+
 const FormikMuiSlider: React.FC<Props> = ({ label, min, step, max, name }: Props) => {
   // props MUST contain a 'name' value that maps to the formik value with the same name
   const [, meta, helpers] = useField(name);

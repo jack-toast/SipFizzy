@@ -25,6 +25,7 @@ type Props = {
   expanded: boolean;
   onClick: () => void;
 };
+
 const ExpandButton: React.FC<Props> = ({
   classes = { root: '', icon: '' },
   className = '',

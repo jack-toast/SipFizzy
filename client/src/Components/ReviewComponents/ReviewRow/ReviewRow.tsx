@@ -14,6 +14,7 @@ import { selectCurrentUser } from '../../../Redux/selectors/authSelectors';
 type Props = {
   review: Review;
 };
+
 const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);

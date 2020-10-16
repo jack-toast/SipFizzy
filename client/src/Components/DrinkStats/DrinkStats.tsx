@@ -20,6 +20,7 @@ type LabelProps = {
   id: string;
   anchor: string;
 };
+
 const CustomLabel: any = ({ id, anchor }: LabelProps) => {
   const theme = useTheme();
   return (

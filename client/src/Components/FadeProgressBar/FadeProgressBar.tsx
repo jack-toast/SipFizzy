@@ -7,6 +7,7 @@ type Props = {
   active: boolean;
   style?: React.CSSProperties;
 };
+
 const FadeProgressBar: React.FC<Props> = ({ active, style }: Props) => {
   return (
     <div

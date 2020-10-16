@@ -16,6 +16,7 @@ type Props = {
   size?: 'medium' | 'small' | 'large' | undefined;
   name: string;
 };
+
 const FormikMuiRating: React.FC<Props> = ({
   className = '',
   classes = {},
