@@ -1,6 +1,6 @@
 # Sip Fizzy
 
-Sip Fizzy, is a platform (app? tool? idk...) that will allow seltzer fans to share their thoughts on seltzers, connect with other enthusiasts, and get curated recommendations.
+Sip Fizzy, is a platform (app? tool?) that will allow seltzer fans to share their thoughts on seltzers, connect with other enthusiasts, and get curated recommendations.
 
 ## Why does this exist?
 
