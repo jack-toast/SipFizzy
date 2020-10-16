@@ -1,0 +1,15 @@
+.NavLink {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: unset;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.RightItems {
+  margin-left: auto;
+  display: flex;
+}
