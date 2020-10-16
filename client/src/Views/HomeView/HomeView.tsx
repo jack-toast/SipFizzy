@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
-import FadeProgressBar from '../../Components/FadeProgressBar';
+import FadeProgressBar from '../../Components/FadeProgressBar/FadeProgressBar';
 import { useTypedSelector } from '../../Redux/store';
-import TopDrinks from './TopDrinks';
+import TopDrinks from './TopDrinks/TopDrinks';
 
 const HomeView: React.FC = () => {
   const { loading } = useTypedSelector((state) => state.drinks);
@@ -17,7 +17,5 @@ const HomeView: React.FC = () => {
     </>
   );
 };
-
-HomeView.propTypes = {};
 
 export default HomeView;

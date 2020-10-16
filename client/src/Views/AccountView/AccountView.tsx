@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchCurrentUser } from '../../Redux/slices/auth';
 import { useTypedSelector } from '../../Redux/store';
-import AccountDetails from './AccountDetails';
-import LoginForm from './LoginForm/index';
+import AccountDetails from './AccountDetails/AccountDetails';
+import LoginForm from './LoginForm/LoginForm';
 
-const Account: React.FC = () => {
+const AccountView: React.FC = () => {
   const dispatch = useDispatch();
   const { currentUser, loading } = useTypedSelector((state) => state.auth);
 
@@ -47,4 +47,4 @@ const Account: React.FC = () => {
   return <AccountDetails />;
 };
 
-export default Account;
+export default AccountView;

@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import DrinkRow from '../../../Components/DrinkRow';
+import DrinkRow from '../../../Components/DrinkRow/DrinkRow';
 import { useTypedSelector } from '../../../Redux/store';
 
 const TopDrinks: React.FC = () => {

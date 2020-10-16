@@ -5,10 +5,10 @@ import { GrTest } from 'react-icons/gr';
 
 import { useTypedSelector } from '../../Redux/store';
 import { LocalBar } from '@material-ui/icons';
-import styles from './styles.module.scss';
-import DrinkReviews from '../DrinkReviews';
-import FadeProgressBar from '../FadeProgressBar';
-import DrinkStats from '../DrinkStats';
+import styles from './DrinkRow.module.scss';
+import DrinkReviews from '../DrinkReviews/DrinkReviews';
+import FadeProgressBar from '../FadeProgressBar/FadeProgressBar';
+import DrinkStats from '../DrinkStats/DrinkStats';
 import { openReviewDialog } from '../../Redux/slices/reviewDialogSlice';
 import { has } from 'lodash';
 import { selectDrinks } from '../../Redux/selectors/drinksSelectors';

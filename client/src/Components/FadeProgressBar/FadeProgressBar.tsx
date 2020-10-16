@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinearProgress } from '@material-ui/core';
 import clsx from 'clsx';
-import styles from './styles.module.scss';
+import styles from './FadeProgressBar.module.scss';
 
 type Props = {
   active: boolean;

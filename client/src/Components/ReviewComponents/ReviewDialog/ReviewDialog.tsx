@@ -18,8 +18,8 @@ import {
 } from '../../../Redux/selectors/reviewDialogSelectors';
 import { closeReviewDialog, createReview } from '../../../Redux/slices/reviewDialogSlice';
 import { RootState, useTypedSelector } from '../../../Redux/store';
-import ReviewForm from '../ReviewForm';
-import styles from './styles.module.scss';
+import ReviewForm from '../ReviewForm/ReviewForm';
+import styles from './ReviewDialog.module.scss';
 
 const selectDrinkForDialog = createSelector(
   selectReviewDialogDrinkId,

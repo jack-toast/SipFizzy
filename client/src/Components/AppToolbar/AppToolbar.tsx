@@ -7,7 +7,7 @@ import {
   Face,
   LocalDrinkOutlined,
 } from '@material-ui/icons';
-import styles from './styles.module.scss';
+import styles from './AppToolbar.module.scss';
 import AccessControl from '../AccessControl';
 import { useDispatch } from 'react-redux';
 import { toggleTheme } from '../../Redux/slices/themeSlice';

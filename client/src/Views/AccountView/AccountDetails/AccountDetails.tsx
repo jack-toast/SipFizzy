@@ -3,7 +3,7 @@ import { Button, Container, Divider, Typography } from '@material-ui/core';
 import { deleteFakeReviewsAPI } from '../../../APIs/reviewsAPI';
 import { syncDrinkScoresAPI } from '../../../APIs/drinksAPI';
 import AccessControl from '../../../Components/AccessControl';
-import styles from './styles.module.scss';
+import styles from './AccountDetails.module.scss';
 import { useTypedSelector } from '../../../Redux/store';
 import { selectCurrentUser } from '../../../Redux/selectors/authSelectors';
 import { get } from 'lodash';

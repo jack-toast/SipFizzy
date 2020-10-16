@@ -5,10 +5,10 @@ import clsx from 'clsx';
 import { TextField } from 'formik-material-ui';
 import { clamp, isEmpty, random, range } from 'lodash';
 import { nanoid } from 'nanoid';
-import styles from './styles.module.scss';
-import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider';
-import DrinkReviewSchema from './DrinkReviewSchema';
-import FormikMuiRating from '../../FormikWrappers/FormikMuiRating';
+import styles from './ReviewForm.module.scss';
+import FormikMuiSlider from '../../FormikWrappers/FormikMuiSlider/FormikMuiSlider';
+import ReviewFormSchema from './ReviewFormSchema';
+import FormikMuiRating from '../../FormikWrappers/FormikMuiRating/FormikMuiRating';
 import { useTypedSelector } from '../../../Redux/store';
 import { NewReview } from '../../../MyTypes/review';
 
@@ -61,7 +61,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={DrinkReviewSchema}
+      validationSchema={ReviewFormSchema}
       onSubmit={handleSubmitForm}
     >
       {({ isSubmitting }) => {

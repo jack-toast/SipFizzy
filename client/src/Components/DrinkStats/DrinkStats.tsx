@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { ResponsiveRadar } from '@nivo/radar';
 import { Paper, useTheme } from '@material-ui/core';
 import { get } from 'lodash';
-import styles from './styles.module.scss';
+import styles from './DrinkStats.module.scss';
 import { useTypedSelector } from '../../Redux/store';
 
 const qualityLabelMap = {

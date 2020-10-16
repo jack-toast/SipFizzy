@@ -5,13 +5,13 @@ import { Typography } from '@material-ui/core';
 import { makeSelectReviewsForDrink } from '../../Redux/selectors/reviewsSelectors';
 import { fetchReviews } from '../../Redux/slices/reviews';
 import { useTypedSelector } from '../../Redux/store';
-import ReviewRow from '../ReviewComponents/ReviewRow';
+import ReviewRow from '../ReviewComponents/ReviewRow/ReviewRow';
 
 type Props = {
   drinkId: string;
 };
 
-const DrinkReviews: React.FC<Props> = ({ drinkId }) => {
+const DrinkReviews: React.FC<Props> = ({ drinkId }: Props) => {
   const dispatch = useDispatch();
   const selectReviewsForDrink = useMemo(makeSelectReviewsForDrink, []);
   const reviews = useTypedSelector((state) => selectReviewsForDrink(state, drinkId));

@@ -2,12 +2,12 @@ import React from 'react';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import { TextField } from 'formik-material-ui';
-import styles from './styles.module.scss';
+import styles from './CreateDrinkView.module.scss';
 import { createDrinkAPI } from '../../APIs/drinksAPI';
 import CreateDrinkSchema from './CreateDrinkSchema';
 import { NewDrink } from '../../MyTypes/drink';
 
-const CreateDrink: React.FC = () => {
+const CreateDrinkView: React.FC = () => {
   const handleFormSubmission = async (newDrink: NewDrink) => {
     console.log('newDrink', newDrink);
     try {
@@ -118,4 +118,4 @@ const CreateDrink: React.FC = () => {
   );
 };
 
-export default CreateDrink;
+export default CreateDrinkView;

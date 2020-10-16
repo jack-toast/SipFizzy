@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const DrinkReviewSchema = Yup.object().shape({
+const ReviewFormSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Must be longer than 2 characters')
     .max(100, 'Must be shorter than 100 characters')
@@ -21,4 +21,4 @@ const DrinkReviewSchema = Yup.object().shape({
     .required('you need qualities'),
 });
 
-export default DrinkReviewSchema;
+export default ReviewFormSchema;

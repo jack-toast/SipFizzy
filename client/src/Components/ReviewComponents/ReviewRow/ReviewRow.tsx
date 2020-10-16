@@ -4,7 +4,7 @@ import { Collapse, Paper, Tooltip, Typography } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { DateTime } from 'luxon';
 import { useDispatch } from 'react-redux';
-import styles from './styles.module.scss';
+import styles from './ReviewRow.module.scss';
 import ExpandButton from '../../Shared/ExpandButton';
 import { openReviewEditorDialog } from '../../../Redux/slices/reviewDialogSlice';
 import { useTypedSelector } from '../../../Redux/store';

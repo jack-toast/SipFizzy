@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { has } from 'lodash';
-import styles from './styles.module.scss';
+import styles from './LoginForm.module.scss';
 import { loginUserAPI, signupUserAPI } from '../../../APIs/authAPI';
 
 const LoginForm: React.FC = () => {

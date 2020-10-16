@@ -5,7 +5,7 @@ import WebFont from 'webfontloader';
 import { StylesProvider } from '@material-ui/core';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import App from './Components/AppRoot';
+import AppRoot from './Components/AppRoot/AppRoot';
 import * as serviceWorker from './serviceWorker';
 import store from './Redux/store';
 
@@ -22,7 +22,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <StylesProvider injectFirst={true}>
-          <App />
+          <AppRoot />
         </StylesProvider>
       </Router>
     </Provider>

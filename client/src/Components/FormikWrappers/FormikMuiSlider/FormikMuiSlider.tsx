@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Slider, Typography } from '@material-ui/core';
 import { useField } from 'formik';
 
-import styles from './styles.module.scss';
+import styles from './FormikMuiSlider.module.scss';
 // JY TODO - contribute to the formit-material-ui repo
 
 type Props = {
