@@ -1,2 +1,2 @@
 # fizzyfinder
-find that fizzy wizzy
+Find your fizzy
