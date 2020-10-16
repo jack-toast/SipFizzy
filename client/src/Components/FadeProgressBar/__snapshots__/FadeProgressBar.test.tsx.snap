@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FadeProgressBar /> should not display progress bar 1`] = `
+<div>
+  <div
+    class="ProgressContainer"
+    data-testid="progress-container"
+  >
+    <div
+      class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
+      role="progressbar"
+    >
+      <div
+        class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+      />
+      <div
+        class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -3,18 +3,17 @@ import { LinearProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import styles from './FadeProgressBar.module.scss';
 
-type Props = {
+export type Props = {
   active: boolean;
-  style?: React.CSSProperties;
 };
 
-const FadeProgressBar: React.FC<Props> = ({ active, style }: Props) => {
+const FadeProgressBar: React.FC<Props> = ({ active }: Props) => {
   return (
     <div
-      style={{ ...style }}
       className={clsx(styles.ProgressContainer, {
         [styles.show]: active,
       })}
+      data-testid="progress-container"
     >
       <LinearProgress />
     </div>
