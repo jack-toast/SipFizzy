@@ -13,6 +13,8 @@ import PrivateRoute from '../PrivateRoute';
 import CreateDrinkView from '../../Views/CreateDrinkView/CreateDrinkView';
 import AccountView from '../../Views/AccountView/AccountView';
 import HomeView from '../../Views/HomeView/HomeView';
+import UserView from '../../Views/UserView/UserView';
+import AdminView from '../../Views/AdminView/AdminView';
 
 const useStyles = makeStyles((theme) => ({
   toolbarSpacer: {
@@ -46,6 +48,12 @@ const AppRoot: React.FC = () => {
         </PrivateRoute>
         <Route path="/account">
           <AccountView />
+        </Route>
+        <Route path="/user/:userId">
+          <UserView />
+        </Route>
+        <Route path="/admin">
+          <AdminView />
         </Route>
         <Route path="/">
           <HomeView />

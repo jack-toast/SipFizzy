@@ -3,7 +3,6 @@ const createHttpError = require('http-errors');
 const Review = require('../../models/review.model');
 
 module.exports = asyncHandler(async (req, res) => {
-  console.log('bar');
   const review = await Review.findOneAndDelete({ _id: req.params.reviewId });
   if (!review) {
     throw createHttpError(

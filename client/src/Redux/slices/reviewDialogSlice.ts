@@ -1,6 +1,5 @@
 import { createReviewAPI } from '../../APIs/reviewsAPI';
 import { addReview } from './reviews';
-import { addReview as userAddReview } from './auth';
 import { fetchDrinksOptId } from './drinks';
 
 /* eslint-disable no-param-reassign */
@@ -34,7 +33,6 @@ export const createReview = createAsyncThunk<
   // ... the avg score, qualities, numReviews, etc. get updated
   dispatch(fetchDrinksOptId({ drinkId: resp.review.drinkId }));
   dispatch(addReview(resp.review));
-  dispatch(userAddReview(resp.review));
   return resp.review as Review;
 });
 

@@ -23,7 +23,6 @@ export const fetchDrinksOptId = createAsyncThunk<
   }
   const drinkId = get(apiArgs, 'drinkId');
   const response = await getDrinksOptId({ drinkId });
-  console.log('response', response);
   return response.drinks as Drink[];
 });
 

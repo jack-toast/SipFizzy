@@ -1,9 +1,10 @@
 export type CurrentUser = {
-  reviews: string[];
   isAdmin: boolean;
   _id: string;
   username: string;
+  bio?: string;
   email: string;
+  image?: string;
   createdAt: string;
   updatedAt: string;
   __v: number;

@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
-const { Schema, SchemaTypes } = mongoose;
+const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
@@ -38,7 +38,6 @@ const UserSchema = new Schema(
       type: String,
       select: false,
     },
-    reviews: [{ type: SchemaTypes.ObjectId, ref: 'Review' }],
     bio: String,
     image: String,
     isAdmin: {

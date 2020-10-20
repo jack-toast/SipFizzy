@@ -33,7 +33,11 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const renderUsername = () => {
     if (!username) return null;
     return (
-      <NavLink to="/" className={styles.UserLink} onClick={(e) => e.stopPropagation()}>
+      <NavLink
+        to={`/user/${userId}`}
+        className={styles.UserLink}
+        onClick={(e) => e.stopPropagation()}
+      >
         <Typography color="textSecondary">{`@${username}`}</Typography>
       </NavLink>
     );

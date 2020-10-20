@@ -30,10 +30,12 @@
 .NumRatingsContainer {
   display: flex;
   align-items: center;
-  // min-width: 2rem;
 
   > p {
     margin-right: 0.25em;
+  }
+  > svg > path {
+    stroke: currentColor;
   }
 }
 

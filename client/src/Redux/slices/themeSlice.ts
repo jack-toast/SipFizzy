@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-/* eslint-disable no-param-reassign */
+export const initialThemeState = {
+  useDark: true,
+};
 const themeSlice = createSlice({
   name: 'theme',
-  initialState: {
-    useDark: true,
-  },
+  initialState: initialThemeState,
   reducers: {
     toggleTheme: (state) => {
       state.useDark = !state.useDark;
