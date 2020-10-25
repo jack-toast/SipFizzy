@@ -12,17 +12,9 @@ const AccountView: React.FC = () => {
   const { currentUser, loading } = useTypedSelector((state) => state.auth);
 
   useEffect(() => {
-    const requestCurrentUser = async () => {
-      try {
-        const resp = await dispatch(fetchCurrentUser());
-        console.log('resp', resp);
-      } catch (err) {
-        console.log('err', err);
-      }
-    };
-    requestCurrentUser();
+    dispatch(fetchCurrentUser());
     return undefined;
-  }, [dispatch]);
+  }, []);
 
   if (loading !== 'idle') {
     return (
@@ -44,7 +36,7 @@ const AccountView: React.FC = () => {
     return <LoginForm />;
   }
 
-  return <AccountDetails />;
+  return <AccountDetails user={currentUser} />;
 };
 
 export default AccountView;

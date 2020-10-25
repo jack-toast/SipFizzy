@@ -33,11 +33,7 @@ const initialState: AuthSliceState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
-  reducers: {
-    addReview: (state, { payload }) => {
-      if (state.currentUser) state.currentUser.reviews.push(payload.id);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCurrentUser.pending, (state, action) => {
@@ -64,7 +60,5 @@ const authSlice = createSlice({
       });
   },
 });
-
-export const { addReview } = authSlice.actions;
 
 export default authSlice.reducer;

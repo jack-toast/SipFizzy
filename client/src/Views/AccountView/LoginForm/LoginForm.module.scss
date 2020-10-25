@@ -1,7 +1,9 @@
 .Root {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  padding-top: 5rem;
 }
 
 .Paper {
@@ -18,7 +20,6 @@
   margin-top: 1rem;
   width: 100%;
 }
-// k5YPS$45J@VsPExqriYwHq6
 
 .Checkbox {
   align-self: flex-start;

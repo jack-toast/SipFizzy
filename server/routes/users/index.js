@@ -8,6 +8,7 @@ const syncUserReviews = require('./syncUserReviews');
 const loginUser = require('./loginUser');
 const getAuthedUser = require('./getAuthedUser');
 const auth = require('../../middlewares/auth');
+const getUserReviews = require('./getUserReviews');
 
 // Look to github API for reference
 // https://docs.github.com/en/free-pro-team@latest/rest/reference/users
@@ -20,7 +21,6 @@ users.post('/signup', createUser);
 users.post('/login', loginUser);
 users.get('/user', auth, getAuthedUser);
 // users.patch('/user', updateAuthedUser);
-// users.ost
 
 // List users
 users.get('/users', getUsers);
@@ -29,6 +29,7 @@ users.get('/users', getUsers);
 users.get('/users/:userId', getUser);
 users.patch('/users/:userId', updateUser); // should delete
 users.delete('/users/:userId', deleteUser); // admin only
+users.get('/users/:userId/reviews', getUserReviews);
 users.patch('/users/:userId/reviewsync', syncUserReviews); // shouldnt be necessary...
 
 module.exports = users;

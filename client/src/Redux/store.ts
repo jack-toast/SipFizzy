@@ -6,7 +6,7 @@ import auth from './slices/auth';
 import drinks from './slices/drinks';
 import reviewDialog from './slices/reviewDialogSlice';
 import reviews from './slices/reviews';
-import themeSlice from './slices/themeSlice';
+import theme from './slices/themeSlice';
 
 // configure middleware
 const logger = createLogger({
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   drinks,
   reviewDialog,
   reviews,
-  theme: themeSlice,
+  theme,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -28,7 +28,10 @@ export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => {
+    if (process.env.NODE_ENV === 'development') getDefaultMiddleware().concat(logger);
+    return getDefaultMiddleware();
+  },
   devTools: process.env.NODE_ENV !== 'production',
 });
 

@@ -18,6 +18,7 @@
     "clsx": "^1.1.1",
     "formik": "^2.1.7",
     "formik-material-ui": "^3.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "keymirror": "^0.1.1",
     "ky": "^0.23.0",
     "lodash": "^4.17.19",
@@ -55,12 +56,15 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.4",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "browserslist": {
     "production": [

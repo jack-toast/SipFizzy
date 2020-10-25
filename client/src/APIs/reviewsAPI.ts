@@ -1,4 +1,3 @@
-/* eslint-disable no-unreachable */
 import ky from 'ky';
 import { NewReview, Review } from '../MyTypes/review';
 import kyUseKey from './kyUseKey';

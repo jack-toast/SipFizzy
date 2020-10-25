@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FadeProgressBar /> progress bar - render active: active-progress-bar 1`] = `
+<div
+  class="ProgressContainer show"
+  data-testid="progress-container"
+>
+  <div
+    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
+    role="progressbar"
+  >
+    <div
+      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+    />
+    <div
+      class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+    />
+  </div>
+</div>
+`;
+
+exports[`<FadeProgressBar /> progress bar - render hidden: inactive-progress-bar 1`] = `
+<div
+  class="ProgressContainer"
+  data-testid="progress-container"
+>
+  <div
+    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
+    role="progressbar"
+  >
+    <div
+      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+    />
+    <div
+      class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+    />
+  </div>
+</div>
+`;

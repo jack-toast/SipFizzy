@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler');
 const createHttpError = require('http-errors');
-const checkReviewsValid = require('../../helpers/checkReviewsValid');
 const User = require('../../models/user.model');
 
 module.exports = asyncHandler(async (req, res) => {
@@ -8,10 +7,9 @@ module.exports = asyncHandler(async (req, res) => {
   if (!body)
     throw createHttpError(400, 'You must provide a body to update a user');
 
-  const { bio, image, reviews } = body;
+  const { bio, image } = body;
 
   const update = {
-    ...(checkReviewsValid(reviews) && { reviews }),
     bio,
     image,
   };

@@ -11,7 +11,7 @@ import { useTypedSelector } from '../../../Redux/store';
 import { Review } from '../../../MyTypes/review';
 import { selectCurrentUser } from '../../../Redux/selectors/authSelectors';
 
-type Props = {
+export type Props = {
   review: Review;
 };
 
@@ -19,13 +19,13 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
   const currentUser = useTypedSelector(selectCurrentUser);
-  const { username, title, createdAt, description, userId } = review;
+  const { username, title, createdAt, description, userId, id, drinkId } = review;
 
   const handleClickEditReview = () => {
     dispatch(
       openReviewEditorDialog({
-        drinkId: review.drinkId,
-        reviewId: review.id,
+        drinkId: drinkId,
+        reviewId: id,
       }),
     );
   };
@@ -33,7 +33,11 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
   const renderUsername = () => {
     if (!username) return null;
     return (
-      <NavLink to="/" className={styles.UserLink} onClick={(e) => e.stopPropagation()}>
+      <NavLink
+        to={`/user/${userId}`}
+        className={styles.UserLink}
+        onClick={(e) => e.stopPropagation()}
+      >
         <Typography color="textSecondary">{`@${username}`}</Typography>
       </NavLink>
     );

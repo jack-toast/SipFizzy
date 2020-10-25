@@ -12,4 +12,8 @@
 .RightItems {
   margin-left: auto;
   display: flex;
+
+  > a {
+    color: inherit;
+  }
 }

@@ -3,7 +3,6 @@ const createHttpError = require('http-errors');
 const { getIncAvg, getObjIncAvg } = require('../../helpers/incAverageHelper');
 const Drink = require('../../models/drink.model');
 const Review = require('../../models/review.model');
-const User = require('../../models/user.model');
 
 module.exports = ash(async (req, res) => {
   const { body } = req;
@@ -51,9 +50,4 @@ module.exports = ash(async (req, res) => {
   drink.numRatings = numRatings + 1;
 
   drink.save();
-
-  // also need to update the user's reviews array
-  const user = await User.findById(userId);
-  user.reviews.push(newReview.id);
-  user.save();
 });
