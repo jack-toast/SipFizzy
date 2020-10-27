@@ -16,7 +16,11 @@ import {
   selectReviewDialogDrinkId,
   selectReviewDialogReviewId,
 } from '../../../Redux/selectors/reviewDialogSelectors';
-import { closeReviewDialog, createReview } from '../../../Redux/slices/reviewDialogSlice';
+import {
+  closeReviewDialog,
+  createReview,
+  updateReview,
+} from '../../../Redux/slices/reviewDialogSlice';
 import { RootState, useTypedSelector } from '../../../Redux/store';
 import ReviewForm from '../ReviewForm/ReviewForm';
 import styles from './ReviewDialog.module.scss';
@@ -40,7 +44,7 @@ const selectExistingReview = createSelector(
 
 const ReviewDialog: React.FC = () => {
   const dispatch = useDispatch();
-  const { dialogOpen } = useTypedSelector((state) => state.reviewDialog);
+  const { dialogOpen, reviewId } = useTypedSelector((state) => state.reviewDialog);
   const existingReview = useTypedSelector(selectExistingReview);
   const selectedDrink = useTypedSelector(selectDrinkForDialog);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -50,8 +54,14 @@ const ReviewDialog: React.FC = () => {
     return undefined;
   }, [dialogOpen]);
 
-  const handleSubmitReviewThunk = async (reviewArgs: NewReview) => {
-    const submissionResult = await dispatch(createReview(reviewArgs));
+  const handleSubmitReview = async (reviewArgs: NewReview) => {
+    // const submissionResult = await (reviewId
+    //   ? dispatch(updateReview(reviewArgs))
+    //   : dispatch(createReview(reviewArgs)));
+    const submissionResult = reviewId
+      ? await dispatch(updateReview(reviewArgs))
+      : await dispatch(createReview(reviewArgs));
+
     console.log('submissionResult', submissionResult);
     if (get(submissionResult, 'type', '').includes('fulfilled')) {
       setShowSuccessMessage(true);
@@ -77,7 +87,7 @@ const ReviewDialog: React.FC = () => {
       <Collapse in={!showSuccessMessage} mountOnEnter unmountOnExit>
         <DialogTitle>{getTitle()}</DialogTitle>
         <DialogContent className={styles.DialogContent}>
-          <ReviewForm handleSubmitForm={handleSubmitReviewThunk} existingValues={existingReview} />
+          <ReviewForm handleSubmitForm={handleSubmitReview} existingValues={existingReview} />
         </DialogContent>
       </Collapse>
       <Collapse in={showSuccessMessage} mountOnEnter unmountOnExit>

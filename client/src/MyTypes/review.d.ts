@@ -40,7 +40,20 @@ export type NewReview = {
   score: number;
   title: string;
   description: string;
-  // drinkId: string;
-  // username: string;
-  // userId: string;
+};
+
+export type ReviewUpdate = {
+  qualities: {
+    flavorAccuracy: number;
+    flavorIntensity: number;
+    bubbles: number;
+    body: number;
+    smell: number;
+    sweetness: number;
+    sour: number;
+    bitter: number;
+  };
+  score: number;
+  title: string;
+  description: string;
 };

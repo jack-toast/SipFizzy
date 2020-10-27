@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { NewReview, Review } from '../MyTypes/review';
+import { NewReview, Review, ReviewUpdate } from '../MyTypes/review';
 import kyUseKey from './kyUseKey';
 
 const baseURL = process.env.REACT_APP_API_URL;
@@ -39,11 +39,11 @@ type CreateReviewArgs = {
 type CreateReviewResponse = {
   success: boolean;
   message: string;
-  id: string;
   review: Review;
 };
-// type CreateReviewArgs = Foo & NewReview;
-export const createReviewAPI = async (reviewArgs: CreateReviewArgs & NewReview) => {
+export const createReviewAPI = async (
+  reviewArgs: CreateReviewArgs & NewReview,
+): Promise<CreateReviewResponse> => {
   if (!reviewArgs.username) throw new Error('You must be logged in to add a review');
   const res: CreateReviewResponse = await kyUseKey
     .post(`${baseURL}/reviews`, {
@@ -51,7 +51,28 @@ export const createReviewAPI = async (reviewArgs: CreateReviewArgs & NewReview) 
       throwHttpErrors: false,
     })
     .json();
-  if (!res.success || !res.id) {
+  if (!res.success) {
+    throw new Error(res.message || 'Unknown Error Occurred');
+  }
+  return res;
+};
+
+type UpdateReviewResponse = {
+  success: boolean;
+  message: string;
+  review: Review;
+};
+export const updateReviewAPI = async (
+  reviewUpdate: ReviewUpdate,
+  reviewId: string,
+): Promise<UpdateReviewResponse> => {
+  const res: UpdateReviewResponse = await kyUseKey
+    .patch(`${baseURL}/reviews/${reviewId}`, {
+      json: { ...reviewUpdate },
+      throwHttpErrors: false,
+    })
+    .json();
+  if (!res.success) {
     throw new Error(res.message || 'Unknown Error Occurred');
   }
   return res;

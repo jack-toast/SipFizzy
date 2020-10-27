@@ -9,17 +9,18 @@ module.exports = asyncHandler(async (req, res) => {
   if (!body)
     throw createHttpError(400, 'You must provide a body to update a review');
 
-  const { title, description, ratings = {}, meta = {} } = body;
+  const { title, description, qualities = {}, meta = {} } = body;
 
   const update = {
     $set: {
       title,
       description,
-      ...(!isEmpty(ratings) && flatten({ ratings })),
+      ...(!isEmpty(qualities) && flatten({ qualities })),
       ...(!isEmpty(meta) && flatten({ meta }, { maxDepth: 2 })),
     },
   };
-  req.log.debug({ update }, `updating review ${req.params.reviewId}`);
+  // req.log.debug({ update }, `updating review ${req.params.reviewId}`);
+  console.log('review update update', update);
 
   const updatedReview = await Review.findOneAndUpdate(
     { _id: req.params.reviewId },

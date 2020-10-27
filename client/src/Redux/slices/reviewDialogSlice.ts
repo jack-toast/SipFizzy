@@ -1,10 +1,8 @@
-import { createReviewAPI } from '../../APIs/reviewsAPI';
+import { createReviewAPI, updateReviewAPI } from '../../APIs/reviewsAPI';
 import { addReview } from './reviews';
 import { fetchDrinksOptId } from './drinks';
-
-/* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { NewReview, Review } from '../../MyTypes/review';
+import { createSlice, createAsyncThunk, AnyAction, AsyncThunk } from '@reduxjs/toolkit';
+import { NewReview, Review, ReviewUpdate } from '../../MyTypes/review';
 import { AppDispatch, RootState } from '../store';
 import { has } from 'lodash';
 
@@ -28,13 +26,48 @@ export const createReview = createAsyncThunk<
     username: currentUser.username,
     drinkId,
   });
-  // add the new review!
-  // should actually fetch that drink's data so that...
-  // ... the avg score, qualities, numReviews, etc. get updated
   dispatch(fetchDrinksOptId({ drinkId: resp.review.drinkId }));
   dispatch(addReview(resp.review));
   return resp.review as Review;
 });
+
+export const updateReview = createAsyncThunk<
+  Review,
+  ReviewUpdate,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>('reviewDialog/updateReview', async (reviewUpdate, thunkApi) => {
+  const { getState, dispatch } = thunkApi;
+  const {
+    reviewDialog: { reviewId },
+  } = getState();
+  if (!reviewId) throw new Error('Need reviewId to update a review');
+  const resp = await updateReviewAPI(reviewUpdate, reviewId);
+  dispatch(fetchDrinksOptId({ drinkId: resp.review.drinkId }));
+  dispatch(addReview(resp.review));
+  return resp.review as Review;
+});
+
+const isFromSlice = (action: AnyAction): boolean => {
+  if (action.type.includes('reviewDialog/')) console.log('action.type', action.type);
+  return action.type.includes('reviewDialog/');
+};
+
+type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
+type PendingAction = ReturnType<GenericAsyncThunk['pending']>;
+type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>;
+type RejectedAction = ReturnType<GenericAsyncThunk['rejected']>;
+
+const isPendingAction = (action: AnyAction): action is PendingAction =>
+  isFromSlice(action) && action.type.endsWith('/pending');
+
+const isFulfilledAction = (action: AnyAction): action is FulfilledAction =>
+  isFromSlice(action) && action.type.endsWith('/fulfilled');
+
+const isRejectedAction = (action: AnyAction): action is RejectedAction =>
+  isFromSlice(action) && action.type.endsWith('/rejected');
 
 type ReviewDialogSliceState = {
   currentRequestId: string;
@@ -74,20 +107,22 @@ const reviewDialogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createReview.pending, (state, action) => {
+      .addMatcher(isPendingAction, (state, action) => {
+        console.log('pending action', action);
         if (state.loading === 'idle') {
           state.loading = 'pending';
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(createReview.fulfilled, (state, action) => {
+      .addMatcher(isFulfilledAction, (state, action) => {
+        console.log('fulfilled action', action);
         const { requestId } = action.meta;
         if (state.loading === 'pending' && state.currentRequestId === requestId) {
           state.loading = 'idle';
           state.currentRequestId = '';
         }
       })
-      .addCase(createReview.rejected, (state, action) => {
+      .addMatcher(isRejectedAction, (state, action) => {
         const { requestId } = action.meta;
         if (state.loading === 'pending' && state.currentRequestId === requestId) {
           state.loading = 'idle';
