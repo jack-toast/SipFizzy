@@ -53,7 +53,7 @@ const ReviewRow: React.FC<Props> = ({ review }: Props) => {
     if (!currentUser) return null;
     if (userId !== currentUser._id) return null;
     return (
-      <Tooltip title="edit">
+      <Tooltip title="edit" placement="top">
         <div
           role="button"
           tabIndex={0}

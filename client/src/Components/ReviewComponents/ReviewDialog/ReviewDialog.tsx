@@ -55,9 +55,6 @@ const ReviewDialog: React.FC = () => {
   }, [dialogOpen]);
 
   const handleSubmitReview = async (reviewArgs: NewReview) => {
-    // const submissionResult = await (reviewId
-    //   ? dispatch(updateReview(reviewArgs))
-    //   : dispatch(createReview(reviewArgs)));
     const submissionResult = reviewId
       ? await dispatch(updateReview(reviewArgs))
       : await dispatch(createReview(reviewArgs));
@@ -74,6 +71,7 @@ const ReviewDialog: React.FC = () => {
   };
 
   const getTitle = () => {
+    if (reviewId) return `Update Sip - ${get(selectedDrink, 'name')}`;
     return `New Sip - ${get(selectedDrink, 'name') || 'unknown (tell jack)'}`;
   };
 

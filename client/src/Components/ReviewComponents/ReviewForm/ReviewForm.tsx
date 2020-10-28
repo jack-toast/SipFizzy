@@ -36,6 +36,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   existingValues,
 }: ReviewFormProps) => {
   const errorMessage = useTypedSelector((state) => state.reviewDialog?.error?.message);
+  const editingExisting = useMemo(() => existingValues && !isEmpty(existingValues), [
+    existingValues,
+  ]);
 
   const initScores = useMemo(() => getInitScores(8), []);
 
@@ -141,7 +144,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
               color="primary"
               variant="contained"
             >
-              Submit Review
+              {editingExisting ? 'Update Review' : 'Submit Review'}
             </Button>
           </Form>
         );
