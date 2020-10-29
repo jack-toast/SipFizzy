@@ -53,6 +53,11 @@ const reviewsSlice = createSlice({
       const { payload } = action;
       state.reviews[payload.id] = payload;
     },
+    deleteReview: (state, action: PayloadAction<string>) => {
+      const newReviews = { ...state.reviews };
+      delete newReviews[action.payload];
+      state.reviews = newReviews;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -79,6 +84,6 @@ const reviewsSlice = createSlice({
   },
 });
 
-export const { addReview } = reviewsSlice.actions;
+export const { addReview, deleteReview } = reviewsSlice.actions;
 
 export default reviewsSlice.reducer;

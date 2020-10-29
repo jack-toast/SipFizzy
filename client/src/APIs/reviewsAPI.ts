@@ -32,6 +32,23 @@ export const deleteFakeReviewsAPI = async () => {
   return res;
 };
 
+type DeleteReviewResponse = {
+  success: boolean;
+  message: string;
+};
+export const deleteReviewAPI = async (reviewId: string): Promise<DeleteReviewResponse> => {
+  if (!reviewId) throw new Error('You gotta give me a reviewId my friend');
+  const res: DeleteReviewResponse = await kyUseKey
+    .delete(`${baseURL}/reviews/${reviewId}`, {
+      throwHttpErrors: false,
+    })
+    .json();
+  if (!res.success) {
+    throw new Error(res.message || 'Unknown Error Occurred');
+  }
+  return res;
+};
+
 type CreateReviewArgs = {
   username: string;
   drinkId: string;

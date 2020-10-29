@@ -11,7 +11,7 @@ const reviews = express.Router();
 
 reviews.get('/', getReviews);
 reviews.get('/:reviewId', getReview);
-reviews.patch('/:reviewId', updateReview);
+reviews.patch('/:reviewId', auth, updateReview);
 reviews.post('/', auth, createReview);
 
 // admin only

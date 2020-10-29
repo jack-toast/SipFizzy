@@ -24,7 +24,13 @@
 
 .Title {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+
+.EditIcons {
+  display: flex;
+  align-items: center;
 }
 
 .Subtitle {
@@ -37,6 +43,11 @@
   text-decoration: none;
   color: unset;
   margin-right: 0.5rem;
+
+  &:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
 }
 
 .Description {
